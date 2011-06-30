@@ -1,4 +1,4 @@
-AppFuse Basic Struts Archetype - Test Committe
+AppFuse Basic Struts Archetype - test test test 3333333
 --------------------------------------------------------------------------------
 If you're reading this then you've created your new project using Maven and
 core.  You have only created the shell of an AppFuse Java EE
