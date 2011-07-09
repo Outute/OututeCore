@@ -1,3 +1,4 @@
+<!--start dataAccessFailure-->
 <%@ include file="/common/taglibs.jsp" %>
 
 <title>Data Access Error</title>
@@ -18,3 +19,6 @@
 -->
 
 <a href="mainMenu" onclick="history.back();return false">&#171; Back</a>
+
+
+<!--end dataAccessFailure-->

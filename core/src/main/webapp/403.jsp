@@ -1,3 +1,4 @@
+<!--start 403-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <page:applyDecorator name="default">
@@ -18,3 +19,7 @@
     <img src="<c:url value="/images/403.jpg"/>" alt="Hawaii" /></a>
 </p>
 </page:applyDecorator>
+
+
+
+<!--end 403-->

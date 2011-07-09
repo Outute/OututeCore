@@ -1,6 +1,5 @@
-<%@ include file="/common/taglibs.jsp"%>
-
-<head>
+<!--start tutorialForm-->
+<%@ include file="/common/taglibs.jsp"%><head>
     <title><fmt:message key="tutorial.profile.title"/></title>
     <meta name="heading" content="<fmt:message key='tutorial.profile.heading'/>"/>
     <meta name="menu" content="TutorialMenu"/>
@@ -8,7 +7,9 @@
 </head>
 
 <s:form name="tutorialForm" action="saveTutorial" method="post" validate="true">
-    <li style="display: none">
+    
+
+<li style="display: none">
         <s:hidden key="tutorial.id"/>
         <s:hidden key="tutorial.version"/>
         <input type="hidden" name="from" value="${param.from}"/>
@@ -41,3 +42,4 @@
     <s:textfield key="tutorial.lengthInMins" required="true" cssClass="text large"/>
 </s:form>
 
+<!--end tutorialForm-->

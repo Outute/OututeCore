@@ -106,7 +106,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-spring-plugin/2.1.8/struts2-spring-plugin-2.1.8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/subethamail/subethasmtp-smtp/1.2/subethasmtp-smtp-1.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/subethamail/subethasmtp-wiser/1.2/subethasmtp-wiser-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.6.0_26/lib/tools.jar"/>
+	<classpathentry kind="lib" path="C:/glassfish3/jdk/lib/tools.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/tuckey/urlrewritefilter/3.1.0/urlrewritefilter-3.1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/velocity/velocity/1.4/velocity-1.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/velocity/velocity-dep/1.4/velocity-dep-1.4.jar"/>

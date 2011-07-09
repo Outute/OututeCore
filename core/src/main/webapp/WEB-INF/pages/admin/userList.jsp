@@ -1,3 +1,5 @@
+<!--start usersList-->
+
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -51,3 +53,6 @@
 <script type="text/javascript">
     highlightTableRows("users");
 </script>
+
+
+<!--end usersList-->

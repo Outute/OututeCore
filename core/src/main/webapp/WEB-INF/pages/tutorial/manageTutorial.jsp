@@ -1,3 +1,4 @@
+<!--start manageTutorial-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -51,3 +52,6 @@
 <script type="text/javascript">
     highlightTableRows("tutorials");
 </script>
+
+
+<!--end manageTutorial-->

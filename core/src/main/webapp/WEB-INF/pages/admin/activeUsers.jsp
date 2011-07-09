@@ -1,3 +1,5 @@
+<!--start activeUsers-->
+
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -29,3 +31,6 @@
     <display:setProperty name="paging.banner.item_name" value="user" />
     <display:setProperty name="paging.banner.items_name" value="users" />
 </display:table>
+
+
+<!--end activeUsers-->

@@ -1,3 +1,4 @@
+<!--start logout-->
 <%@ include file="/common/taglibs.jsp"%>
 <%@ page import="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices" %>
 <%@ page import="javax.servlet.http.Cookie" %>
@@ -14,3 +15,6 @@ response.addCookie(terminate);
 %>
 
 <c:redirect url="/mainMenu"/>
+
+
+<!--end logout-->

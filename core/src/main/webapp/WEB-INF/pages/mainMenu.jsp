@@ -1,3 +1,4 @@
+<!-- start mainMenu-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -23,3 +24,4 @@ ${param.xss}
         <a href="<c:url value='/uploadFile'/>"><fmt:message key="menu.selectFile"/></a>
     </li>
 </ul>
+<!-- end mainMenu-->

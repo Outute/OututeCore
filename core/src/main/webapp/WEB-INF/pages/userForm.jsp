@@ -1,3 +1,4 @@
+<!--start userForm-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -205,3 +206,5 @@ function onFormSubmit(theForm) {
 </c:if>
 }
 </script>
+
+<!--end userForm-->

@@ -1,3 +1,4 @@
+<!--start uploadForm-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -23,3 +24,4 @@
     Form.focusFirstElement($('uploadForm'));
 </script>
 
+<!--end uploadForm-->

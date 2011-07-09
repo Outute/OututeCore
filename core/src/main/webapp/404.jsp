@@ -1,3 +1,4 @@
+<!--start 404-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <page:applyDecorator name="default">
@@ -18,3 +19,5 @@
     <img  src="<c:url value="/images/404.jpg"/>" alt="Emerald Lake - Western Canada" /></a>
 </p>
 </page:applyDecorator>
+
+<!--end 404-->

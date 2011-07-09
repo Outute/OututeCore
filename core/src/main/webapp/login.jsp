@@ -1,3 +1,4 @@
+<!--start login-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -6,7 +7,7 @@
     <meta name="menu" content="Login"/>
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/styles/${appConfig["csstheme"]}/layout-1col.css'/>" />
 </head>
-<body id="login">
+<body>
 
 <form method="post" id="loginForm" action="<c:url value='/j_security_check'/>"
     onsubmit="saveUsername(this);return validateForm(this)">
@@ -55,3 +56,6 @@ test test
 
 <p><fmt:message key="login.passwordHint"/></p>
 </body>
+
+
+<!--end login-->

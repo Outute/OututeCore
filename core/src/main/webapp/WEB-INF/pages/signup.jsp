@@ -1,3 +1,4 @@
+<!--start signup-->
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
@@ -93,3 +94,6 @@
 <script type="text/javascript">
     Form.focusFirstElement(document.forms["signupForm"]);
 </script>
+
+
+<!--end signup-->

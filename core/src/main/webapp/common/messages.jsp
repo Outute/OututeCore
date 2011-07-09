@@ -1,3 +1,4 @@
+<!--start message-->
 <% if (request.getAttribute("struts.valueStack") != null) { %>
 <%-- ActionError Messages - usually set in Actions --%>
 <s:if test="hasActionErrors()">
@@ -47,3 +48,5 @@
     </div>
     <c:remove var="errors" scope="session"/>
 </c:if>
+
+<!--end message-->

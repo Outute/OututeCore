@@ -1,3 +1,4 @@
+<!--start pickList-->
 <%@ include file="/common/taglibs.jsp"%>
 <tr>
     <td>
@@ -40,3 +41,5 @@
         </select>
     </td>
 </tr>
+
+<!--end pickList-->
