@@ -3,54 +3,32 @@
 
 <%@ include file="/common/taglibs.jsp"%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-        <%@ include file="/common/meta.jsp" %>
-        <title><decorator:title/> | <fmt:message key="webapp.name"/></title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><fmt:message key="webapp.name"/></title>
+    <link rel="Bookmark" href="/images/outute_icon.ico">
+    <link rel="Shortcut Icon" href="/images/outute_icon.ico">
+    <link href="css/main_style.css" rel="stylesheet" type="text/css" />
+    <script src="js/outute_js.js" type="text/javascript"></script>
+    <style type="text/css">
+    <!--
+    .STYLE1 {color: #006600}
+    -->
+  </style>
 
+  <decorator:head/>
+  </head>
 
-        <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/styles/${appConfig["csstheme"]}/theme.css'/>" />
-        <link rel="stylesheet" type="text/css" media="print" href="<c:url value='/styles/${appConfig["csstheme"]}/print.css'/>" />
-
-		
-		<link href="/styles/style.css" rel="stylesheet" type="text/css" />
-		<style type="text/css">
-		<!--
-		.STYLE1 {color: #006600}
-		-->
-		</style>        
-
-		<script src="/scripts/outute_js.js" type="text/javascript"></script>
-        <script type="text/javascript" src="<c:url value='/scripts/prototype.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/scripts/scriptaculous.js'/>"></script>
-        <script type="text/javascript" src="<c:url value='/scripts/global.js'/>"></script>
-        <decorator:head/>
-    </head>
-<body>
-
+  <body>
     <div id="container">
-		<div class="content-box">
-			<div class="top-box">
-            	<jsp:include page="/common/header.jsp"/>
-				<jsp:include page="/common/menu.jsp"/>
-			</div>
-
-                <%@ include file="/common/messages.jsp" %>
-                <decorator:body/>
-
-            <c:set var="currentMenu" scope="request"><decorator:getProperty property="meta.menu"/></c:set>
-            <c:if test="${currentMenu == 'AdminMenu'}">
-            <div id="sub">
-                <menu:useMenuDisplayer name="Velocity" config="cssVerticalMenu.vm" permissions="rolesAdapter">
-                    <menu:displayMenu name="AdminMenu"/>
-                </menu:useMenuDisplayer>
-            </div>
-            </c:if>
-
-        </div>
-
-        <div class="footer-links">
-            <jsp:include page="/common/footer.jsp"/>
-        </div>
+      <div class="content-box">
+        <jsp:include page="/common/header.jsp"/>
+        <%@ include file="/common/messages.jsp" %>
+        <decorator:body/>
+      </div>
+      <div class="footer-links floatr">
+        <jsp:include page="/common/footer.jsp"/>
+      </div>
     </div>
-</body>
+  </body>
 </html>

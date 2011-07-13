@@ -48,5 +48,4 @@
     </div>
     <c:remove var="errors" scope="session"/>
 </c:if>
-
 <!--end message-->
