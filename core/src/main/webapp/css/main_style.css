@@ -121,8 +121,9 @@ text-indent:-5000px
 
 .login_bg{
 background:url(../images/login_bg.jpg) no-repeat;
-width:260px;
-height:175px;
+width:320px;
+height:300px;
+padding-right:30px;
 }
 
 .login-section  h2{
