@@ -120,7 +120,8 @@ text-indent:-5000px
 }
 
 .login_bg{
-width:270px;
+background:url(../images/login_bg.jpg) no-repeat;
+width:260px;
 height:175px;
 }
 

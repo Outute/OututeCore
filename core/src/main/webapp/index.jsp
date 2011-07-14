@@ -5,7 +5,6 @@
   <div class="login-section" id="login">
   <form method="post" id="loginForm" action="<c:url value='/j_security_check'/>"
       onsubmit="saveUsername(this);return validateForm(this)">
-  <fieldset>
   <h2><fmt:message key='label.login'/></h2>
   <ul>
   <c:if test="${param.error != null}">
@@ -29,8 +28,8 @@
       </li>
   <c:if test="${appConfig['rememberMeEnabled']}">
       <li>
-          <input type="checkbox" class="checkbox" name="_spring_security_remember_me" id="rememberMe" tabindex="3"/>
-          <label for="rememberMe" class="choice"><fmt:message key="login.rememberMe"/></label>
+          <input type="checkbox" name="_spring_security_remember_me" id="rememberMe" tabindex="3"/>
+          <fmt:message key="login.rememberMe"/>
       </li>
   </c:if>
       <li>
@@ -42,7 +41,6 @@
             </p>
     </li>
   </ul>
-  </fieldset>
   </form>
   </div>
 </div>

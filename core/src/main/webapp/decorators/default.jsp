@@ -26,7 +26,7 @@
         <%@ include file="/common/messages.jsp" %>
         <decorator:body/>
       </div>
-      <div class="footer-links floatr">
+      <div class="footer-links floatl">
         <jsp:include page="/common/footer.jsp"/>
       </div>
     </div>
