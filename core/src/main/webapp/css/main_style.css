@@ -119,11 +119,10 @@ height:113px;
 text-indent:-5000px
 }
 
-.login_bg{
-background:url(../images/login_bg.jpg) no-repeat;
-width:320px;
-height:300px;
-padding-right:30px;
+.login_b{
+background:url(../images/login_bg.JPG) no-repeat;
+width:270px;
+height:175px;
 }
 
 .login-section  h2{
