@@ -8,7 +8,7 @@
     <title><fmt:message key="webapp.name"/></title>
     <link rel="Bookmark" href="/images/outute_icon.ico">
     <link rel="Shortcut Icon" href="/images/outute_icon.ico">
-    <link href="css/main_style.css" rel="stylesheet" type="text/css" />
+    <link href="css/outute_style.css" rel="stylesheet" type="text/css" />
     <script src="js/outute_js.js" type="text/javascript"></script>
     <style type="text/css">
     <!--
