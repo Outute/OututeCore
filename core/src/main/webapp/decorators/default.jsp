@@ -19,7 +19,7 @@
   <decorator:head/>
   </head>
 
-  <body>
+  <body<decorator:getProperty property="body.id" writeEntireProperty="true"/><decorator:getProperty property="body.class" writeEntireProperty="true"/>>
     <div id="container">
       <div class="content-box">
         <jsp:include page="/common/header.jsp"/>

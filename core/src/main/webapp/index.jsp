@@ -1,7 +1,8 @@
 <!--start index-->
 <%@ include file="/common/taglibs.jsp"%>
 
-<div class="login_b floatr">
+<div class="login_bg floatr">
+<div class="middle_right floatr">
   <div class="login-section" id="login">
   <form method="post" id="loginForm" action="<c:url value='/j_security_check'/>"
       onsubmit="saveUsername(this);return validateForm(this)">
@@ -16,15 +17,15 @@
       </li>
   </c:if>
       <li>
-         <label>
-              <fmt:message key="label.username"/> <span class="req">*</span>
-          </label>
+         
+              <fmt:message key="label.username"/>
+          
           <input type="text" class="text medium" name="j_username" id="j_username" tabindex="1"/>
       </li>
       <li>
-          <label>
-              <fmt:message key="label.password"/> <span class="req">*</span>
-          </label>
+          
+              <fmt:message key="label.password"/>
+          
           <input type="password" class="text medium" name="j_password" id="j_password" tabindex="2"/>
       </li>
   <c:if test="${appConfig['rememberMeEnabled']}">
@@ -45,6 +46,7 @@
   </fieldset>
   </form>
   </div>
+</div>
 </div>
 
 <div class="main-content floatl">

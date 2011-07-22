@@ -51,7 +51,6 @@
 </ul>
 </fieldset>
 </form>
-test test
 <%@ include file="/scripts/login.js"%>
 
 <p><fmt:message key="login.passwordHint"/></p>
