@@ -16,7 +16,7 @@
     <table>
     	<tr>
     		<td>
-    			<s:textfield key="user.username" cssClass="text large" required="true"/>
+    			<s:textfield key="user.username" theme="xhtml" cssClass="text medium" required="true"/>
     		</td>
     	</tr>
     	<tr>
@@ -33,7 +33,7 @@
         </tr>
         <tr>
         	<td>
-        		<s:textfield key="user.passwordHint" required="true" cssClass="text large"/>
+        		<s:textfield key="user.passwordHint" theme="xhtml" required="true" cssClass="text large"/>
         	</td>
         </tr>
         <tr>
@@ -57,7 +57,7 @@
         </tr>
         <tr>
         	<td>
-        		<s:textfield key="user.website" required="true" cssClass="text large"/>
+        		<s:textfield key="user.website" theme="xhtml" required="true" cssClass="text large"/>
         	</td>
         </tr>
         	<td>
@@ -66,38 +66,35 @@
         </tr>
         <tr>
             <td>
-                <s:textfield key="user.address.address" theme="xhtml" cssClass="text large" labelposition="bottom"/>
+                <s:textfield key="user.address.address" theme="xhtml" cssClass="text large"/>
             </td>
         </tr>
         <tr>
         	<td>
-                <s:textfield key="user.address.city" theme="xhtml" required="true" cssClass="text medium" 
-                    labelposition="bottom"/>
+                <s:textfield key="user.address.city" theme="xhtml" required="true" cssClass="text medium"/>
             </td>
         </tr>
         <tr>
            	<td>
-                <s:textfield key="user.address.province" theme="xhtml" required="true" cssClass="text state" 
-                    labelposition="bottom"/>
+                <s:textfield key="user.address.province" theme="xhtml" required="true" cssClass="text state"/>
             </td>
         </tr>
         <tr>
            	<td>
-                <s:textfield key="user.address.postalCode" theme="xhtml" required="true" cssClass="text medium" 
-                    labelposition="bottom"/>
+                <s:textfield key="user.address.postalCode" theme="xhtml" required="true" cssClass="text medium"/>
+            </td>
+        </tr>
+        <tr>
+    		<td>
+            	<label for="user.address.country">
+                	<fmt:message key="user.address.country"/> <span class="req">*</span>
+                </label>
             </td>
         </tr>
         <tr>
            	<td>
                 <s:set name="country" value="user.address.country" scope="page"/>
                 <appfuse:country name="user.address.country" prompt="" default="${country}"/>
-            </td>
-        </tr>
-        <tr>
-        	<td>
-                <label for="user.address.country">
-                    <fmt:message key="user.address.country"/> <span class="req">*</span>
-                </label>
             </td>
         </tr>
         <tr>
