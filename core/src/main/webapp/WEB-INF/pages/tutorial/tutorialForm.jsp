@@ -8,8 +8,9 @@
 
 <s:form name="tutorialForm" action="saveTutorial" method="post" validate="true">
     
-
-<li style="display: none">
+<table>
+<tr>
+	<td>
         <s:hidden key="tutorial.id"/>
         <s:hidden key="tutorial.version"/>
         <input type="hidden" name="from" value="${param.from}"/>
@@ -17,29 +18,58 @@
         <s:if test="tutorial.version == null">
             <input type="hidden" name="encryptPass" value="true" />
         </s:if>
-    </li>
-    <li class="buttonBar right">
-        <s:submit key="button.save" method="save" onclick="onFormSubmit(this.form)"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.name" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.description" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.type" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.category" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.cost" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.method" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+<tr>
+	<td>
+    	<s:textfield key="tutorial.lengthInMins" required="true" theme="xhtml" cssClass="text large"/>
+    </td>
+</tr>
+</table>
+<table>
+<tr>
+	<td>
+    	<s:submit key="button.save" method="save" onclick="onFormSubmit(this.form)"/>
+    </td>
+    <td>
+<c:if test="${param.from == 'list' and not empty tutorial.id}">
+    	<s:submit key="button.delete" method="delete" onclick="return confirmDelete('tutorial')"/>
+</c:if>
 
-    <c:if test="${param.from == 'list' and not empty tutorial.id}">
-        <s:submit key="button.delete" method="delete" onclick="return confirmDelete('tutorial')"/>
-    </c:if>
-    
-        <s:submit key="button.cancel" method="cancel"/>
-    </li>
-    <s:textfield key="tutorial.name" required="true" cssClass="text large"/>
-
-    <s:textfield key="tutorial.description" required="true" cssClass="text large"/>
-
-    <s:textfield key="tutorial.type" required="true" cssClass="text large"/>
-
-    <s:textfield key="tutorial.category" required="true" cssClass="text large"/>
-
-    <s:textfield key="tutorial.cost" required="true" cssClass="text large"/>
-
-    <s:textfield key="tutorial.method" required="true" cssClass="text large"/>
-
-    <s:textfield key="tutorial.lengthInMins" required="true" cssClass="text large"/>
+    	 <s:submit key="button.cancel" method="cancel"/>
+    </td
+</tr>
+</table>
 </s:form>
 
 <!--end tutorialForm-->
