@@ -1,4 +1,3 @@
-<!--start taglibs-->
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
@@ -14,6 +13,3 @@
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="datePattern"><fmt:message key="date.format"/></c:set>
-
-
-<!--end taglibs-->

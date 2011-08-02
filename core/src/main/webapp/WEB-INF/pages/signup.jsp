@@ -97,6 +97,8 @@
                 <appfuse:country name="user.address.country" prompt="" default="${country}"/>
             </td>
         </tr>
+    </table>
+    <table>
         <tr>
         	<td>
         		<s:submit key="button.register" cssClass="button"/>

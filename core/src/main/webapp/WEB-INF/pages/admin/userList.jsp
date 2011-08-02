@@ -8,13 +8,13 @@
     <meta name="menu" content="AdminMenu"/>
 </head>
 
-<div id="search">
+<p>
 <form method="get" action="${ctx}/admin/users" id="searchForm">
     <input type="text" size="20" name="q" id="query" value="${param.q}"
            placeholder="Enter search terms..."/>
     <input type="submit" value="<fmt:message key="button.search"/>"/>
 </form>
-</div>
+</p>
 
 <input type="button" style="margin-right: 5px"
     onclick="location.href='<c:url value="/editUser?method=Add&from=list"/>'"
