@@ -18,10 +18,10 @@
 <table>
 	<tr>
 		<td>
-			<input type="button" style="margin-right: 5px" onclick="location.href='<c:url value="/createTutorial"/>'" value="<fmt:message key="button.add"/>"/>
+			<input type="button" style="margin-right: 5px" class="button" onclick="location.href='<c:url value="/createTutorial"/>'" value="<fmt:message key="button.add"/>"/>
 		</td>
 		<td>
-			<input type="button" onclick="location.href='<c:url value="/mainMenu"/>'" value="<fmt:message key="button.done"/>"/>
+			<input type="button" class="button" onclick="location.href='<c:url value="/mainMenu"/>'" value="<fmt:message key="button.done"/>"/>
 		</td>
 	</tr>
 </table>
@@ -50,10 +50,10 @@
 <table>
 	<tr>
 		<td>
-			<input type="button" style="margin-right: 5px" onclick="location.href='<c:url value="/saveTutorial?method=Add&from=list"/>'" value="<fmt:message key="button.add"/>"/>
+			<input type="button" style="margin-right: 5px" class="button" onclick="location.href='<c:url value="/saveTutorial?method=Add&from=list"/>'" value="<fmt:message key="button.add"/>"/>
 		</td>
 		<td>
-			<input type="button" onclick="location.href='<c:url value="/mainMenu"/>'" value="<fmt:message key="button.done"/>"/>
+			<input type="button" class="button" onclick="location.href='<c:url value="/mainMenu"/>'" value="<fmt:message key="button.done"/>"/>
 		</td>
 	</tr>
 </table>

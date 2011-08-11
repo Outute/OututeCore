@@ -15,11 +15,11 @@
 </form>
 </div>
 
-<input type="button" style="margin-right: 5px"
+<input type="button" style="margin-right: 5px" class="button"
     onclick="location.href='<c:url value="/editTutorial?method=Add"/>'"
     value="<fmt:message key="button.add"/>"/>
 
-<input type="button" onclick="location.href='<c:url value="/mainMenu"/>'"
+<input type="button" onclick="location.href='<c:url value="/mainMenu"/>'" class="button"
     value="<fmt:message key="button.done"/>"/>
 
 <display:table name="tutorials" cellspacing="0" cellpadding="0" requestURI="" 
@@ -42,11 +42,11 @@
     <display:setProperty name="export.pdf.filename" value="Tutorial List.pdf"/>
 </display:table>
 
-<input type="button" style="margin-right: 5px"
+<input type="button" style="margin-right: 5px" class="button"
     onclick="location.href='<c:url value="/editTutorial?method=Add"/>'"
     value="<fmt:message key="button.add"/>"/>
 
-<input type="button" onclick="location.href='<c:url value="/mainMenu"/>'"
+<input type="button" onclick="location.href='<c:url value="/mainMenu"/>'" class="button"
     value="<fmt:message key="button.done"/>"/>
 
 <script type="text/javascript">

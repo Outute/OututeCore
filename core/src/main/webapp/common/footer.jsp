@@ -11,9 +11,7 @@
 			<fmt:param><c:url value="/#"/></fmt:param>
 		</fmt:message>
 	</li>
-	<li>
-		<fmt:message key="footer.break"/>
-	</li>
+<li>|</li>
 	<li>
 		<fmt:message key="footer.terms">
 			<fmt:param><c:url value="/#"/></fmt:param>

@@ -24,15 +24,15 @@
     <table>
     	<tr>
     		<td>
-    			<s:submit key="button.save" method="save" onclick="onFormSubmit(this.form)"/>
+    			<s:submit key="button.save" method="save" cssClass="button" onclick="onFormSubmit(this.form)"/>
     		</td>
     		<td>
     			<c:if test="${param.from == 'list' and not empty user.id}">
-    				<s:submit key="button.delete" method="delete" onclick="return confirmDelete('user')"/>
+    				<s:submit key="button.delete" method="delete" cssClass="button" onclick="return confirmDelete('user')"/>
     			</c:if>
     		</td>
     		<td>
-    			<s:submit key="button.cancel" method="cancel"/>
+    			<s:submit key="button.cancel" cssClass="button" method="cancel"/>
     		</td>
     	</tr>
     </table>
@@ -189,15 +189,15 @@
     <table>
     	<tr>
     		<td>
-    			<s:submit key="button.save" method="save" onclick="onFormSubmit(this.form)"/>
+    			<s:submit key="button.save" method="save" cssClass="button" onclick="onFormSubmit(this.form)"/>
     		</td>
     		<td>
     			<c:if test="${param.from == 'list' and not empty user.id}">
-    				<s:submit key="button.delete" method="delete" onclick="return confirmDelete('user')"/>
+    				<s:submit key="button.delete" method="delete" cssClass="button" onclick="return confirmDelete('user')"/>
     			</c:if>
     		</td>
     		<td>
-    			<s:submit key="button.cancel" method="cancel"/>
+    			<s:submit key="button.cancel" cssClass="button" method="cancel"/>
     		</td>
     	</tr>
     </table>

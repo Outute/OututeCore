@@ -1,11 +1,36 @@
 <!--start index-->
 <%@ include file="/common/taglibs.jsp"%>
 
+<head>
+	<title><fmt:message key="index.title"/></title>
+	<meta name="heading" content="<fmt:message key='index.heading'/>"/>
+	<meta name="menu" content="Home"/>
+</head>
+
 <div class="login_bg floatr">
 <div class="middle_right floatr">
-  <div class="login-section" id="login">
-  dfasdfasdfasdfasdf
-  </div>
+	<div class="">
+	<ul>
+		<li>
+			<fmt:message key="mainMenu.welcome"/>
+		</li>
+		<li>
+			<fmt:message key="mainMenu.tutorialList">
+				<fmt:param><c:url value="/listTutorial"/></fmt:param>
+			</fmt:message>
+		</li>
+		<li>
+			<fmt:message key="mainMenu.newTutorial">
+				<fmt:param><c:url value="/createTutorial"/></fmt:param>
+			</fmt:message>
+		</li>
+		<li>
+		<fmt:message key="mainMenu.editProfile">
+			<fmt:param><c:url value="/editProfile"/></fmt:param>
+		</fmt:message>
+	</li>
+	</ul>
+	</div>
 </div>
 </div>
 

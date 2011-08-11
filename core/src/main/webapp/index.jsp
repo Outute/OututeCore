@@ -1,54 +1,61 @@
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
-    <title><fmt:message key="index.title"/></title>
-    <meta name="heading" content="<fmt:message key='index.heading'/>"/>
-    <meta name="menu" content="Home"/>
+	<title><fmt:message key="index.title"/></title>
+	<meta name="heading" content="<fmt:message key='index.heading'/>"/>
+	<meta name="menu" content="Home"/>
 </head>
 
 <div class="login_bg floatr">
 <div class="middle_right floatr">
-  <div class="login-section" id="login">
-  <form method="post" id="loginForm" action="<c:url value='/j_security_check'/>" onsubmit="saveUsername(this);return validateForm(this)">
-  <h2><fmt:message key='label.login'/></h2>
-  <ul>
-  <c:if test="${param.error != null}">
-      <li class="error">
-          <img src="${ctx}/images/iconWarning.gif" alt="<fmt:message key='icon.warning'/>" class="icon"/>
-          <fmt:message key="errors.password.mismatch"/>
-          <%--${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}--%>
-      </li>
-  </c:if>
-      <li>
-         
-              <fmt:message key="label.username"/>
-          
-          <input type="text" class="text medium" name="j_username" id="j_username" tabindex="1"/>
-      </li>
-      <li>
-          
-              <fmt:message key="label.password"/>
-          
-          <input type="password" class="text medium" name="j_password" id="j_password" tabindex="2"/>
-      </li>
+	<div class="login-section" id="login">
+	<form method="post" id="loginForm" action="<c:url value='/j_security_check'/>" onsubmit="saveUsername(this);return validateForm(this)">
+	<h2><fmt:message key='label.login'/></h2>
+	<ul>
+	<c:if test="${param.error != null}">
+		<li class="error">
+			<img src="${ctx}/images/iconWarning.gif" alt="<fmt:message key='icon.warning'/>" class=""/>
+			<fmt:message key="errors.password.mismatch"/>
+			<%--${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}--%>
+		</li>
+	</c:if>
+		<li>
 
-      <li>
-          <input type="submit" class="button" name="login" value="<fmt:message key='button.login'/>" tabindex="4" />
-            <p>
-                <fmt:message key="login.signup">
-                    <fmt:param><c:url value="/signup"/></fmt:param>
-                </fmt:message>
-            </p>
-    </li>
-  </ul>
-  </form>
-  </div>
+			<fmt:message key="label.username"/>
+
+			<input type="text" class="" name="j_username" id="j_username" tabindex="1"/>
+		</li>
+		<li>
+
+			<fmt:message key="label.password"/>
+
+			<input type="password" class="" name="j_password" id="j_password" tabindex="2"/>
+		</li>
+	<c:if test="${appConfig['rememberMeEnabled']}">
+		<div>
+			<input type="checkbox" class="" name="_spring_security_remember_me" id="rememberMe" tabindex="3"/>
+			&nbsp;&nbsp;&nbsp;
+			<label for="rememberMe" class=""><fmt:message key="login.rememberMe"/></labelan>
+		</div>
+	</c:if>
+		<li>
+			<s:submit key="button.login" cssClass="button" tabindex="4" />
+		</li>
+		<div>
+				<fmt:message key="login.signup">
+					<fmt:param><c:url value="/signup"/></fmt:param>
+				</fmt:message>
+		</div>
+
+	</ul>
+	</form>
+	</div>
 </div>
 </div>
 
 <div class="main-content floatl">
   <h1>Welcome to OuTute...</h1>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum nisi ut ligula laoreet pellentesque. Integer lacinia nunc id est ornare eu pellentesque sem consecteturonec ac urna auctor lectus fringilla hendrerit at eget duiivamus sit amet sem tortor.</p>
+  <p>To be added....</p>
   <a href="#"><img src="images/read-more-button.gif" alt="" /></a>
 </div>
 <div class="left-col floatl">
