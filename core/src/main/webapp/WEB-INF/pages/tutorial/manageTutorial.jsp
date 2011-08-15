@@ -32,7 +32,11 @@
         url="/editTutorial?from=list" paramId="id" paramProperty="id"/>
     <display:column property="description" escapeXml="true" sortable="true" titleKey="tutorial.description" style="width: 34%"/>
     <display:column property="cost" sortable="true" titleKey="tutorial.cost" style="width: 25%" autolink="true" media="html"/>
-    <!-- display:column property="tutor" titleKey="tutorial.tutor" sortable="true" style="width: 34%"/-->
+    <display:column titleKey="tutorial.tutor" sortable="true" style="width: 34%">
+      <c:forEach var="tutor" items="${tutorials.tutors}">
+        <c:out value="${tutor.firstName} ${tutor.lastName}"/>
+      </c:forEach>
+   </display:column>
     <display:column sortProperty="enabled" sortable="true" titleKey="tutorial.enabled" style="width: 16%; padding-left: 15px" media="html">
         <input type="checkbox" disabled="disabled" <c:if test="${tutorials.enabled}">checked="checked"</c:if>/>
     </display:column>

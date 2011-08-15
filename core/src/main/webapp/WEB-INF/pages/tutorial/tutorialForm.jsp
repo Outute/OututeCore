@@ -55,6 +55,14 @@
     	<s:textfield key="tutorial.lengthInMins" required="true" theme="xhtml" cssClass="text large"/>
     </td>
 </tr>
+<tr>
+  <td><s:label key="tutorial.tutor"/></td>
+  <td>
+    <c:forEach var="tutor" items="${tutorial.tutors}">
+      <c:out value="${tutor.username}"/>
+    </c:forEach>
+  </td>
+</tr>
 </table>
 <table>
 <tr>
@@ -68,7 +76,7 @@
     </td>
     <td>
     	 <s:submit key="button.cancel" cssClass="button" method="cancel"/>
-    </td
+    </td>
 </tr>
 </table>
 </s:form>

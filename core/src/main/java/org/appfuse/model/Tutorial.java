@@ -6,6 +6,7 @@ import org.compass.annotations.Searchable;
 import org.compass.annotations.SearchableId;
 import org.compass.annotations.SearchableProperty;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,8 +43,8 @@ public class Tutorial extends BaseObject implements Serializable {
     private int cost;                   // required
     private int method;                    // required
     //private Long id;
-    //private Set<User> tutors;                       // required
-    //private Set<User> admins;                    // required
+    private Set<User> tutors;                       // required
+    private Set<User> students;                    // required
     private boolean enabled;
     private boolean tutorialExpired;
     private boolean tutorialLocked;
@@ -66,15 +67,15 @@ public class Tutorial extends BaseObject implements Serializable {
      * @param tutorial name.
      */
     public Tutorial(String name, String description, int type, int category, int cost, int method,
-    Date schedule, Date createTime, Date modifyTime, int openDays, int lengthInMins) {
+    Date schedule, Date createTime, Date modifyTime, int openDays, int lengthInMins, Set<User> tutors, Set<User> students) {
         this.name = name;
         this.description = description;
         this.type = type;
         this.category = category;
         this.cost = cost;
         this.method = method;
-        //this.tutors = tutors;
-        //this.admins = admins;
+        this.tutors = tutors;
+        this.students = students;
         this.schedule = schedule;
         this.createTime = createTime;
         this.modifyTime = modifyTime;
@@ -120,26 +121,20 @@ public class Tutorial extends BaseObject implements Serializable {
     public int getMethod() {
         return method;
     }
-/**
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tutorial_user",
-            joinColumns = { @JoinColumn(name = "tutorial_id") },
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "tutorial_tutor", joinColumns = { @JoinColumn(name = "tutorial_id") },
+      inverseJoinColumns = {@JoinColumn(name = "user_id")})
     public Set<User> getTutors() {
         return tutors;
-    }**/
-/**
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tutorial_user",
-            joinColumns = { @JoinColumn(name = "tutorial_id") },
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    public Set<User> getAdmins() {
-        return admins;
-    }**/
+    }
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "tutorial_student", joinColumns = { @JoinColumn(name = "tutorial_id") },
+      inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    public Set<User> getStudents() {
+        return students;
+    }
 
     @Column(name = "enabled", nullable = false)
     public boolean getEnabled() {
@@ -213,14 +208,14 @@ public class Tutorial extends BaseObject implements Serializable {
     public void setMethod(int method) {
         this.method = method;
     }
-/**
+
     public void setTutors(Set<User> tutors) {
         this.tutors = tutors;
     }
 
-    public void setAdmins(Set<User> admins) {
-        this.admins = admins;
-    }**/
+    public void setStudents(Set<User> students) {
+        this.students = students;
+    }
 
     public void setSchedule(Date schedule) {
         this.schedule = schedule;

@@ -8,9 +8,13 @@ import org.appfuse.model.User;
 import com.edu.webapp.util.RequestUtil;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.core.context.SecurityContext;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -132,20 +136,27 @@ public class TutorialAction extends BaseAction implements Preparable {
         if (getRequest().isUserInRole(Constants.ADMIN_ROLE) || getRequest().isUserInRole(Constants.TUTOR_ROLE)) {
 
             if (isNew) {
+              User loginUser;
+              Set<User> tutors;
+
               tutorial.setEnabled(true);
               tutorial.setTutorialLocked(false);
               tutorial.setTutorialExpired(false);
+              // TODO to be implemented
               tutorial.setSchedule(new Date());
               tutorial.setCreateTime(new Date());
               tutorial.setModifyTime(new Date());
               tutorial.setOpenDays(5);
               tutorial.setVersion(0);
-              Set<User> tutors = new HashSet();
-              // TODO    
-              User user = userManager.getUsers().get(1);
-              tutors.add(user);
-              //tutorial.setTutors(tutors);
-              //tutorial.setAdmins(tutors);
+              // Set the login user as the tutor
+              tutors = new HashSet<User>();
+              SecurityContext ctx = SecurityContextHolder.getContext();
+              if (ctx != null) {
+                  Authentication auth = ctx.getAuthentication();
+                  loginUser = (User)auth.getPrincipal();
+                  tutors.add(loginUser);
+              }
+              tutorial.setTutors(tutors);
             }
             try {
                 tutorialManager.save(tutorial);
@@ -155,19 +166,6 @@ public class TutorialAction extends BaseAction implements Preparable {
                 getResponse().sendError(HttpServletResponse.SC_FORBIDDEN);
                 return null;
             }
-            // TODO
-            /*catch (UserExistsException e) {
-                List<Object> args = new ArrayList<Object>();
-                args.add(user.getUsername());
-                args.add(user.getEmail());
-                addActionError(getText("errors.existing.user", args));
-
-                // reset the version # to what was passed in
-                user.setVersion(originalVersion);
-                // redisplay the unencrypted passwords
-                user.setPassword(user.getConfirmPassword());
-                return INPUT;
-            }*/
 
             if (!"list".equals(from)) {
                 // add success messages
