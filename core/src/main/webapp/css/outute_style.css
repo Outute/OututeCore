@@ -115,6 +115,8 @@ body{background:#f4f4f4;font-family:Georgia, "Times New Roman", Times, serif;fon
 
 .main-links li a.active{background:url(../images/li-left-bg.gif) left top no-repeat;color:#fff;}
 
+.main-links li a.subactive{background:url(../images/footer-dotted-bg.gif) left top no-repeat;color:#407587;}
+
 .main-links li a.active span{background:url(../images/li-right-bg.gif) top right no-repeat;color:#fff;}
 
 .footer-links{color:#407587;background:url(../images/footer-dotted-bg.gif) top left repeat-x;width:900px;}

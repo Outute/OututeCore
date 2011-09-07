@@ -1,4 +1,4 @@
-#macro( displayCssMenu $menu )
+#macro( displayCssMenu $menu $isSubMenu)
   #if ($displayer.isAllowed($menu))
     #set ($count = $count + 1)
     ## set menu title
@@ -12,10 +12,18 @@
         #else
           <li>
         #end
-        #if ($menu.name == $currentMenu)
-          <a href="$url" title="$title" class="current" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end>${title}</a>
+        #if ($menu.name == "MainMenu")
+          <a class="active" href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
         #else
-          <a href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end>${title}</a>
+          #if ($menu.name == $currentMenu)
+            <a href="$url" title="$title" class="current" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px;"#end><span>${title}</span></a>
+          #else
+            #if ($isSubMenu)
+              <a href="$url" title="$title" class="subactive" #if($menu.width)style="width: ${menu.width}px"#end>${title}</a>
+            #else
+              <a href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
+            #end
+          #end
         #end
     #else ## create multiple menu items in a menu
         #if ($menu.components.size() > 0)
@@ -30,17 +38,17 @@
         #end
 
         <li#if ($hasViewableChildren) class="menubar"#end>
-          <a href="$url" title="$title" #if ($menu.name == $currentMenu) class="current" #end#if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end>${title}</a>
+          <a href="$url" title="$title" #if ($menu.name == $currentMenu) class="current active" #end#if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
     #end
 
     #if ($menu.components.size() > 0)
-        #if ($hasViewableChildren) 
-          <ul> 
+        #if ($hasViewableChildren)
+          <ul>
         #end
 
         #set ($count = 0)
         #foreach ($menuIt in $menu.components)
-            #displayCssMenu($menuIt)
+            #displayCssMenu($menuIt true)
         #end
         
         #if ($hasViewableChildren && ($count == $renderedChildren))
@@ -60,4 +68,4 @@
   #end
 #end
 
-#displayCssMenu($menu)
+#displayCssMenu($menu false)
