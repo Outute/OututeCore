@@ -5,17 +5,20 @@
     </Displayers>
     <Menus>
         <Menu name="MainMenu" class="active" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER"/>
-        <Menu name="TutorialMenu" title="menu.tutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" width="120" page="/manageTutorial">
-            <Item name="ManageTutorial" title="menu.tutorial.manageTutorial" page="/listTutorial"/>
-            <Item name="CreateTutorial" title="menu.tutorial.createTutorial" page="/createTutorial"/>
-        </Menu>
+        <Menu name="TutorialMenu" title="menu.tutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" width="120" page="/manageTutorial"/>
+        <Menu name="ManageTutorial" title="menu.tutorial.manageTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" page="/listTutorial"/>
+        <Menu name="CreateTutorial" title="menu.tutorial.createTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" page="/createTutorial"/>
+        <Menu name="OfferTutorial" title="menu.tutorial.offerTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" page="/OfferTutorial"/>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
-        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users">
-            <Item name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
-            <Item name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers"/>
-            <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
-            <Item name="FileUpload" title="menu.selectFile" page="/uploadFile"/>
-        </Menu>
+        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users"/>
+        <Menu name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
+        <Menu name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers"/>
+        <Menu name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
+        <Menu name="FileUpload" title="menu.selectFile" page="/uploadFile"/>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="MyOutute" title="menu.myOutute" description="My OuTute" roles="ROLE_ADMIN,ROLE_TUTOR" page="/listTutorial"/>
+        <Menu name="AboutUs" title="menu.aboutUs" description="About us" page="/aboutus"/>
+        <Menu name="Categories" title="menu.categories" description="Categories" page="/categories"/>
+        <Menu name="ContactUs" title="menu.contactUs" description="Contact us" page="/contactus"/>
     </Menus>
 </MenuConfig>

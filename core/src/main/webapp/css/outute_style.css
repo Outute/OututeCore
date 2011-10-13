@@ -119,6 +119,26 @@ body{background:#f4f4f4;font-family:Georgia, "Times New Roman", Times, serif;fon
 
 .main-links li a.active span{background:url(../images/li-right-bg.gif) top right no-repeat;color:#fff;}
 
+.main2-links{background:url(../images/links-bg.gif) top right repeat-x;padding-top:11px;height:56px;}
+
+.main2-links ul{list-style:none;}
+
+.main2-links li{display:block; float:left;   text-align:center;  list-style:none;padding:0px 7px 0px 7px;}
+
+.main2-links li a{color:#407587;display:block;float:left;padding:0px 0px 0px 4px;text-decoration:none;cursor:pointer;}
+
+.main2-links li a span{color:#407587;display:block;float:left;padding:3px 7px 4px 5px;}
+
+.main2-links li a:hover{background:url(../images/li-left-bg.gif) left top no-repeat;color:#fff;}
+
+.main2-links li a:hover span{background:url(../images/li-right-bg.gif) top right no-repeat;color:#fff;}
+
+.main2-links li a.active{background:url(../images/li-left-bg.gif) left top no-repeat;color:#fff;}
+
+.main2-links li a.subactive{background:url(../images/footer-dotted-bg.gif) left top no-repeat;color:#407587;}
+
+.main2-links li a.active span{background:url(../images/li-right-bg.gif) top right no-repeat;color:#fff;}
+
 .footer-links{color:#407587;background:url(../images/footer-dotted-bg.gif) top left repeat-x;width:900px;}
 
 .footer-links ul{list-style:none;}

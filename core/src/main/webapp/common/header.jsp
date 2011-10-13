@@ -28,9 +28,7 @@
 		</div>
 
 		<div class="top_right_lower floatr">
-			<div class="main-links">
-				<%@ include file="/common/menu.jsp" %>
-			</div>
+			<%@ include file="/common/menu.jsp" %>
 		</div>
 	</div>
 <%-- Put constants into request scope --%>
