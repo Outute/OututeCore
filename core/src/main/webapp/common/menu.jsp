@@ -15,8 +15,8 @@
 	<div class="main2-links">
     <ul>
         <menu:displayMenu name="ManageTutorial"/>
-        <menu:displayMenu name="CreateTutorial"/>
         <menu:displayMenu name="OfferTutorial"/>
+        <menu:displayMenu name="TakeTutorial"/>
         <menu:displayMenu name="UserMenu"/>
     </ul>
     </div>
