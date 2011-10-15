@@ -401,3 +401,64 @@ input.button:hover{cursor:pointer; color:#fff; background:#663300; border:1px so
 .blog-posted-row{padding:3px;}
 /* inner pages css ends */osted-row{padding:3px;}
 /* inner pages css ends */
+
+/* calendar css*/
+div.calendar-panel {
+    padding:1px;
+    font-size:12px;
+    font-family:"Lucida Grande", "Lucida Sans", Calibri, Helvetica, Arial, sans-serif;
+    color: #000000;
+    border: 1px solid gray;
+    background: #f2f2f2; /* Old browsers */
+    background: -moz-linear-gradient(top, #f9f9f9 0%, #f2f2f2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f9f9f9 0%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f9f9f9 0%,#f2f2f2 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #f9f9f9 0%,#f2f2f2 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #f9f9f9 0%,#f2f2f2 100%); /* W3C */
+    text-align:center;
+}
+divcalendar-panel h4 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+}
+table.calendar-day td,table.calendar-day th{
+	padding: 5px;
+}
+table.calendar-day th{
+	font-weight: bold;
+}
+table.calendar-day .calendar-selectabled:hover {
+    background: #0066CC;
+    color: #FFFFFF;
+}
+table.calendar-day .calendar-disabled {
+	cursor: auto;
+	color: #A6A6A6;
+	background: #EEEEEE;
+}
+table.calendar-day .calendar-selected {
+	background-color: #B3D4FF;
+	color: #000000;
+	font-weight: bolder;
+}
+table.calendar-day .calendar-selectabled {
+	cursor: pointer;
+}
+table.calendar-day tbody{
+	color: #000;
+	background: #FFF;
+}
+table.calendar-day td{
+	border-left: solid 1px #CCCCCC;
+	border-top: solid 1px #CCCCCC;
+}
+table.calendar-day tr.last td{
+	border-bottom: solid 1px #CCCCCC;
+}
+table.calendar-day td.last{
+	border-right: solid 1px #CCCCCC;
+}
+/* end calendar css*/

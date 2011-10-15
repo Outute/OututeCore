@@ -9,9 +9,6 @@
 		<link rel="stylesheet" type="text/css" media="all" href="<c:url value='css/outute_style.css'/>" />
 		<link rel="stylesheet" type="text/css" media="print" href="<c:url value='/styles/${appConfig["csstheme"]}/print.css'/>" />
 		<script type="text/javascript" src="<c:url value='/js/outute_js.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/scripts/prototype.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/scripts/scriptaculous.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/scripts/global.js'/>"></script>
 		<style type="text/css">
 		<!--
 		.STYLE1 {color: #006600}

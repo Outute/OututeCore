@@ -16,6 +16,7 @@
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/>
             <Item name="FileUpload" title="menu.selectFile" page="/uploadFile"/>
         </Menu>
+        <Menu name="MyOutute" title="menu.admin" page="/createTutorial" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
     </Menus>
 </MenuConfig>

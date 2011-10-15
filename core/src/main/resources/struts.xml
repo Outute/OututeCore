@@ -17,7 +17,7 @@
     <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
 
     <!-- Configuration for the default package. -->
-    <package name="default" extends="struts-default">
+    <package name="default" extends="json-default">
         <interceptors>
             <!-- Interceptor to handle allowing only admins to certain actions -->
             <interceptor name="adminOnly" class="adminInterceptor"/>
@@ -111,13 +111,25 @@
         </action>
 
         <!-- Add additional actions here -->
-        <action name="manageTutorial" class="tutorialAction" method="execute">
+        <action name="createTutorial" class="tutorialAction" method="listAll">
+        	<result name="success">/WEB-INF/pages/tutorial/createTutorial.jsp</result>
+        </action>
+        <action name="addTutorialPage">
+        	<result name="success">/WEB-INF/pages/tutorial/addTutorial.jsp</result>
+        </action>
+        <action name="addTutorial" class="tutorialAction" method="save">
+        	<result name="success">/WEB-INF/pages/tutorial/listClasses.jsp</result>
+        </action>
+        <action name="addTutorialDatePage">
+        	<result name="success">/WEB-INF/pages/tutorial/addTutorialDate.jsp</result>
+        </action>
+        <!-- <action name="manageTutorial" class="tutorialAction" method="execute">
             <result name="success">/WEB-INF/pages/tutorial/manageTutorial.jsp</result>
             <result name="error">/WEB-INF/pages/mainMenu.jsp</result>
         </action>
 
         <action name="createTutorial">
-            <result name="success">/WEB-INF/pages/tutorial/tutorialForm.jsp</result>
+            <result name="success">/WEB-INF/pages/tutorial/createTutorial.jsp</result>
         </action>
 
         <action name="saveTutorial" class="tutorialAction" method="save">
@@ -139,7 +151,7 @@
         <action name="delete" class="tutorialAction" method="list">
             <interceptor-ref name="adminCheck"/>
             <result name="success">/WEB-INF/pages/tutorial/manageTutorial.jsp</result>
-        </action>
+        </action> -->
     </package>
     <!-- Actions in this package will be prefixed with /admin/ -->
     <package name="admin" extends="default" namespace="/admin">

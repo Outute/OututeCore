@@ -147,6 +147,17 @@
                 </dependencies>
             </plugin>
             <plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>7.0.1.v20091125</version>
+				<configuration>
+					<webAppConfig>
+						<defaultsDescriptor>src/test/resources/webdefault.xml</defaultsDescriptor>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+				</configuration>
+			</plugin>
+            <!-- <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
@@ -166,7 +177,7 @@
                         </scanTargetPattern>
                     </scanTargetPatterns>
                 </configuration>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>native2ascii-maven-plugin</artifactId>
@@ -329,6 +340,12 @@
             <artifactId>struts2-convention-plugin</artifactId>
             <version>${struts.version}</version>
         </dependency>
+        <!-- struts2-json-plugin added by tc -->
+        <dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-json-plugin</artifactId>
+			<version>${struts.version}</version>
+		</dependency>
         <dependency>
             <groupId>org.apache.struts</groupId>
             <artifactId>struts2-spring-plugin</artifactId>
@@ -711,7 +728,7 @@
         <jdbc.version>5.1.14</jdbc.version>
         <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
         <jdbc.url>jdbc:mysql://localhost/${db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</jdbc.url>
-        <jdbc.username>root</jdbc.username>
-        <jdbc.password>password</jdbc.password>
+        <jdbc.username>iff</jdbc.username>
+        <jdbc.password>iff</jdbc.password>
     </properties>
 </project>
