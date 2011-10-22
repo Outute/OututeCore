@@ -6,42 +6,59 @@
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
-                value="%p - %C{1}.%M(%L) | %m%n"/>
+                value="%p [%t] %c{1}.%M(%L) | %m%n"/>
         </layout>
     </appender>
-
-    <logger name="net.sf.ehcache">
-        <level value="ERROR"/>
+    
+    <logger name="com.edu">
+        <level value="DEBUG"/>
     </logger>
+    
+    <!--logger name="net.sf.ehcache">
+        <level value="ERROR"/>
+    </logger-->
 
     <!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
-    <logger name="org.springframework.security">
+    <!--logger name="org.springframework.security">
         <level value="ERROR"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.apache">
+    <!--logger name="org.apache">
         <level value="WARN"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.apache.velocity">
+    <!--logger name="org.apache.velocity">
         <level value="FATAL"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.hibernate">
+    <!-- Suppress invalid warning messages from JSF -->
+    <!--logger name="org.apache.myfaces">
+        <level value="ERROR"/>
+    </logger-->
+
+    <!--logger name="org.dbunit">
         <level value="WARN"/>
-    </logger>
+    </logger-->
+
+    <!--logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger-->
   
     <!--logger name="org.hibernate.SQL">
         <level value="DEBUG"/>
     </logger-->
 
-    <logger name="org.springframework">
+    <!--logger name="org.springframework">
         <level value="WARN"/>
-    </logger>
+    </logger-->
    
-    <logger name="org.appfuse">
+    <!--logger name="org.appfuse">
         <level value="DEBUG"/>
-    </logger>
+    </logger-->
+
+    <!--logger name="org.appfuse.tool">
+        <level value="INFO"/>
+    </logger-->
 
     <root>
         <level value="WARN"/>
