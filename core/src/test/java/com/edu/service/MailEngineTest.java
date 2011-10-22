@@ -1,5 +1,6 @@
-package org.appfuse.service;
+package com.edu.service;
 
+import org.appfuse.service.BaseManagerTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +10,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
+
+import com.edu.service.MailEngine;
 
 import javax.mail.BodyPart;
 import javax.mail.Part;

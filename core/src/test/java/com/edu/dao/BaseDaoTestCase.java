@@ -1,4 +1,4 @@
-package org.appfuse.dao;
+package com.edu.dao;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;

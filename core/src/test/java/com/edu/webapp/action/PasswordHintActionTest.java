@@ -1,8 +1,8 @@
 package com.edu.webapp.action;
 
+import com.edu.model.User;
+import com.edu.service.UserManager;
 import com.opensymphony.xwork2.Action;
-import org.appfuse.model.User;
-import org.appfuse.service.UserManager;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.subethamail.wiser.Wiser;

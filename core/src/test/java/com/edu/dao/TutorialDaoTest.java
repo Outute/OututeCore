@@ -1,12 +1,14 @@
-package org.appfuse.dao;
+package com.edu.dao;
 
-import org.appfuse.dao.BaseDaoTestCase;
-import org.appfuse.model.Tutorial;
-import org.appfuse.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.annotation.ExpectedException;
+
+import com.edu.dao.BaseDaoTestCase;
+import com.edu.dao.TutorialDao;
+import com.edu.model.Tutorial;
+import com.edu.model.User;
 
 import java.util.Date;
 import java.util.HashSet;

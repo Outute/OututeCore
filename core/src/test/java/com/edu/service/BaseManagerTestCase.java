@@ -1,42 +1,42 @@
-package org.appfuse.service.impl;
+package com.edu.service;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.appfuse.util.ConvertUtil;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
+import com.edu.util.ConvertUtil;
 
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+@ContextConfiguration(locations = {
+        "classpath:/applicationContext-resources.xml", "classpath:/applicationContext-dao.xml",
+        "classpath:/applicationContext-service.xml", "classpath*:/**/applicationContext.xml"
+})
 /**
- * A mock class for testing using JMock. This test class can be moved to the test tree.
+ * Test classes can extend this manager based on a spring context.
+ * This test class can be moved to the test tree.
  *
  * @author mraible
  */
-@RunWith(JMock.class)
-public abstract class BaseManagerMockTestCase {
+public abstract class BaseManagerTestCase extends AbstractTransactionalJUnit4SpringContextTests {
+
     /**
-     * A logger
+     * A simple logger
      */
     protected final Log log = LogFactory.getLog(getClass());
     /**
      * The resourceBundle
      */
     protected ResourceBundle rb;
-    /**
-     * The junit 4 context
-     */
-    protected Mockery context = new JUnit4Mockery();
 
     /**
      * Default constructor will set the ResourceBundle if needed.
      */
-    public BaseManagerMockTestCase() {
+    public BaseManagerTestCase() {
         // Since a ResourceBundle is not required for each class, just
         // do a simple check to see if one exists
         String className = this.getClass().getName();
@@ -44,13 +44,12 @@ public abstract class BaseManagerMockTestCase {
         try {
             rb = ResourceBundle.getBundle(className);
         } catch (MissingResourceException mre) {
-            //log.debug("No resource bundle found for: " + className);
+            // log.warn("No resource bundle found for: " + className);
         }
     }
 
     /**
-     * Utility method to populate a javabean-style object with values
-     * from a Properties file
+     * Utility method to populate an object with values from a properties file
      *
      * @param obj the model object to populate
      * @return Object populated object

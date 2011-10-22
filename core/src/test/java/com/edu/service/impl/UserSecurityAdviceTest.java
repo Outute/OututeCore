@@ -1,11 +1,5 @@
-package org.appfuse.service.impl;
+package com.edu.service.impl;
 
-import org.appfuse.Constants;
-import org.appfuse.dao.UserDao;
-import org.appfuse.model.Role;
-import org.appfuse.model.User;
-import org.appfuse.service.UserManager;
-import org.appfuse.service.UserSecurityAdvice;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -23,6 +17,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
+
+import com.edu.Constants;
+import com.edu.dao.UserDao;
+import com.edu.model.Role;
+import com.edu.model.User;
+import com.edu.service.UserManager;
+import com.edu.service.UserSecurityAdvice;
 
 import static org.junit.Assert.*;
 

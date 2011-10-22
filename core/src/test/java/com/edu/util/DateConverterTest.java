@@ -1,7 +1,10 @@
-package org.appfuse.util;
+package com.edu.util;
 
 import junit.framework.TestCase;
 import org.springframework.context.i18n.LocaleContextHolder;
+
+import com.edu.util.DateConverter;
+import com.edu.util.DateUtil;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

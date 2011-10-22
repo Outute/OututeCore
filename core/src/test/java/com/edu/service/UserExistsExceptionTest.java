@@ -1,14 +1,17 @@
-package org.appfuse.service;
+package com.edu.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.appfuse.model.User;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
+import com.edu.model.User;
+import com.edu.service.UserExistsException;
+import com.edu.service.UserManager;
 
 import static org.junit.Assert.assertNotNull;
 

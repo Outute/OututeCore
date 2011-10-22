@@ -1,12 +1,13 @@
 package com.edu.webapp.action;
 
 import org.apache.struts2.ServletActionContext;
-import org.appfuse.model.User;
-import org.appfuse.service.UserManager;
 import org.compass.gps.CompassGps;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
+
+import com.edu.model.User;
+import com.edu.service.UserManager;
 
 import static org.junit.Assert.*;
 

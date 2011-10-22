@@ -1,11 +1,15 @@
-package org.appfuse.service;
+package com.edu.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.appfuse.Constants;
-import org.appfuse.model.User;
+import org.appfuse.service.BaseManagerTestCase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.edu.Constants;
+import com.edu.model.User;
+import com.edu.service.RoleManager;
+import com.edu.service.UserManager;
 
 import static org.junit.Assert.*;
 

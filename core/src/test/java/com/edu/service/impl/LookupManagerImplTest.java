@@ -1,12 +1,15 @@
-package org.appfuse.service.impl;
+package com.edu.service.impl;
 
-import org.appfuse.Constants;
-import org.appfuse.dao.LookupDao;
-import org.appfuse.model.LabelValue;
-import org.appfuse.model.Role;
+import org.appfuse.service.impl.BaseManagerMockTestCase;
 import org.jmock.Expectations;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.edu.Constants;
+import com.edu.dao.LookupDao;
+import com.edu.model.LabelValue;
+import com.edu.model.Role;
+import com.edu.service.impl.LookupManagerImpl;
 
 import java.util.ArrayList;
 import java.util.List;

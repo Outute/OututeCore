@@ -1,15 +1,19 @@
-package org.appfuse.service.impl;
+package com.edu.service.impl;
 
-import org.appfuse.Constants;
-import org.appfuse.dao.RoleDao;
-import org.appfuse.dao.UserDao;
-import org.appfuse.model.Role;
-import org.appfuse.model.User;
-import org.appfuse.service.UserExistsException;
+import org.appfuse.service.impl.BaseManagerMockTestCase;
 import org.jmock.Expectations;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import com.edu.Constants;
+import com.edu.dao.RoleDao;
+import com.edu.dao.UserDao;
+import com.edu.model.Role;
+import com.edu.model.User;
+import com.edu.service.UserExistsException;
+import com.edu.service.impl.RoleManagerImpl;
+import com.edu.service.impl.UserManagerImpl;
 
 import static org.junit.Assert.*;
 

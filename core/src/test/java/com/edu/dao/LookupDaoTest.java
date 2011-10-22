@@ -1,7 +1,10 @@
-package org.appfuse.dao;
+package com.edu.dao;
 
+import org.appfuse.dao.BaseDaoTestCase;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.edu.dao.LookupDao;
 
 import java.util.List;
 

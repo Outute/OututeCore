@@ -1,12 +1,14 @@
-package org.appfuse.service.impl;
+package com.edu.service.impl;
 
-import org.appfuse.dao.TutorialDao;
-import org.appfuse.model.Tutorial;
-import org.appfuse.service.impl.BaseManagerMockTestCase;
 import org.jmock.Expectations;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.edu.dao.TutorialDao;
+import com.edu.model.Tutorial;
+import com.edu.service.impl.BaseManagerMockTestCase;
+import com.edu.service.impl.TutorialManagerImpl;
 
 import java.util.ArrayList;
 import java.util.List;

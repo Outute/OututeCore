@@ -1,9 +1,6 @@
-package org.appfuse.dao;
+package com.edu.dao;
 
-import org.appfuse.Constants;
-import org.appfuse.model.Address;
-import org.appfuse.model.Role;
-import org.appfuse.model.User;
+import org.appfuse.dao.BaseDaoTestCase;
 import org.compass.core.CompassCallbackWithoutResult;
 import org.compass.core.CompassException;
 import org.compass.core.CompassHits;
@@ -16,6 +13,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.annotation.NotTransactional;
+
+import com.edu.Constants;
+import com.edu.dao.RoleDao;
+import com.edu.dao.UserDao;
+import com.edu.model.Address;
+import com.edu.model.Role;
+import com.edu.model.User;
 
 import static org.junit.Assert.*;
 
