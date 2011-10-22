@@ -1,8 +1,9 @@
 package com.edu.webapp.filter;
 
-import org.appfuse.Constants;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.edu.Constants;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

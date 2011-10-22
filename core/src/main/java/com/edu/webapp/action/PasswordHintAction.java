@@ -1,6 +1,6 @@
 package com.edu.webapp.action;
 
-import org.appfuse.model.User;
+import com.edu.model.User;
 import com.edu.webapp.util.RequestUtil;
 import org.springframework.mail.MailException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,13 +1,13 @@
 package com.edu.webapp.action;
 
 import com.opensymphony.xwork2.Preparable;
-import org.appfuse.Constants;
-import org.appfuse.model.Tutorial;
-import org.appfuse.model.User;
 
+import com.edu.Constants;
+import com.edu.model.TimeSchedule;
+import com.edu.model.Tutorial;
+import com.edu.model.User;
 import com.edu.webapp.util.RequestUtil;
 import org.springframework.mail.MailException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.context.SecurityContext;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -31,17 +34,28 @@ public class TutorialAction extends BaseAction implements Preparable {
 	private Tutorial tutorial;
 	private Long id;
 	private String query;
+	private boolean ajax;
+	//
+	private List<TimeSchedule> timeSchedules;
+	private TimeSchedule timeSchedule;
 
 	/**
 	 * Grab the entity from the database before populating with request parameters
 	 */
 	public void prepare() {
 		// prevent failures on new
-//		if (getRequest().getMethod().equalsIgnoreCase("post")
-//				&& (!"".equals(getRequest().getParameter("tutorial.id")))) {
-//			tutorial = tutorialManager.getTutorial(new Long(getRequest()
-//					.getParameter("tutorial.id")));
-//		}
+		if (getRequest().getMethod().equalsIgnoreCase("post")) {
+			String tutorialId = getRequest().getParameter("tutorial.id");
+			if (!(tutorialId == null || "".equals(tutorialId))) {
+				tutorial = tutorialManager.getTutorial(new Long(tutorialId));
+			}
+			String timeScheduleId = getRequest()
+					.getParameter("timeSchedule.id");
+			if (!(timeScheduleId == null || "".equals(timeScheduleId))) {
+				timeSchedule = tutorialManager.getTimeSchedule(new Long(
+						timeScheduleId));
+			}
+		}
 	}
 
 	/**
@@ -69,17 +83,34 @@ public class TutorialAction extends BaseAction implements Preparable {
 		this.query = q;
 	}
 
+	public List<TimeSchedule> getTimeSchedules() {
+		return timeSchedules;
+	}
+
+	public void setAjax(boolean ajax) {
+		this.ajax = ajax;
+	}
+
+	public TimeSchedule getTimeSchedule() {
+		return timeSchedule;
+	}
+
+	public void setTimeSchedule(TimeSchedule timeSchedule) {
+		this.timeSchedule = timeSchedule;
+	}
+
 	/**
 	 * Delete the tutorial passed in.
 	 *
 	 * @return success
 	 */
 	public String delete() {
-		tutorialManager.removeTutorial(tutorial.getId());
-		List<Object> args = new ArrayList<Object>();
-		args.add(tutorial.getName());
-		saveMessage(getText("Tutorial.deleted", args));
-
+		if (tutorial.getId() != null) {
+			tutorialManager.removeTutorial(tutorial.getId());
+			List<Object> args = new ArrayList<Object>();
+			args.add(tutorial.getName());
+			saveMessage(getText("Tutorial.deleted", args));
+		}
 		return SUCCESS;
 	}
 
@@ -132,13 +163,10 @@ public class TutorialAction extends BaseAction implements Preparable {
 
 		//Integer originalVersion = tutorial.getVersion();
 		HttpServletRequest request = getRequest();
-		boolean isNew = ("".equals(getRequest()
-				.getParameter("tutorial.version")));
+		boolean isNew = tutorial != null && tutorial.getId() == null;
 		// only attempt to change tutorial if user is tutor or admin
 		// for other users, prepare() method will handle populating
-		if (getRequest().isUserInRole(Constants.ADMIN_ROLE)
-				|| getRequest().isUserInRole(Constants.TUTOR_ROLE)) {
-
+		if (isRole(Constants.ADMIN_ROLE) || isRole(Constants.TUTOR_ROLE)) {
 			if (isNew) {
 				User loginUser;
 				Set<User> tutors;
@@ -151,7 +179,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 				tutorial.setCreateTime(new Date());
 				tutorial.setModifyTime(new Date());
 				tutorial.setOpenDays(5);
-				tutorial.setVersion(0);
 				// Set the login user as the tutor
 				tutors = new HashSet<User>();
 				SecurityContext ctx = SecurityContextHolder.getContext();
@@ -163,8 +190,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 				tutorial.setTutors(tutors);
 			}
 			try {
-				tutorialManager.save(tutorial);
-			} catch (AccessDeniedException ade) {
+				tutorialManager.saveTutorial(tutorial);
+			} catch (Exception ade) {
+				ade.printStackTrace();
 				// thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
 				log.warn(ade.getMessage());
 				getResponse().sendError(HttpServletResponse.SC_FORBIDDEN);
@@ -221,6 +249,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String listAll() {
 		tutorials = tutorialManager.getTutorials();
+		if (!tutorials.isEmpty()) {
+			tutorial = tutorials.get(0);
+		}
 		return SUCCESS;
 	}
 
@@ -234,4 +265,131 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return SUCCESS;
 	}
 
+	/**
+	 * list all TimeSchedules of the tutorial
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-18
+	 */
+	public String listAllTimeSchedule() {
+		id = id == null ? tutorial.getId() : id;
+		if (id == null) {
+			timeSchedules = new ArrayList<TimeSchedule>();
+		} else {
+			timeSchedules = tutorialManager.getAllTimeScheduleByTutorialId(id);
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * save a TimeSchedule to the tutorial 
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-18
+	 */
+	public String addTimeSchedule() {
+		String fromTime = getRequest().getParameter("fromTime");
+		String toTime = getRequest().getParameter("toTime");
+		String[] strArr = new String[] { fromTime, toTime };
+		String[] ampm = new String[] { "am", "pm" };
+		int[] fromto = new int[] { 0, 0 };
+		for (int i = 0; i < strArr.length; i++) {
+			String tmp = strArr[i] == null ? "" : strArr[i].toLowerCase();
+			for (int j = 0; j < ampm.length; j++) {
+				boolean contains = tmp.contains(ampm[j])
+						&& (tmp = tmp.replace(ampm[j], "")) != null;
+				if (contains || j + 1 == ampm.length) {
+					String[] split = tmp.split(":");
+					fromto[i] = Integer.valueOf(split.length > 0 ? split[0]
+							.trim() : "0")
+							* 60
+							+ (contains ? j * 12 * 60 : 0)
+							+ Integer.valueOf(split.length > 1 ? split[1]
+									.trim() : "0");
+					continue;
+				}
+			}
+		}
+		if (fromto[0] >= fromto[1] || fromto[0] < 0 || fromto[1] >= 24 * 60) {
+			addFieldError("From", "is invalid value.");
+			return SUCCESS;
+		}
+		timeSchedule.setCreateTime(new Date());
+		{
+			Calendar c = Calendar.getInstance();
+			c.setTime(timeSchedule.getStartDate());
+			c.set(Calendar.HOUR_OF_DAY, fromto[0] / 60);
+			c.set(Calendar.MINUTE, fromto[0] % 60);
+			timeSchedule.setFromTime(c.getTime());
+		}
+		timeSchedule.setModifyTime(new Date());
+		{
+			Calendar c = Calendar.getInstance();
+			c.setTime(timeSchedule.getStartDate());
+			c.set(Calendar.HOUR_OF_DAY, fromto[1] / 60);
+			c.set(Calendar.MINUTE, fromto[1] % 60);
+			timeSchedule.setToTime(c.getTime());
+		}
+		if (timeSchedule.getId() == null) {
+			timeSchedule.setTutorial(tutorial);
+		}
+		System.out.println(timeSchedule.getStartDate());
+		try {
+			tutorialManager.saveTimeSchedule(timeSchedule);
+		} catch (Exception ade) {
+			ade.printStackTrace();
+			// thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
+			log.warn(ade.getMessage());
+			return SUCCESS;
+		}
+		//timeSchedule = tutorialManager.getTimeSchedule(timeSchedule.getId());
+		//System.out.println(timeSchedule.getStartDate());
+		return SUCCESS;
+	}
+
+	/**
+	 * remove a TimeSchedule from the tutorial
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-18
+	 */
+	public String removeTimeSchedule() {
+		if (timeSchedule.getId() != null) {
+			tutorialManager.removeTimeSchedule(timeSchedule.getId());
+			List<Object> args = new ArrayList<Object>();
+			args.add(timeSchedule.toString());
+			saveMessage(getText("TimeSchedule.deleted", args));
+		}
+		return SUCCESS;
+	}
+	
+	/**
+	 * search tutorials
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-22
+	 */
+	public String findTutorials(){
+		return SUCCESS;
+	}
+	
+	/**
+	 * view a tutorial for booking
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-22
+	 */
+	public String viewTutorial(){
+		return SUCCESS;
+	}
+	
+	/**
+	 * register all of selected tutorials
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-22
+	 */
+	public String registerTutorial(){
+		return SUCCESS;
+	}
 }

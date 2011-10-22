@@ -17,7 +17,7 @@ public class CompassConfigurationPostProcessor implements LocalCompassBeanPostPr
         // Look at current class's package and add it if it's not the AppFuse default
         String classPackage = this.getClass().getPackage().getName();
         String rootPackage = classPackage.substring(0, classPackage.indexOf("webapp") - 1);
-        if (!rootPackage.equals("org.appfuse")) {
+        if (!rootPackage.equals("com.edu")) {
             log.debug("Adding scan for package: " + rootPackage);
             config.addScan(rootPackage);
         }

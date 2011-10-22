@@ -2,10 +2,11 @@ package com.edu.webapp.action;
 
 import com.opensymphony.xwork2.Preparable;
 import org.apache.struts2.ServletActionContext;
-import org.appfuse.Constants;
-import org.appfuse.model.Role;
-import org.appfuse.model.User;
-import org.appfuse.service.UserExistsException;
+
+import com.edu.Constants;
+import com.edu.model.Role;
+import com.edu.model.User;
+import com.edu.service.UserExistsException;
 import com.edu.webapp.util.RequestUtil;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;

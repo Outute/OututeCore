@@ -1,12 +1,13 @@
 package com.edu.webapp.listener;
 
-import org.appfuse.model.User;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionContextIntegrationFilter;
+
+import com.edu.model.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

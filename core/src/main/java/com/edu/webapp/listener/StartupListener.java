@@ -2,8 +2,6 @@ package com.edu.webapp.listener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.appfuse.Constants;
-import org.appfuse.service.LookupManager;
 import org.compass.gps.CompassGps;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +10,9 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.RememberMeAuthenticationProvider;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.edu.Constants;
+import com.edu.service.LookupManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

@@ -1,8 +1,8 @@
 package com.edu.webapp.action;
 
+import com.edu.util.DateUtil;
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 import org.apache.struts2.util.StrutsTypeConverter;
-import org.appfuse.util.DateUtil;
 
 import java.text.ParseException;
 import java.util.Date;
