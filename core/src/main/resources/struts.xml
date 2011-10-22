@@ -111,18 +111,58 @@
         </action>
 
         <!-- Add additional actions here -->
+        <!-- offer tutorial -->
         <action name="createTutorial" class="tutorialAction" method="listAll">
         	<result name="success">/WEB-INF/pages/tutorial/createTutorial.jsp</result>
         </action>
-        <action name="addTutorialPage">
+        <action name="listTutorialFregmaent" class="tutorialAction" method="listAll">
+        	<result name="success">/WEB-INF/pages/tutorial/listTutorialFragment.jsp</result>
+        </action>
+        <action name="tutorialDetailFragment" class="tutorialAction" method="listAllTimeSchedule">
+        	<result name="success">/WEB-INF/pages/tutorial/tutorialDetailFragment.jsp</result>
+        </action>
+        <action name="addTutorialPage" class="tutorialAction">
         	<result name="success">/WEB-INF/pages/tutorial/addTutorial.jsp</result>
         </action>
         <action name="addTutorial" class="tutorialAction" method="save">
-        	<result name="success">/WEB-INF/pages/tutorial/listClasses.jsp</result>
+        	<result name="success">/common/messages.jsp</result>
         </action>
-        <action name="addTutorialDatePage">
+        <action name="removeTutorial" class="tutorialAction" method="delete">
+        	<result name="success">/common/messages.jsp</result>
+        </action>
+        <action name="addTutorialDatePage" class="tutorialAction">
         	<result name="success">/WEB-INF/pages/tutorial/addTutorialDate.jsp</result>
         </action>
+        <action name="addTimeShedule" class="tutorialAction" method="addTimeSchedule">
+        	<result name="success">/common/messages.jsp</result>
+        </action>
+        <action name="removeTimeSchedule" class="tutorialAction" method="removeTimeSchedule">
+        	<result name="success">/common/messages.jsp</result>
+        </action>
+        <!-- end offer tutorial -->
+        <!-- register tutorial -->
+        <action name="takeTutorial" class="tutorialAction" method="listAll">
+        	<result name="success">/WEB-INF/pages/takeTutorial/takeTutorial.jsp</result>
+        </action>
+        <action name="searchTutorialPage" class="tutorialAction">
+        	<result name="success">/WEB-INF/pages/takeTutorial/searchTutorial.jsp</result>
+        </action>
+        <action name="listForSearchTutorial" class="tutorialAction" method="findTutorials">
+        	<result name="success">/WEB-INF/pages/takeTutorial/listForSearchTutorial.jsp</result>
+        </action>
+        <action name="tutorialDetail" class="tutorialAction" method="listAllTimeSchedule">
+        	<result name="success">/WEB-INF/pages/takeTutorial/tutorialDetail.jsp</result>
+        </action>
+        <action name="bookTutorialPage" class="tutorialAction" method="viewTutorial">
+        	<result name="success">/WEB-INF/pages/takeTutorial/bookTutorial.jsp</result>
+        </action>
+        <action name="registerTutorialPage" class="tutorialAction" method="viewTutorial">
+        	<result name="success">/WEB-INF/pages/takeTutorial/registerTutorial.jsp</result>
+        </action>
+        <action name="registerTutorial" class="tutorialAction" method="registerTutorial">
+        	<result name="success">/WEB-INF/pages/takeTutorial/registerTutorial.jsp</result>
+        </action>
+        <!-- end register tutorial -->
         <!-- <action name="manageTutorial" class="tutorialAction" method="execute">
             <result name="success">/WEB-INF/pages/tutorial/manageTutorial.jsp</result>
             <result name="error">/WEB-INF/pages/mainMenu.jsp</result>

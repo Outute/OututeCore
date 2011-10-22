@@ -10,51 +10,55 @@
         </layout>
     </appender>
     
-    <logger name="net.sf.ehcache">
-        <level value="ERROR"/>
+    <logger name="com.edu">
+        <level value="DEBUG"/>
     </logger>
+    
+    <!--logger name="net.sf.ehcache">
+        <level value="ERROR"/>
+    </logger-->
 
     <!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
-    <logger name="org.springframework.security">
+    <!--logger name="org.springframework.security">
         <level value="ERROR"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.apache">
+    <!--logger name="org.apache">
         <level value="WARN"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.apache.velocity">
+    <!--logger name="org.apache.velocity">
         <level value="FATAL"/>
-    </logger>
+    </logger-->
 
     <!-- Suppress invalid warning messages from JSF -->
-    <logger name="org.apache.myfaces">
+    <!--logger name="org.apache.myfaces">
         <level value="ERROR"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.dbunit">
+    <!--logger name="org.dbunit">
         <level value="WARN"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.hibernate">
+    <!--logger name="org.hibernate">
         <level value="WARN"/>
-    </logger>
+    </logger-->
   
     <!--logger name="org.hibernate.SQL">
         <level value="DEBUG"/>
     </logger-->
 
-    <logger name="org.springframework">
+    <!--logger name="org.springframework">
         <level value="WARN"/>
-    </logger>
+    </logger-->
    
-    <logger name="org.appfuse">
+    <!--logger name="org.appfuse">
         <level value="DEBUG"/>
-    </logger>
+    </logger-->
 
-    <logger name="org.appfuse.tool">
+    <!--logger name="org.appfuse.tool">
         <level value="INFO"/>
-    </logger>
+    </logger-->
 
     <root>
         <level value="WARN"/>
