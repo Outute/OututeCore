@@ -21,7 +21,9 @@
 		<div id="container">
 			<div class="content-box">
 				<jsp:include page="/common/header.jsp"/>
+				<div id="messagesContent">
 				<%@ include file="/common/messages.jsp" %>
+				</div>
 				<decorator:body/>
 			</div>
 			<div class="footer-links floatl">

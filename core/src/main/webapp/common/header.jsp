@@ -12,6 +12,7 @@
 		</div>
 		<div class="top-right floatr">
 			<!-- AddThis Button BEGIN -->
+			<!-- 
 			<div class="addthis_toolbox addthis_default_style ">
 				<a href="http://www.addthis.com/bookmark.php?v=250&amp;pubid=ra-4deee9d86173325e" class="addthis_button_compact STYLE1">
 					<fmt:message key="header.follow" />
@@ -22,8 +23,9 @@
 				<a class="addthis_button_preferred_3"></a>
 				<a class="addthis_button_preferred_4"></a>
 			</div>
-			<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
 			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4deee9d86173325e"></script>
+			 -->
+			<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
 			<!-- AddThis Button END -->
 		</div>
 

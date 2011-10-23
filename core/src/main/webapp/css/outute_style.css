@@ -1,5 +1,12 @@
 /* CSS Document */
 
+/*
+YUI CSS Reset
+*/
+/*
+html{color:#000;background:#FFF;}body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#000;}del,ins{text-decoration:none;}
+*/
+
 @import url(../styles/displaytag.css);
 
 *{margin:0px;padding:0px;}
@@ -418,6 +425,7 @@ div.calendar-panel {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-9 */
     background: linear-gradient(top, #f9f9f9 0%,#f2f2f2 100%); /* W3C */
     text-align:center;
+    line-height: 16px;
 }
 divcalendar-panel h4 {
     margin: 0;
@@ -438,6 +446,11 @@ table.calendar-day .calendar-disabled {
 	cursor: auto;
 	color: #A6A6A6;
 	background: #EEEEEE;
+}
+table.calendar-day .calendar-disabled-nextmonth {
+	cursor: auto;
+	color: #A6A6A6;
+	background: #FFF;
 }
 table.calendar-day .calendar-selected {
 	background-color: #B3D4FF;
@@ -462,3 +475,105 @@ table.calendar-day td.last{
 	border-right: solid 1px #CCCCCC;
 }
 /* end calendar css*/
+
+.hidden{
+	display:none;
+}
+.rightTutorialPanel{
+	width:600px;
+}
+.addTutorial{
+background: rgb(226,226,226); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* IE10+ */
+background: linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
+}
+/* tutorial list selected */
+.tutorialSelected {
+	background-color: #EEEEEE;
+}
+
+/* form js*/
+.addTutorialTitle{
+	font-family: sans-serif;
+	color: #000000 !important;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 28px;
+}
+.formContent{
+	color: #6E6E6E !important;
+	font-size:12px;
+	font-family:sans-serif,"Lucida Grande", "Lucida Sans", Calibri, Helvetica, Arial;
+	vertical-align: middle;
+}
+input.button{ font-size:12px; font-weight: normal; font-family:sans-serif,"Lucida Grande", "Lucida Sans", Calibri, Helvetica, Arial; }
+input.buttonMin{ font-size:11px; padding: 5px; }
+.input { height: 20px; padding: 3px; }
+.inputMin { height: 20px; padding: 1px; border-color: #AAA; border-width: thin; }
+.select{ height: 26px; padding: 5px; }
+.textarea{padding: 5px;}
+.w300px{ width: 300px; }
+.w200px{ width: 200px; }
+.w100pc{ width: 100%; }
+.bold { font-weight: bold; }
+.padding10{padding: 10px;}
+
+/*tutorial detail*/
+.classTutorialDetail { background-color: #e5e5e5; display: block; height: 100px; padding: 10px; }
+.classTutorialTitle { width: 300px; overflow:hidden; height: 24px; font-size:16px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif; }
+.classDescription { width: 300px; overflow:hidden; height: 20px; color: #6c6c6c; font-size:14px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif; }
+.tutorialHr{ margin: 5px 0px; color: #FFFFFF; }
+.tutorialDetail { float:left; width:70%; display:inline; font-size:11px; }
+.calendarIcon{background-image: url("../images/MiniCalendar.png"); padding: 8px 16px;}
+.timeScheduleTimeContent{font-size:12px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif;}
+.timeScheduleCostContent{font-size:12px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif;}
+.searchContent{}
+
+.formContent td{
+	margin-right: 6px;
+	margin-bottom: 6px;
+	padding: 6px;
+}
+.formContent label{
+	text-align: right;
+	line-height: 22px;
+	vertical-align: top;
+}
+.form-required {
+	margin-left: 5px;
+	color: red;
+}
+.listTimeSchedule .outertable{
+	border-collapse: separate;
+	border-spacing: 5px;
+    color: #000;
+    background: #fff;
+    width: 100%;
+}
+.listTimeSchedule .innertable{
+	border-collapse: collapse;
+	width: 100%;
+}
+.listTimeSchedule .innertable a{
+	text-decoration: none;
+}
+.listTimeSchedule .outertable tr{
+	height: 32px;
+	font-size: 16px;
+	margin-top: 5px;
+}
+.listTimeSchedule .innertable td{
+	background-color: #eee;
+}
+.iconTd, .tutorialIcon{
+	width: 24px;
+}
+.iconTextTd{
+	width: 40px;
+	-width: 55px;
+}

@@ -15,7 +15,7 @@
 			<ul>
 				<li><a href="manageTutorials.html"><span>Outline Tutorials</span></a></li>
 				<li><a class="active" href="createTutorial"><span>Offer Tutorials</span></a></li>
-				<li><a href="registerTutorials.html"><span>Take Tutorials</span></a></li>
+				<li><a href="takeTutorial"><span>Take Tutorials</span></a></li>
 				<li><a href="#"><span>Edit Profile</span></a></li>
 			</ul>
 		</div>
