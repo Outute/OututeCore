@@ -194,13 +194,13 @@
                         </goals>
                         <configuration>
                             <encoding>UTF8</encoding>
-                            <includes>ApplicationResources_*.properties</includes>
-                            <excludes>ApplicationResources.properties,
-                                ApplicationResources_de*.properties,
-                                ApplicationResources_fr*.properties,
-                                ApplicationResources_nl*.properties,
-                                ApplicationResources_pt*.properties,
-                                ApplicationResources_es*.properties</excludes>
+                            <includes>i18n/ApplicationResources_*.properties</includes>
+                            <excludes>i18n/ApplicationResources.properties,
+                                i18n/ApplicationResources_de*.properties,
+                                i18n/ApplicationResources_fr*.properties,
+                                i18n/ApplicationResources_nl*.properties,
+                                i18n/ApplicationResources_pt*.properties,
+                                i18n/ApplicationResources_es*.properties</excludes>
                         </configuration>
                     </execution>
                     <execution>
@@ -210,12 +210,12 @@
                         </goals>
                         <configuration>
                             <encoding>8859_1</encoding>
-                            <includes>ApplicationResources.properties,
-                                ApplicationResources_de.properties,
-                                ApplicationResources_fr.properties,
-                                ApplicationResources_nl.properties,
-                                ApplicationResources_pt*.properties,
-                                ApplicationResources_es*.properties</includes>
+                            <includes>i18n/ApplicationResources.properties,
+                                i18n/ApplicationResources_de.properties,
+                                i18n/ApplicationResources_fr.properties,
+                                i18n/ApplicationResources_nl.properties,
+                                i18n/ApplicationResources_pt*.properties,
+                                i18n/ApplicationResources_es*.properties</includes>
                         </configuration>
                     </execution>
                 </executions>
@@ -225,7 +225,7 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
-                    <exclude>ApplicationResources*.properties</exclude>
+                    <exclude>i18n/ApplicationResources*.properties</exclude>
                 </excludes>
                 <filtering>true</filtering>
             </resource>
