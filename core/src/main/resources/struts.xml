@@ -69,6 +69,16 @@
         <action name="mainMenu">
             <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
         </action>
+        
+        
+        <action name="howoututeworks">
+            <result name="success">/WEB-INF/pages/howoututeworks.jsp</result>
+        </action>
+        
+        
+        <action name="contactus">
+            <result name="success">/WEB-INF/pages/contactus.jsp</result>
+        </action>
 
         <action name="signup" class="signupAction">
             <result name="cancel" type="redirect">/</result>

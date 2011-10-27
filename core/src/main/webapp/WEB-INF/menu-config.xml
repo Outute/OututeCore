@@ -17,7 +17,7 @@
         <Menu name="FileUpload" title="menu.selectFile" page="/uploadFile"/>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="MyOutute" title="menu.myOutute" description="My OuTute" roles="ROLE_ADMIN,ROLE_TUTOR" page="/listTutorial"/>
-        <Menu name="AboutUs" title="menu.aboutUs" description="About us" page="/aboutus"/>
+        <Menu name="HowOututeWorks" title="menu.howOututeWorks" description="How Outute Works" page="/howoututeworks"/>
         <Menu name="Categories" title="menu.categories" description="Categories" page="/categories"/>
         <Menu name="ContactUs" title="menu.contactUs" description="Contact us" page="/contactus"/>
     </Menus>
