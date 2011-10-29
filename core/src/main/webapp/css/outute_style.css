@@ -482,6 +482,7 @@ background: -ms-linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 
 background: linear-gradient(top, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
 }
+.takeTutorialTable a, .offerTutorialTable a{ text-decoration: none; }
 /* tutorial list selected */
 .tutorialSelected {
 	background-color: #EEEEEE;
@@ -506,7 +507,7 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .hidden{display:none;}
 .input { height: 20px; padding: 3px; }
 .inputMin { height: 20px; padding: 1px; border-color: #AAA; border-width: thin; }
-.select{ height: 26px; padding: 5px; }
+.select{ padding: 5px;}
 .textarea{padding: 5px;}
 .w300px{ width: 300px; }
 .w200px{ width: 200px; }
@@ -515,8 +516,8 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .pointer{cursor: pointer;}
 .padding10{padding: 10px;}
 .overhide{overflow: hidden;}
-.addIcon{background-image: url("../images/add.png"); padding: 1px 8px;}
-.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 1px 8px; margin: 0px;}
+span.addIcon{background: url("../images/add.png") no-repeat 0 0; padding: 3px 7px; margin: 0 3px; font-size: 10px;}
+span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 0px 8px; margin: 0 3px;}
 
 /*tutorial detail*/
 .classTutorialDetail { background-color: #e5e5e5; display: block; height: 100px; padding: 10px; }

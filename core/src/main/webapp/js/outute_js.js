@@ -165,11 +165,13 @@ Util = typeof(Util)!='undefined' || {
 	param: function(a) {
 		var s = [],
 			add = function( key, value ) {
-				s[ s.length ] = encodeURIComponent( key ) + "=" + encodeURIComponent( value.replace( Util.rCRLF, "\r\n" ) );
+				s[s.length] = encodeURIComponent( key ) + "=" + encodeURIComponent( value.replace( Util.rCRLF, "\r\n" ) );
 			};
 		if (a instanceof Array && a.length) {
 			for(var i=0;i<a.length;i++){
-				add( a[i].name, a[i].value );
+				if(a[i].name && a[i].value){
+					add(a[i].name, a[i].value);
+				}
 			}
 		}
 		return s.join( "&" ).replace( Util.r20, "+" );
@@ -271,7 +273,7 @@ Util = typeof(Util)!='undefined' || {
 		};
 		if (el.addEventListener) {
 			el.addEventListener(type, f, false );
-		} else if (panel.attachEvent ) {
+		} else if (el.attachEvent ) {
 			el.attachEvent( 'on'+type, f);
 		}
 	},
@@ -597,6 +599,9 @@ function editTutorial(url,tutorialId,id){
 	},function(){alert('error');}]);
 }
 function deleteTutorial(url,tutorialId,url2,id){
+	if(!confirm('Are you sure to delete this tutorial?')){
+		return;
+	}
 	Util.ajax(url,Util.param([{name:'tutorial.id',value:tutorialId}]),[function(s,t,r){
 		showMessages(r.text);
 		Util.ajax(url2,null,[function(a,b,c){
@@ -624,6 +629,9 @@ function editTutorialSchedule(url,tutorialScheduleId,tutorialId,id){
 	},function(){alert('error');}]);
 }
 function deleteTutorialSchedule(url,tutorialScheduleId,tutorialId,url2,id){
+	if(!confirm('Are you sure to delete this tutorial schedule?')){
+		return;
+	}
 	Util.ajax(url,Util.param([{name:'tutorialSchedule.id',value:tutorialScheduleId},{name:'tutorial.id',value:tutorialId}]),[function(s,t,r){
 		showMessages(r.text);
 		Util.ajax(url2,Util.param([{name:'tutorial.id',value:tutorialId}]),[function(a,b,c){
@@ -638,21 +646,22 @@ function clickSearch(url,formId,id){
 }
 function selectCalendar4Schedule(funcParams){
 	var date=funcParams.date, url=funcParams.url, id=funcParams.id, tutorialId=funcParams.tutorialId, el=Util.id(id);
+	date=date&&date.length==8?(date.substring(4,6)+"/"+date.substring(6,8)+"/"+date.substring(0,4)):Util.dateToStr(Util.toDay());
 	Util.data(el,'search.start', date);
 	viewTutorial(url,tutorialId,id);
 }
 function viewTutorial(url,tutorialId,id,start,end){
 	var startDate='',endDate='',el=Util.id(id), arr=['search.start','search.end'];
 	if(start==undefined){
-		startDate=el?el[arr[0]]:'';
-		endDate=el?el[arr[1]]:'';
+		startDate=el?Util.data(el,arr[0]):'';
+		endDate=el?Util.data(el,arr[1]):'';
 	}else{
 		var startEl = Util.id(start), endEl=Util.id(end);
 		startDate=startEl?startEl.value:'', endDate=endEl?endEl.value:'';
 		Util.data(el,arr[0], startDate);
 		Util.data(el,arr[1], endDate);
 		if(el){
-			el['ids']={};
+			Util.data(el,'ids',{});
 		}
 	}
 	Util.ajax(url,Util.param([{name:'tutorial.id',value:tutorialId},{name:'search.start',value:startDate},{name:'search.end',value:endDate}]),[function(a,b,c){
@@ -662,12 +671,13 @@ function viewTutorial(url,tutorialId,id,start,end){
 function clickTutorialSchedule(id, tutorialScheduleId){
 	var el = Util.id(id);
 	if(el){
-		el['ids'] = el['ids']||{};
-		el['ids'][tutorialScheduleId]=tutorialScheduleId;
+		var ids = Util.data(el,'ids')||{}; 
+		ids[tutorialScheduleId]=tutorialScheduleId;
+		Util.data(el,'ids',ids); 
 	}
 }
 function clickBookNow(url,tutorialId,id){
-	var el = Util.id(id), a=[], ids=el?el['ids']:null;
+	var el = Util.id(id), a=[], ids=el?Util.data(el,'ids'):null;
 	if(ids){
 		for(var k in ids){
 			if(ids[k]){
@@ -680,17 +690,18 @@ function clickBookNow(url,tutorialId,id){
 	,function(a,b,c){alert(c.text);}]);
 }
 function cancelTutorialSchedule(tutorialScheduleId,id,trId){
-	var el = Util.id(id), tr=Util.id(trId), trParent=tr?tr.parentNode:null;
-	if(el&&el['ids']&&(tutorialScheduleId in el['ids'])){
-		el['ids'][tutorialScheduleId]=null;
-		try{delete el['ids'][tutorialScheduleId];}catch(err){}
+	var el = Util.id(id), tr=Util.id(trId), trParent=tr?tr.parentNode:null, ids=el?Util.data(el,'ids'):null;
+	if(el&&ids&&(tutorialScheduleId in ids)){
+		ids[tutorialScheduleId]=null;
+		try{delete ids[tutorialScheduleId];}catch(err){}
+		Util.data(el,'ids',ids);
 	}
 	if(trParent){
 		trParent.removeChild(tr);
 	}
 }
 function clickRegister(url,tutorialId,id){
-	var el = Util.id(id), a=[], ids=el?el['ids']:null;
+	var el = Util.id(id), a=[], ids=el?Util.data(el,'ids'):null;
 	if(ids){
 		for(var k in ids){
 			if(ids[k]){

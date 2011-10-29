@@ -7,13 +7,13 @@
 <meta name="menu" content="TutorialMenu" />
 </head>
 <!-- Offer Tutorials -->
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table class="takeTutorialTable" width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<tr valign="top">
 			<td width="30%">
 			<!-- Tutorials list -->
 				<div class="takeTutorial" style="text-align: right;background-color: #DDD; height: 30px; line-height: 30px; padding-right: 10px;">
-					<a href="javascript:;" onclick="clickTakeTutorial('rightTakeTutorialPanel','searchTutorialPage');return false;"><span class="addIcon"></span>Take Tutorial</a>
+					<a href="javascript:;" onclick="clickTakeTutorial('rightTakeTutorialPanel','searchTutorialPage');return false;"><span class="addIcon"></span>Take More Tutorial</a>
 				</div>
 				<div id="takeTutorialList" class="tutorialList"  style="overflow-y: scroll; height: 415px; background-color: white;">
 					<jsp:include page="/WEB-INF/pages/takeTutorial/listTutorial.jsp"></jsp:include>

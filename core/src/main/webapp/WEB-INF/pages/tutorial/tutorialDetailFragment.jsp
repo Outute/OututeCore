@@ -12,11 +12,9 @@
 			<div><span class="bold">Category:</span><span>${tutorial.category}</span></div>
 			<div><span class="bold">Tutorial Type:</span><span>${tutorial.type}</span></div>
 		</div>
-		<div style="float: right; width:25%; display:inline; text-align: right; position: absolute;bottom: 10px;">
-			<span class="tutorialEditIcon"></span>
-			<a href="javascript:;" onclick="editTutorial('addTutorialPage','${tutorial.id}','rightTutorialPanel');return false;">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span class="tutorialAddDateIcon"></span>
-			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;">Add Date</a>
+		<div style="float: right; display:inline; text-align: right; position: absolute;bottom: 0px; right:0px; font-size: 16px;">
+			<a href="javascript:;" onclick="editTutorial('addTutorialPage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span>Add Date</a>
 		</div>
 	</div>
 </div>
@@ -36,8 +34,8 @@
 					  				Max&nbsp;<strong>${ts.maxParticipate}</strong>&nbsp;participates&nbsp;-&nbsp;$${ts.cost}&nbsp;<c:if test="${ts.durationType>0}">each</c:if>
 					  			</div>
 					  		</td>
-					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="editTutorialSchedule('addTutorialDatePage','${ts.id}','${tutorial.id}','rightTutorialPanel');return false;"><span class="editTutorialIcon">+</span>Edit</a></td>
-					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="deleteTutorialSchedule('removeTutorialSchedule','${ts.id}','${tutorial.id}','tutorialDetailFragment','rightTutorialPanel');return false;"><span class="deleteTutorialIcon">-</span>Delete</a></td>
+					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="editTutorialSchedule('addTutorialDatePage','${ts.id}','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span>Edit</a></td>
+					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="deleteTutorialSchedule('removeTutorialSchedule','${ts.id}','${tutorial.id}','tutorialDetailFragment','rightTutorialPanel');return false;"><span class="removeIcon"></span>Delete</a></td>
 						</tr>
 					</table>
 				</td>

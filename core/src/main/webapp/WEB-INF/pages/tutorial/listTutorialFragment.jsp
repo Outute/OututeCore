@@ -11,7 +11,7 @@
 				<a id="firstTutorial" href="javascript:;" onclick="clickTutorial('tutorialListTable','${t.id}','tutorialDetailFragment','rightTutorialPanel');return false;">${t.name}</a>
 			</td>
 			<td>
-				<span class="deleteTutorialIcon">X</span>
+				<span class="removeIcon"></span>
 				<a href="javascript:;" onclick="deleteTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;">Delete</a>
 			</td>
 		</tr>

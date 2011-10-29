@@ -2,7 +2,7 @@
 <%@ include file="/common/taglibs.jsp"%>
 <!--start list tutorial-->
 <div class="hidden" script="Util.id('firstTutorial').click();"></div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table class="listForTakeTutorial" width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<c:forEach items="${tutorials}" var="t">
 		<tr height="30px" id="tid_${t.id}">

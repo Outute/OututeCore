@@ -41,7 +41,7 @@
 			<tr>
 			  <td><label>Teaching Type:</label></td>
 			  <td>
-			  	<input type="radio" class="input" id="tutorial_type_0" name="tutorial.type" value="0" onclick="this.checked && Util.hideId(['workshopPC','partitr','costtr']).showId('tutorialPC');" <c:if test="${tutorial.type==0}">checked="checked"</c:if>>
+			  	<input type="radio" class="input" id="tutorial_type_0" name="tutorial.type" value="0" onclick="this.checked && Util.hideId(['workshopPC','partitr','costtr']).showId('tutorialPC');" <c:if test="${tutorial==null||tutorial.type==0}">checked="checked"</c:if>>
 			  	<label for="tutorial_type_0">Tutorial</label>
 			  	<input type="radio" class="input" id="tutorial_type_1" name="tutorial.type" value="1" onclick="this.checked && Util.hideId('tutorialPC').showId(['workshopPC','partitr','costtr']);" <c:if test="${tutorial.type==1}">checked="checked"</c:if>>
 			  	<label for="tutorial_type_1">Workshop(Client must enroll in all sessions)</label>
@@ -51,14 +51,14 @@
 			  <td colspan="2">
 			  	<span>Max Participates & Cost:</span>
 			  	<span id="tutorialPC" style="<c:if test="${tutorial.type==1}">display:none;</c:if>">will be defined at individual sessions</span>
-			  	<span id="workshopPC" style="<c:if test="${tutorial.type==0}">display:none;</c:if>">will be defined here</span>
+			  	<span id="workshopPC" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">will be defined here</span>
 			  </td>
 			</tr>
-			<tr id="partitr" style="<c:if test="${tutorial.type==0}">display:none;</c:if>">
+			<tr id="partitr" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">
 			  <td><label for="participate">Max Participates:</label></td>
 			  <td><input type="text" class="input" id="participate" name="participate" size="10" value=""/></td>
 			</tr>
-			<tr id="costtr" style="<c:if test="${tutorial.type==0}">display:none;</c:if>">
+			<tr id="costtr" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">
 			  <td><label for="tutorial_cost">Cost:</label></td>
 			  <td><input type="text" class="input" id="tutorial_cost" name="tutorial.cost" size="10" value="${tutorial.cost}"/></td>
 			</tr>
