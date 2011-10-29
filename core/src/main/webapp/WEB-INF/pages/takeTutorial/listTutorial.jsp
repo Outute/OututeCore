@@ -11,7 +11,7 @@
 				<a href="javascript:;" onclick="clickTutorial('takeTutorialList','${t.id}','tutorialDetail','rightTakeTutorialPanel');return false;">${t.name}</a>
 			</td>
 			<td>
-				<a href="javascript:;" onclick="cancelTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;"><span class="removeIcon"></span>Cancel</a>
+				<a href="javascript:;" onclick="cancelTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;"><span class="removeIcon"></span><fmt:message key="page.lable.cancel"/></a>
 			</td>
 		</tr>
 		</c:forEach>

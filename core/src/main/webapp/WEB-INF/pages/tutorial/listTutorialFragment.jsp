@@ -12,7 +12,7 @@
 			</td>
 			<td>
 				<span class="removeIcon"></span>
-				<a href="javascript:;" onclick="deleteTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;">Delete</a>
+				<a href="javascript:;" onclick="deleteTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;"><fmt:message key="page.lable.delete"/></a>
 			</td>
 		</tr>
 		</c:forEach>

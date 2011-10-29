@@ -9,13 +9,13 @@
 	<hr class="tutorialHr"/>
 	<div style="float:left; position:relative; width: 100%;">
 		<div class="tutorialDetail">
-			<div><span class="bold">ID:</span><span>${tutorial.id}</span></div>
-			<div><span class="bold">Category:</span><span>${tutorial.category}</span></div>
-			<div><span class="bold">Tutorial Type:</span><span>${tutorial.type}</span></div>
+			<div><span class="bold"><fmt:message key="page.takeTutorial.ID"/></span><span>${tutorial.id}</span></div>
+			<div><span class="bold"><fmt:message key="page.takeTutorial.Category"/></span><span>${tutorial.category}</span></div>
+			<div><span class="bold"><fmt:message key="page.takeTutorial.TutorialType"/></span><span>${tutorial.type}</span></div>
 		</div>
 		<div style="float: right; width:25%; display:inline; text-align: right; position: absolute;bottom: 10px;">
 			<span class="takeMoreTutorialIcon"></span>
-			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;">Take More Tutorial</a>
+			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;"><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
 		</div>
 	</div>
 </div>
@@ -27,18 +27,18 @@
 				<td valign="top">
 					<table class="w100pc">
 						<tr>
-							<td colspan="3">Available times(EDT) for <strong>date</strong></td>
+							<td colspan="3"><fmt:message key="page.takeTutorial.AvailableTimes"/> <strong>date</strong></td>
 						</tr>
 						<tr>
-							<th>Morning</th>
-							<th>Afternoon</th>
-							<th>Evening</th>
+							<th><fmt:message key="page.takeTutorial.Morning"/></th>
+							<th><fmt:message key="page.takeTutorial.Afternoon"/></th>
+							<th><fmt:message key="page.takeTutorial.Evening"/></th>
 						</tr>
 						<c:forEach items="${tutorialSchedules}" var="ts">
 						<tr>
-							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 mins, 10 slots, $${ts.cost})</span></td>
-							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 mins, 10 slots, $${ts.cost})</span></td>
-							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 mins, 10 slots, $${ts.cost})</span></td>
+							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 <fmt:message key="page.takeTutorial.mins"/>, 10 <fmt:message key="page.takeTutorial.slots"/>, $${ts.cost})</span></td>
+							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 <fmt:message key="page.takeTutorial.mins"/>, 10 <fmt:message key="page.takeTutorial.slots"/>, $${ts.cost})</span></td>
+							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 <fmt:message key="page.takeTutorial.mins"/>, 10 <fmt:message key="page.takeTutorial.slots"/>, $${ts.cost})</span></td>
 						</tr>
 						</c:forEach>
 					</table>
@@ -46,8 +46,8 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="right">
-					<input type="button" value="Book Now" class="button buttonMin" onclick="clickBookNow('bookTutorial','${tutorial.id}','rightTakeTutorialPanel');"/>
-					<input type="button" value="Cancel" class="button buttonMin"/>
+					<input type="button" value="<fmt:message key="page.takeTutorial.BookNow"/>" class="button buttonMin" onclick="clickBookNow('bookTutorial','${tutorial.id}','rightTakeTutorialPanel');"/>
+					<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button buttonMin"/>
 				</td>
 			</tr>
 		</table>
