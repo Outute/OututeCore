@@ -8,11 +8,10 @@
 		<tr height="30px" id="tid_${t.id}">
 			<td width="80%">
 				<span class="tutorialIcon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				<a id="firstTutorial" href="javascript:;" onclick="clickTutorial('tutorialListTable','${t.id}','tutorialDetailFragment','rightTutorialPanel');return false;">${t.name}</a>
+				<a href="javascript:;" onclick="clickTutorial('takeTutorialList','${t.id}','tutorialDetail','rightTakeTutorialPanel');return false;">${t.name}</a>
 			</td>
 			<td>
-				<span class="deleteTutorialIcon">X</span>
-				<a href="javascript:;" onclick="deleteTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;">Delete</a>
+				<a href="javascript:;" onclick="cancelTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;"><span class="removeIcon"></span>Cancel</a>
 			</td>
 		</tr>
 		</c:forEach>

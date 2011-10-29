@@ -20,24 +20,24 @@
 		</div>
 	</div>
 </div>
-	<div class="listTimeSchedule" style="width: 100%; background-color: white; overflow-y: scroll; height: 330px;">
+	<div class="listTutorialSchedule" style="width: 100%; background-color: white; overflow-y: scroll; height: 330px;">
 		<table class="outertable">
-			<c:forEach items="${timeSchedules}" var="ts">
+			<c:forEach items="${tutorialSchedules}" var="ts">
 			<tr>
 				<td>
 					<table class=innertable>
 						<tr>
 							<td class="iconTd"><span class="calendarIcon"></span></td>
 					  		<td>
-					  			<div class="timeScheduleTimeContent">
+					  			<div class="tutorialScheduleTimeContent">
 					  				<fmt:formatDate value="${ts.startDate}" pattern="EEEEE MMMMM dd, yyyy - "/><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>&nbsp;to&nbsp;<fmt:formatDate value="${ts.toTime}" pattern="hh:mmaaa"/>
 					  			</div>
-					  			<div class="timeScheduleCostContent">
-					  				Max&nbsp;<strong>${ts.maxParticipate}</strong>&nbsp;participates&nbsp;-&nbsp;$${ts.cost}&nbsp;<c:if test="${ts.repeat>0}">each</c:if>
+					  			<div class="tutorialScheduleCostContent">
+					  				Max&nbsp;<strong>${ts.maxParticipate}</strong>&nbsp;participates&nbsp;-&nbsp;$${ts.cost}&nbsp;<c:if test="${ts.durationType>0}">each</c:if>
 					  			</div>
 					  		</td>
-					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="editTimeSchedule('addTutorialDatePage','${ts.id}','${tutorial.id}','rightTutorialPanel');return false;"><span class="editTutorialIcon">+</span>Edit</a></td>
-					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="deleteTimeSchedule('removeTimeSchedule','${ts.id}','${tutorial.id}','tutorialDetailFragment','rightTutorialPanel');return false;"><span class="deleteTutorialIcon">-</span>Delete</a></td>
+					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="editTutorialSchedule('addTutorialDatePage','${ts.id}','${tutorial.id}','rightTutorialPanel');return false;"><span class="editTutorialIcon">+</span>Edit</a></td>
+					  		<td class="iconTextTd" nowrap="nowrap"><a href="javascript:;" onclick="deleteTutorialSchedule('removeTutorialSchedule','${ts.id}','${tutorial.id}','tutorialDetailFragment','rightTutorialPanel');return false;"><span class="deleteTutorialIcon">-</span>Delete</a></td>
 						</tr>
 					</table>
 				</td>

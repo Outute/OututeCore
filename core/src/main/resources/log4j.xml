@@ -13,6 +13,9 @@
     <logger name="com.edu">
         <level value="DEBUG"/>
     </logger>
+    <logger name="com.opensymphony.xwork2">
+        <level value="ERROR"/>
+    </logger>
     
     <!--logger name="net.sf.ehcache">
         <level value="ERROR"/>

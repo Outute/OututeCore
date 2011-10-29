@@ -12,8 +12,8 @@
 		<tr valign="top">
 			<td width="30%">
 			<!-- Tutorials list -->
-				<div class="addTutorial" style="text-align: right;background-color: #DDD; height: 30px; line-height: 30px; padding-right: 10px;">
-					<a href="javascript:;" onclick="clickAddTutorial('rightTutorialPanel','addTutorialPage?ajax=true');return false;"><span class="addTutorialIcon">+</span>Add Tutorial</a>
+				<div class="takeTutorial" style="text-align: right;background-color: #DDD; height: 30px; line-height: 30px; padding-right: 10px;">
+					<a href="javascript:;" onclick="clickTakeTutorial('rightTakeTutorialPanel','searchTutorialPage');return false;"><span class="addIcon"></span>Take Tutorial</a>
 				</div>
 				<div id="takeTutorialList" class="tutorialList"  style="overflow-y: scroll; height: 415px; background-color: white;">
 					<jsp:include page="/WEB-INF/pages/takeTutorial/listTutorial.jsp"></jsp:include>

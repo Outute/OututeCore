@@ -2,13 +2,18 @@ package com.edu.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,10 +34,10 @@ import org.compass.annotations.SearchableId;
  * @author Reid
  */
 @Entity
-@Table(name = "time_schedule")
+@Table(name = "tutorial_schedule")
 @Searchable
 @javax.xml.bind.annotation.XmlRootElement
-public class TimeSchedule extends BaseObject implements Serializable {
+public class TutorialSchedule extends BaseObject implements Serializable {
 
 	private static final long serialVersionUID = -2146302697966361308L;
 	public static final int REPEAT_NO = 0;
@@ -45,14 +50,17 @@ public class TimeSchedule extends BaseObject implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "START_DATE", nullable = false)
 	private Date startDate;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "END_DATE", nullable = false)
+	private Date endDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "FROM_TIME", nullable = false)
 	private Date fromTime;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "TO_TIME", nullable = false)
 	private Date toTime;
-	@Column(name = "REPEAT_TYPE", nullable = false)
-	private int repeat;
+	@Column(name = "DURATION_TYPE", nullable = false)
+	private int durationType;
 	@Column(name = "ENDS_OCCURRENCE", nullable = false)
 	private int endsOccurrence;
 	@Column(name = "COST")
@@ -65,17 +73,19 @@ public class TimeSchedule extends BaseObject implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFY_TIME")
 	private Date modifyTime;
-
 	@ManyToOne
 	@JoinColumn(name = "TUTORIAL_ID", nullable = false)
 	private Tutorial tutorial;
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(name = "tutorial_schedule_student", joinColumns = { @JoinColumn(name = "tutorial_schedule_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
+	private Set<User> students; // required
 	@Version
 	private Integer version;
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
 	 */
-	public TimeSchedule() {
+	public TutorialSchedule() {
 	}
 
 	// getter and setter
@@ -95,6 +105,14 @@ public class TimeSchedule extends BaseObject implements Serializable {
 		this.startDate = startDate;
 	}
 
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
 	public Date getFromTime() {
 		return fromTime;
 	}
@@ -111,12 +129,12 @@ public class TimeSchedule extends BaseObject implements Serializable {
 		this.toTime = toTime;
 	}
 
-	public int getRepeat() {
-		return repeat;
+	public int getDurationType() {
+		return durationType;
 	}
 
-	public void setRepeat(int repeat) {
-		this.repeat = repeat;
+	public void setDurationType(int durationType) {
+		this.durationType = durationType;
 	}
 
 	public int getEndsOccurrence() {
@@ -167,6 +185,14 @@ public class TimeSchedule extends BaseObject implements Serializable {
 		this.tutorial = tutorial;
 	}
 
+	public Set<User> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<User> students) {
+		this.students = students;
+	}
+
 	public Integer getVersion() {
 		return version;
 	}
@@ -182,8 +208,8 @@ public class TimeSchedule extends BaseObject implements Serializable {
 		HashCodeBuilder hc = new HashCodeBuilder();
 		hc.append(id).append(cost).append(createTime).append(endsOccurrence)
 				.append(fromTime).append(maxParticipate).append(modifyTime)
-				.append(repeat).append(startDate).append(toTime).append(
-						tutorial);
+				.append(durationType).append(startDate).append(endDate).append(
+						toTime).append(tutorial);
 		return hc.toHashCode();
 	}
 
@@ -197,16 +223,17 @@ public class TimeSchedule extends BaseObject implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		TimeSchedule other = (TimeSchedule) obj;
+		TutorialSchedule other = (TutorialSchedule) obj;
 		EqualsBuilder eb = new EqualsBuilder();
 		eb.append(this.id, other.id).append(this.cost, other.cost).append(
 				this.createTime, other.createTime).append(this.endsOccurrence,
 				other.endsOccurrence).append(this.fromTime, other.fromTime)
 				.append(this.maxParticipate, other.maxParticipate).append(
-						this.modifyTime, other.modifyTime).append(this.repeat,
-						other.repeat).append(this.startDate, other.startDate)
-				.append(this.toTime, other.toTime).append(this.tutorial,
-						other.tutorial);
+						this.modifyTime, other.modifyTime).append(
+						this.durationType, other.durationType).append(
+						this.startDate, other.startDate).append(this.endDate,
+						other.endDate).append(this.toTime, other.toTime)
+				.append(this.tutorial, other.tutorial);
 		return eb.isEquals();
 	}
 
@@ -219,9 +246,9 @@ public class TimeSchedule extends BaseObject implements Serializable {
 				cost).append("createTime", createTime).append("endsOccurrence",
 				endsOccurrence).append("fromTime", fromTime).append(
 				"maxParticipate", maxParticipate).append("modifyTime",
-				modifyTime).append("repeat", repeat).append("startDate",
-				startDate).append("toTime", toTime)
-				.append("tutorial", tutorial);
+				modifyTime).append("durationType", durationType).append(
+				"startDate", startDate).append("endDate", endDate).append(
+				"toTime", toTime).append("tutorial", tutorial);
 		return sb.toString();
 	}
 }

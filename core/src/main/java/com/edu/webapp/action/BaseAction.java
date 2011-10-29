@@ -11,6 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -232,5 +235,14 @@ public class BaseAction extends ActionSupport {
 	 */
 	public boolean isRole(String role) {
 		return getRequest().isUserInRole(role);
+	}
+
+	protected User getUser() {
+		SecurityContext ctx = SecurityContextHolder.getContext();
+		if (ctx != null) {
+			Authentication auth = ctx.getAuthentication();
+			return (User) auth.getPrincipal();
+		}
+		return null;
 	}
 }

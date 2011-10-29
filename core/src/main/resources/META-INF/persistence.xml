@@ -6,7 +6,7 @@
         <class>com.edu.model.User</class>
         <class>com.edu.model.Role</class>
         <class>com.edu.model.Tutorial</class>
-        <class>com.edu.model.TimeSchedule</class>
+        <class>com.edu.model.TutorialSchedule</class>
     </persistence-unit>
 
     <!-- WARNING: This file's file original source is at web/common/src/main/resources/META-INF. The

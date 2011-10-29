@@ -18,5 +18,10 @@
         </Menu>
         <Menu name="MyOutute" title="menu.admin" page="/createTutorial" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER"/>
+        
+        <Menu name="OutlineTutorials" title="menu.outline.tutorials" page="/manageTutorialCalendar" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="OfferTutorials" title="menu.offer.tutorials" page="/createTutorial" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="TakeTutorials" title="menu.take.tutorials" page="/takeTutorial" roles="ROLE_ADMIN,ROLE_USER"/>
+        <Menu name="EditProfile" title="menu.edit.profile" page="/takeTutorial" roles="ROLE_ADMIN,ROLE_USER"/>
     </Menus>
 </MenuConfig>

@@ -66,11 +66,11 @@ body{background:#f4f4f4;font-family:Georgia, "Times New Roman", Times, serif;fon
 
 .login-section ul{list-style:none;margin-top:15px;}
 
-.login-section li{float:left;color:#506366;padding:0px 0px 0px 0px;padding-bottom:10px;}
+.login-section li{float:left;color:#506366;padding:0px 0px 0px 0px;padding-bottom:8px;}
 
 .login-section li label{width:67px;display:inline-block;}
 
-.login-section li input{width:128px;background:#f0f0f0;border:1px solid #e3e2e2;height:15px;padding-top:3px;}
+.login-section li input{width:128px;background:#f0f0f0;border:1px solid #e3e2e2;height:20px;padding-top:3px;}
 
 .login-section a{color:#1f718e;margin-top:5px;text-decoration:none;}
 
@@ -397,7 +397,7 @@ h6{font-size:16px; font-weight:bold; padding:0px 0px 5px 0px; margin:0px 0px 10p
 .aboutcolumn2{width:48%; float:right; margin:0px 0px 10px 0px;}
 .abouticon{float:left; margin:0px 20px 0px 0px;}
 .insidereadmore{padding:10px 0px 10px 0px;}
-input.button{color:#000; background:#ffc850; font:bold 11px Arial, Helvetica, sans-serif; text-decoration:none; padding:10px 10px; margin:0px 5px 5px 0;	border:1px solid #5b7a92;}
+input.button{color:#000; background:#EEEEE; font:bold 11px Arial, Helvetica, sans-serif; text-decoration:none; padding:10px 10px; margin:0px 5px 5px 0;	border:1px solid #5b7a92;}
 input.button:hover{cursor:pointer; color:#fff; background:#663300; border:1px solid #ffc850;}
 .project-img{float:right; margin-left:20px;	border: 6px solid #666;}
 .whiteheading{font:30px Myriad Pro, Arial; color:#CBD76B; font-weight:100;	padding:0px; margin:25px 0px 20px 0px;}
@@ -476,13 +476,10 @@ table.calendar-day td.last{
 }
 /* end calendar css*/
 
-.hidden{
-	display:none;
-}
 .rightTutorialPanel{
 	width:600px;
 }
-.addTutorial{
+.addTutorial, .takeTutorial{
 background: rgb(226,226,226); /* Old browsers */
 background: -moz-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
@@ -513,6 +510,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', end
 }
 input.button{ font-size:12px; font-weight: normal; font-family:sans-serif,"Lucida Grande", "Lucida Sans", Calibri, Helvetica, Arial; }
 input.buttonMin{ font-size:11px; padding: 5px; }
+.hidden{display:none;}
 .input { height: 20px; padding: 3px; }
 .inputMin { height: 20px; padding: 1px; border-color: #AAA; border-width: thin; }
 .select{ height: 26px; padding: 5px; }
@@ -521,7 +519,11 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .w200px{ width: 200px; }
 .w100pc{ width: 100%; }
 .bold { font-weight: bold; }
+.pointer{cursor: pointer;}
 .padding10{padding: 10px;}
+.overhide{overflow: hidden;}
+.addIcon{background-image: url("../images/add.png"); padding: 1px 8px;}
+.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 1px 8px; margin: 0px;}
 
 /*tutorial detail*/
 .classTutorialDetail { background-color: #e5e5e5; display: block; height: 100px; padding: 10px; }
@@ -530,9 +532,16 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .tutorialHr{ margin: 5px 0px; color: #FFFFFF; }
 .tutorialDetail { float:left; width:70%; display:inline; font-size:11px; }
 .calendarIcon{background-image: url("../images/MiniCalendar.png"); padding: 8px 16px;}
-.timeScheduleTimeContent{font-size:12px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif;}
-.timeScheduleCostContent{font-size:12px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif;}
+.tutorialScheduleTimeContent{font-size:12px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif;}
+.tutorialScheduleCostContent{font-size:12px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif;}
 .searchContent{}
+.listTutorial4Select .outertable{ border-collapse: separate; border-spacing: 5px; color: #000; background: #fff; width: 100%; }
+.listTutorial4Select .innertable{ border-collapse: collapse; width: 100%; }
+.listTutorial4Select .outertable tr{ height: 32px; font-size: 16px; margin-top: 5px; }
+.listTutorial4Select .innertable td{ background-color: #eee; }
+.listTutorial4Select .innertable .title{font-size:12px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif;}
+.listTutorial4Select .tutorialName{margin-right: 10px;}
+.listTutorial4Select .innertable .content{clear: both; font-size:12px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif;}
 
 .formContent td{
 	margin-right: 6px;
@@ -548,26 +557,26 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 	margin-left: 5px;
 	color: red;
 }
-.listTimeSchedule .outertable{
+.listTutorialSchedule .outertable{
 	border-collapse: separate;
 	border-spacing: 5px;
     color: #000;
     background: #fff;
     width: 100%;
 }
-.listTimeSchedule .innertable{
+.listTutorialSchedule .innertable{
 	border-collapse: collapse;
 	width: 100%;
 }
-.listTimeSchedule .innertable a{
+.listTutorialSchedule .innertable a{
 	text-decoration: none;
 }
-.listTimeSchedule .outertable tr{
+.listTutorialSchedule .outertable tr{
 	height: 32px;
 	font-size: 16px;
 	margin-top: 5px;
 }
-.listTimeSchedule .innertable td{
+.listTutorialSchedule .innertable td{
 	background-color: #eee;
 }
 .iconTd, .tutorialIcon{
@@ -576,4 +585,48 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .iconTextTd{
 	width: 40px;
 	-width: 55px;
+}
+/* manage tutorial calendar*/
+.button_35x21{
+	-webkit-user-select:none;
+	background-attachment:scroll;background-clip:border-box;background-color:transparent;
+	background-image:0 to(rgb(227,227,227)));background-origin:padding-box;
+	border-color:#CCC #BBB #A0A0A0;border-radius:2px;border-style:solid;border-width:1px;
+	color:#000;display:inline-block;
+	font-family:arial, sans-serif;font-size:12px;font-style:normal;font-variant:normal;font-weight:700;
+	height:15px;line-height:normal;margin:0 0 2px;outline-color:#000;outline-style:none;outline-width:0;padding:3px 8px;
+	position:relative;text-align:center;text-shadow:#FFF 0 1px 0;vertical-align:middle;white-space:nowrap;
+}
+.manageTutorialCalendar{
+	background-color: white;
+}
+#mycalendar1 td.calendar-day-cell {
+}
+#mycalendar1 td.time-cell {
+	width: 50px;
+}
+#mycalendar1 th.time-cell-header {
+	width: 50px;
+}
+#mycalendar1 td.schedule-day-cell {
+	padding: 0;
+	background-image: url("../images/grid.png");
+	background-repeat: repeat;
+}
+#mycalendar1 td.schedule-week-cell {
+	padding: 0;
+	background-image: url("../images/grid.png");
+	background-repeat: repeat;
+}
+#mycalendar1 td.schedule-month-cell {
+	width: 60px;
+}
+#mycalendar1 td.renderCss {
+	padding: 0;
+	height: 70px;
+	text-align: left;
+	vertical-align: text-top;
+}
+#mycalendar1 .calendar-header {
+	display: none;
 }

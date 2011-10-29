@@ -1,21 +1,27 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/common/taglibs.jsp"%>
-<!--start list tutorial-->
-<div class="hidden" script="Util.id('firstTutorial').click();"></div>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tbody>
-		<c:forEach items="${tutorials}" var="t">
-		<tr height="30px" id="tid_${t.id}">
-			<td width="80%">
-				<span class="tutorialIcon">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-				<a id="firstTutorial" href="javascript:;" onclick="clickTutorial('tutorialListTable','${t.id}','tutorialDetailFragment','rightTutorialPanel');return false;">${t.name}</a>
-			</td>
-			<td>
-				<span class="deleteTutorialIcon">X</span>
-				<a href="javascript:;" onclick="deleteTutorial('removeTutorial','${t.id}','listTutorialFregmaent','tutorialListTable');return false;">Delete</a>
-			</td>
-		</tr>
-		</c:forEach>
-	</tbody>
-</table>
-<!--end list tutorial-->
+<!--list searched tutorials-->
+<c:forEach items="${tutorials}" var="t">
+	<tr>
+		<td colspan="2">
+			<table class=innertable>
+				<tr>
+					<td class="iconTd"></td>
+			  		<td>
+			  			<div class="title">
+			  				<div class="floatl tutorialName">${t.name}</div><div class="floatl tutor overhide">Instructor:<c:forEach items="${t.tutors}" var="tu" varStatus="stat">
+			  						<c:if test="${stat.index>0}">,</c:if>&nbsp;${tu.firstName}
+			  					</c:forEach><c:if test="${t.cost>0}">&nbsp;&nbsp;Max: ${t.cost} Cost:${t.cost}</c:if>
+			  				</div>
+			  			</div>
+			  			<div class="content overhide">
+			  				Description:${t.description}
+			  			</div>
+			  		</td>
+			  		<td class="iconTextTd" nowrap="nowrap"><input type="button" value="View" onclick="viewTutorial('bookTutorialPage','${t.id}','rightTakeTutorialPanel','search_start','search_end');"/></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</c:forEach>
+<!--end list searched tutorials-->

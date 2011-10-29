@@ -6,9 +6,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
-import com.edu.dao.TimeScheduleDao;
+import com.edu.dao.TutorialScheduleDao;
 import com.edu.dao.TutorialDao;
-import com.edu.model.TimeSchedule;
+import com.edu.dao.UserDao;
+import com.edu.model.TutorialSchedule;
 import com.edu.model.Tutorial;
 import com.edu.model.User;
 import com.edu.service.TutorialExistsException;
@@ -16,9 +17,16 @@ import com.edu.service.TutorialManager;
 import com.edu.service.TutorialNotFoundException;
 import com.edu.service.TutorialService;
 import com.edu.service.UserManager;
+import com.edu.util.DateUtil;
 
 import javax.jws.WebService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implementation of TutorialManager interface.
@@ -32,7 +40,9 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	@Autowired
 	private TutorialDao tutorialDao;
 	@Autowired
-	private TimeScheduleDao timeScheduleDao;
+	private TutorialScheduleDao tutorialScheduleDao;
+	@Autowired
+	private UserDao userDao;
 
 	//private TutorialTutorMappingDao tutorialTutorMappingDao;
 
@@ -41,8 +51,12 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 		this.tutorialDao = tutorialDao;
 	}
 
-	public void setTimeScheduleDao(TimeScheduleDao timeScheduleDao) {
-		this.timeScheduleDao = timeScheduleDao;
+	public void setTutorialScheduleDao(TutorialScheduleDao tutorialScheduleDao) {
+		this.tutorialScheduleDao = tutorialScheduleDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	/**
@@ -113,35 +127,134 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public List getTutorials(Tutorial tutorial) {
+	public List<Tutorial> getTutorials(Tutorial tutorial) {
 		return tutorialDao.getAll();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TimeSchedule> getAllTimeScheduleByTutorialId(Long tutorialId) {
-		return timeScheduleDao.getAllTimeScheduleByTutorialId(tutorialId);
+	public List<TutorialSchedule> getAllTutorialScheduleByTutorialId(
+			Long tutorialId) {
+		return tutorialScheduleDao
+				.getAllTutorialScheduleByTutorialId(tutorialId);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public TimeSchedule getTimeSchedule(Long timeScheduleId) {
-		return timeScheduleDao.get(timeScheduleId);
+	public TutorialSchedule getTutorialSchedule(Long tutorialScheduleId) {
+		return tutorialScheduleDao.get(tutorialScheduleId);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void removeTimeSchedule(Long timeScheduleId) {
-		timeScheduleDao.remove(timeScheduleId);
+	public void removeTutorialSchedule(Long tutorialScheduleId) {
+		tutorialScheduleDao.remove(tutorialScheduleId);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void saveTimeSchedule(TimeSchedule timeSchedule) {
-		timeScheduleDao.save(timeSchedule);
+	public void saveTutorialSchedule(TutorialSchedule tutorialSchedule) {
+		tutorialSchedule.setStartDate(DateUtil.clearTimes(
+				tutorialSchedule.getStartDate()).getTime());
+		tutorialSchedule.setEndDate(DateUtil.getEndDate(tutorialSchedule
+				.getStartDate(), tutorialSchedule.getDurationType(),
+				tutorialSchedule.getEndsOccurrence()));
+		tutorialScheduleDao.save(tutorialSchedule);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Tutorial> findTutorialsByUserId(Long userId) {
+		return tutorialDao.findTutorialsByUserId(userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialSchedule> findTutorialSchedulesByUserId(
+			Long tutorialId, Long userId) {
+		return tutorialScheduleDao.findTutorialSchedulesByUserId(tutorialId,
+				userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Tutorial> findTutorials(Long id, String name, Date start,
+			Date end, String tutorName, String sortBy) {
+		if (id != null) {
+			Tutorial t = tutorialDao.get(id);
+			List<Tutorial> list = new ArrayList<Tutorial>();
+			if (t != null) {
+				list.add(t);
+			}
+			return list;
+		}
+		return tutorialDao.findTutorials(name, start, end, tutorName, sortBy);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void cancelTutorialSchedule(Long tutorialScheduleId, Long userId) {
+		TutorialSchedule tutorialSchedule = tutorialScheduleDao
+				.get(tutorialScheduleId);
+		if (tutorialSchedule != null) {
+			User user = userDao.get(userId);
+			if (tutorialSchedule.getStudents().contains(user)) {
+				tutorialSchedule.getStudents().remove(user);
+				tutorialScheduleDao.save(tutorialSchedule);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void cancelTutorial(Long tutorialId, Long userId) {
+		List<TutorialSchedule> list = tutorialScheduleDao
+				.getAllTutorialScheduleByTutorialId(tutorialId);
+		User user = userDao.get(userId);
+		for (TutorialSchedule tutorialSchedule : list) {
+			if (tutorialSchedule.getStudents().contains(user)) {
+				tutorialSchedule.getStudents().remove(user);
+				tutorialScheduleDao.save(tutorialSchedule);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void registerTutorial(Long tutorialId, Long[] tutorialScheduleIds,
+			Long userId) {
+		List<TutorialSchedule> list = tutorialScheduleDao
+				.getAllTutorialScheduleByTutorialId(tutorialId);
+		Set<Long> set = new HashSet<Long>(Arrays.asList(tutorialScheduleIds));
+		User user = userDao.get(userId);
+		for (TutorialSchedule tutorialSchedule : list) {
+			boolean isContains = set.contains(tutorialSchedule.getId());
+			if (tutorialSchedule.getStudents().contains(user)) {
+				if (!isContains) {
+					tutorialSchedule.getStudents().remove(user);
+					tutorialScheduleDao.save(tutorialSchedule);
+				}
+			} else if (isContains) {
+				tutorialSchedule.getStudents().add(user);
+				tutorialScheduleDao.save(tutorialSchedule);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialSchedule> findTutorialSchedule(Date start, Date end) {
+		return tutorialScheduleDao.findTutorialSchedule(start, end);
 	}
 }
