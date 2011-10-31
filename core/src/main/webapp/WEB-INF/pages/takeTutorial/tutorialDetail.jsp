@@ -14,7 +14,7 @@
 		</div>
 		<div style="float: right; width:25%; display:inline; text-align: right; position: absolute;bottom: 10px;">
 			<span class="takeMoreTutorialIcon"></span>
-			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;"><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
+			<a href="javascript:;" onclick="clickTakeTutorial('rightTakeTutorialPanel','searchTutorialPage');return false;"><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
 		</div>
 	</div>
 </div>
@@ -35,7 +35,7 @@
 					  			</div>
 					  		</td>
 					  		<td class="iconTextTd" nowrap="nowrap">
-								<a href="javascript:;"><span class="removeIcon"></span><fmt:message key="page.lable.cancel"/></a>
+								<a href="javascript:;" onclick="unRegisterTutorialSchedule('cancelTutorialSchedule','listTakedTutorial','${ts.id}','${tutorial.id}','takeTutorialList');return false;"><span class="removeIcon"></span><fmt:message key="page.lable.cancel"/></a>
 					  		</td>
 						</tr>
 					</table>

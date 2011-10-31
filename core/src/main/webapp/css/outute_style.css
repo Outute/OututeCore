@@ -101,9 +101,9 @@ body{background:#f4f4f4;font-family:Georgia, "Times New Roman", Times, serif;fon
 
 .main-links{background:url(../images/links-bg.gif) top right repeat-x;padding-top:11px;height:56px;}
 
-.main-links ul{list-style:none;}
+.main-links ul{list-style:none; clear: both;}
 
-.main-links li{display:block; float:left;	text-align:center;	list-style:none;padding:0px 7px 0px 7px;}
+.main-links li{display:block; float:left; text-align:center; list-style:none;padding:0px 3px 0px 3px;}
 
 .main-links li a{color:#407587;display:block;float:left;padding:0px 0px 0px 4px;text-decoration:none;cursor:pointer;}
 
@@ -517,7 +517,7 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .padding10{padding: 10px;}
 .overhide{overflow: hidden;}
 span.addIcon{background: url("../images/add.png") no-repeat 0 0; padding: 3px 7px; margin: 0 3px; font-size: 10px;}
-span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 0px 8px; margin: 0 3px;}
+span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 0px 8px; margin: 0 3px; font-size: 14px;}
 
 /*tutorial detail*/
 .classTutorialDetail { background-color: #e5e5e5; display: block; height: 100px; padding: 10px; }
@@ -579,6 +579,7 @@ span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 
 .iconTextTd{
 	width: 40px;
 	-width: 55px;
+	font-size: 12px;
 }
 /* manage tutorial calendar*/
 .button_35x21{

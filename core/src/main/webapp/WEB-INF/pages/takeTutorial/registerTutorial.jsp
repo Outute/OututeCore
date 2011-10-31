@@ -47,7 +47,7 @@
 	<table class="w100pc">
 		<tr>
 			<td align="right">
-				<input type="button" value="<fmt:message key="page.button.register"/>" class="button buttonMin" onclick="clickRegister('registerTutorial','${tutorial.id}','rightTakeTutorialPanel');"/>
+				<input type="button" value="<fmt:message key="page.button.register"/>" class="button buttonMin" onclick="clickRegister('registerTutorial','listTakedTutorial','${tutorial.id}','rightTakeTutorialPanel','takeTutorialList');"/>
 				<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button buttonMin" onclick=""/>
 			</td>
 		</tr>

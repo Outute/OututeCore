@@ -12,8 +12,8 @@
 			<div><span class="bold"><fmt:message key="page.offerTutorial.Category"/></span><span>${tutorial.category}</span></div>
 			<div><span class="bold"><fmt:message key="page.offerTutorial.TutorialType"/></span><span>${tutorial.type}</span></div>
 		</div>
-		<div style="float: right; display:inline; text-align: right; position: absolute;bottom: 0px; right:0px; font-size: 16px;">
-			<a href="javascript:;" onclick="editTutorial('addTutorialPage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span><fmt:message key="page.lable.edit"/></a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<div style="float: right; display:inline; text-align: right; position: absolute;bottom: 0px; right:0px; font-size: 14px;">
+			<a href="javascript:;" onclick="editTutorial('addTutorialPage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span><fmt:message key="page.lable.edit"/></a>
 			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span><fmt:message key="page.offerTutorial.AddDate"/></a>
 		</div>
 	</div>

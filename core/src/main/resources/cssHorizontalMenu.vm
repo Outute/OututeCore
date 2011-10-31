@@ -1,4 +1,5 @@
 #macro( displayCssMenu $menu $isSubMenu)
+  #set ($request_uri=$request.getAttribute("javax.servlet.forward.request_uri").toString()) ##add by tylerchen
   #if ($displayer.isAllowed($menu))
     #set ($count = $count + 1)
     ## set menu title
@@ -12,16 +13,16 @@
         #else
           <li>
         #end
-        #if ($menu.name == "MainMenu")
-          <a class="active" href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
+        #if ($menu.name == "MainMenu") ##modify by tylerchen change [class="active"] to [class="#if($request_uri&&$request_uri.indexOf($url)>-1)active#end"]
+          <a class="#if($request_uri&&$request_uri.indexOf($url)>-1)active#end" href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
         #else
-          #if ($menu.name == $currentMenu)
-            <a href="$url" title="$title" class="current" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px;"#end><span>${title}</span></a>
+          #if ($menu.name == $currentMenu) ##modify by tylerchen add [class="#if($request_uri&&$request_uri.indexOf($url)>-1)active#end"]
+            <a class="#if($request_uri&&$request_uri.indexOf($url)>-1)active#end" href="$url" title="$title" class="current" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px;"#end><span>${title}</span></a>
           #else
             #if ($isSubMenu)
-              <a href="$url" title="$title" class="subactive" #if($menu.width)style="width: ${menu.width}px"#end>${title}</a>
-            #else
-              <a href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
+              <a class="subactive" #if($menu.width)style="width: ${menu.width}px"#end>${title}</a>
+            #else ##modify by tylerchen add [class="#if($request_uri&&$request_uri.indexOf($url)>-1)active#end"]
+              <a class="#if($request_uri&&$request_uri.indexOf($url)>-1)active#end" href="$url" title="$title" #if($menu.target)target="$menu.target" #end#if($menu.width)style="width: ${menu.width}px"#end><span>${title}</span></a>
             #end
           #end
         #end

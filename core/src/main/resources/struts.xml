@@ -126,7 +126,7 @@
         <action name="createTutorial" class="tutorialAction" method="listAll">
         	<result name="success">/WEB-INF/pages/tutorial/createTutorial.jsp</result>
         </action>
-        <action name="listTutorialFregmaent" class="tutorialAction" method="listAll">
+        <action name="listTutorialFragment" class="tutorialAction" method="listAll">
         	<result name="success">/WEB-INF/pages/tutorial/listTutorialFragment.jsp</result>
         </action>
         <action name="tutorialDetailFragment" class="tutorialAction" method="listAllTutorialSchedule">
@@ -164,6 +164,9 @@
         <action name="tutorialDetail" class="tutorialAction" method="findRegisteredTutorialSchedule">
         	<result name="success">/WEB-INF/pages/takeTutorial/tutorialDetail.jsp</result>
         </action>
+        <action name="listTakedTutorial" class="tutorialAction" method="findRegisteredTutorial">
+        	<result name="success">/WEB-INF/pages/takeTutorial/listTutorial.jsp</result>
+        </action>
         <action name="bookTutorialPage" class="tutorialAction" method="viewTutorial">
         	<result name="success">/WEB-INF/pages/takeTutorial/bookTutorial.jsp</result>
         </action>
@@ -174,9 +177,19 @@
         	<result name="success">/WEB-INF/pages/takeTutorial/registerTutorial.jsp</result>
         </action>
         <action name="registerTutorial" class="tutorialAction" method="registerTutorial">
-        	<result name="success">/WEB-INF/pages/takeTutorial/tutorialDetail.jsp</result>
+        	<result name="success">/common/messages.jsp</result>
+        </action>
+        <action name="cancelTutorial" class="tutorialAction" method="cancelTutorial">
+        	<result name="success">/common/messages.jsp</result>
+        </action>
+        <action name="cancelTutorialSchedule" class="tutorialAction" method="cancelTutorialSchedule">
+        	<result name="success">/common/messages.jsp</result>
         </action>
         <!-- end register tutorial -->
+        <!-- manage tutorial -->
+        <action name="manageTutorial" class="tutorialAction" method="execute">
+            <result name="success">/WEB-INF/pages/manageTutorial/manageTutorial.jsp</result>
+        </action>
         <action name="manageTutorialList" class="tutorialAction">
         	<result name="success">/WEB-INF/pages/manageTutorial/manageTutorial_list.jsp</result>
         </action>
@@ -192,7 +205,6 @@
         <action name="dayTutorialSchedule" class="tutorialAction" method="findDayTutorialSchedule">
         	<result name="success">/WEB-INF/pages/manageTutorial/dayTutorialSchedule.jsp</result>
         </action>
-        <!-- manage tutorial -->
         <!-- end manage tutorial -->
         <!-- <action name="manageTutorial" class="tutorialAction" method="execute">
             <result name="success">/WEB-INF/pages/tutorial/manageTutorial.jsp</result>

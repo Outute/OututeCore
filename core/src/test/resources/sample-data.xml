@@ -107,6 +107,7 @@
       <column>type</column>
       <column>category</column>
       <column>cost</column>
+      <column>maxParticipate</column>
       <column>method</column>
       <column>enabled</column>
       <column>tutorialExpired</column>
@@ -118,22 +119,23 @@
       <column>lengthInMins</column>
       <column>version</column>
       <row>
-        <value>1</value>
-        <value>test tutorial</value>
-        <value>a test tutorial</value>
-        <value>1</value>
-        <value>1</value>
-        <value>20</value>
-        <value>1</value>
-        <value>1</value>
-        <value>true</value>
-        <value>false</value>
-        <value>2010-05-23 13:30:00</value>
-        <value>2010-05-23 13:30:00</value>
-        <value>2010-06-23 13:30:00</value>
-        <value>7</value>
-        <value>30</value>
-        <value>0</value>
+        <value description="id">1</value>
+        <value description="name">test tutorial</value>
+        <value description="description">a test tutorial</value>
+        <value description="type">1</value>
+        <value description="category">1</value>
+        <value description="cost">20</value>
+        <value description="maxParticipate">0</value>
+        <value description="method">1</value>
+        <value description="enabled">1</value>
+        <value description="tutorialExpired">true</value>
+        <value description="tutorialLocked">false</value>
+        <value description="schedule">2010-05-23 13:30:00</value>
+        <value description="createTime">2010-05-23 13:30:00</value>
+        <value description="modifyTime">2010-06-23 13:30:00</value>
+        <value description="openDays">7</value>
+        <value description="lengthInMins">30</value>
+        <value description="version">0</value>
       </row>
     </table>
 </dataset>

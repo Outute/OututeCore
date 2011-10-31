@@ -28,6 +28,8 @@ import org.appfuse.model.BaseObject;
 import org.compass.annotations.Searchable;
 import org.compass.annotations.SearchableId;
 
+import com.edu.util.DateUtil;
+
 /**
  * This class represents the basic "tutorial" object in WeTute that allows for tutorial management.
  *
@@ -40,41 +42,44 @@ import org.compass.annotations.SearchableId;
 public class TutorialSchedule extends BaseObject implements Serializable {
 
 	private static final long serialVersionUID = -2146302697966361308L;
-	public static final int REPEAT_NO = 0;
-	public static final int REPEAT_WEEKLY = 1;
+	public static final int DURATION_NO_REPEAT = DateUtil.DURATION_NO_REPEAT;
+	public static final int DURATION_DAYLY = DateUtil.DURATION_DAYLY;
+	public static final int DURATION_WEEKLY = DateUtil.DURATION_WEEKLY;
+	public static final int DURATION_BI_WEEKLY = DateUtil.DURATION_BI_WEEKLY;
+	public static final int DURATION_MONTHLY = DateUtil.DURATION_MONTHLY;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@SearchableId
 	private Long id;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "START_DATE", nullable = false)
+	@Column(name = "start_date", nullable = false)
 	private Date startDate;
 	@Temporal(TemporalType.DATE)
-	@Column(name = "END_DATE", nullable = false)
+	@Column(name = "end_date", nullable = false)
 	private Date endDate;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "FROM_TIME", nullable = false)
+	@Column(name = "from_time", nullable = false)
 	private Date fromTime;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "TO_TIME", nullable = false)
+	@Column(name = "to_time", nullable = false)
 	private Date toTime;
-	@Column(name = "DURATION_TYPE", nullable = false)
+	@Column(name = "duration_type", nullable = false)
 	private int durationType;
-	@Column(name = "ENDS_OCCURRENCE", nullable = false)
+	@Column(name = "ends_occurrence", nullable = false)
 	private int endsOccurrence;
-	@Column(name = "COST")
+	@Column(name = "cost")
 	private int cost;
-	@Column(name = "MAX_PARTICIPATE")
+	@Column(name = "max_participate")
 	private int maxParticipate;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME")
+	@Column(name = "create_time")
 	private Date createTime;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MODIFY_TIME")
+	@Column(name = "modify_time")
 	private Date modifyTime;
 	@ManyToOne
-	@JoinColumn(name = "TUTORIAL_ID", nullable = false)
+	@JoinColumn(name = "tutorial_id", nullable = false)
 	private Tutorial tutorial;
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "tutorial_schedule_student", joinColumns = { @JoinColumn(name = "tutorial_schedule_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })

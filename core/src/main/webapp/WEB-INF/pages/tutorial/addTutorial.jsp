@@ -1,7 +1,7 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/common/taglibs.jsp"%>
 <!--start add tutorialForm-->
-<form id="addTutorial" action="addTutorial" method="post" class="formContent" onsubmit="saveTutorial('addTutorial','addTutorial','listTutorialFregmaent','tutorialListTable');return false;">
+<form id="addTutorial" action="addTutorial" method="post" class="formContent" onsubmit="saveTutorial('addTutorial','listTutorialFragment','addTutorial','tutorialListTable');return false;">
 <input type="hidden" name="tutorial.id" value="${tutorial.id}"/>
 <div class="padding10">
 	<div class="addTutorialTitle"><fmt:message key="page.offerTutorial.addTutorialTitle"/></div>
@@ -56,7 +56,7 @@
 			</tr>
 			<tr id="partitr" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">
 			  <td><label for="participate"><fmt:message key="page.offerTutorial.MaxParticipates"/></label></td>
-			  <td><input type="text" class="input" id="participate" name="participate" size="10" value=""/></td>
+			  <td><input type="text" class="input" id="tutorial_participate" name="tutorial.maxParticipate" size="10" value="${tutorial.maxParticipate}"/></td>
 			</tr>
 			<tr id="costtr" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">
 			  <td><label for="tutorial_cost"><fmt:message key="page.offerTutorial.Cost"/></label></td>
@@ -64,8 +64,8 @@
 			</tr>
 			<tr align="right">
 			  <td colspan="2">
-			  	<input type="button" name="save" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorial('addTutorial','addTutorial','listTutorialFregmaent','tutorialListTable');return false;"/>
-			  	<input type="button" name="cancel" value="<fmt:message key="page.button.cancel"/>" class="button"/>
+			  	<input type="button" name="save" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorial('addTutorial','listTutorialFragment','addTutorial','tutorialListTable');return false;"/>
+			  	<input type="button" name="cancel" value="<fmt:message key="page.button.cancel"/>" class="button" onclick="try{Util.id('firstTutorial').click();}catch(err){}"/>
 			  </td>
 			</tr>
 		</tbody>

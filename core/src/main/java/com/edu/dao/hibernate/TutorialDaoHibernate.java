@@ -100,7 +100,7 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 		{
 			hql.append(") order by t.name");
 		}
-		String query = hql.toString().replace("1=1 and", "").replace("(1=1)",
+		String query = hql.toString().replace("1=1 and", "").replace("and (1=1)",
 				"");
 		return getHibernateTemplate().find(query, params.toArray());
 	}

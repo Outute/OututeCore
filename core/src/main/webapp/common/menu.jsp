@@ -13,9 +13,7 @@
 	</ul>
 	</span>
 	<c:if test="${not empty pageContext.request.remoteUser}">
-	
-	<span class="main2-links">
-	
+	<span class="main-links">
     <ul>
         <menu:displayMenu name="ManageTutorial"/>
         <menu:displayMenu name="OfferTutorial"/>

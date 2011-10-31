@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * Action for facilitating User Management feature.
@@ -37,7 +38,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 	private Tutorial tutorial;
 	private Long id;
 	private String query;
-	private boolean ajax;
 	//
 	private List<TutorialSchedule> tutorialSchedules;
 	private TutorialSchedule tutorialSchedule;
@@ -74,6 +74,10 @@ public class TutorialAction extends BaseAction implements Preparable {
 		this.id = id;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public Tutorial getTutorial() {
 		return tutorial;
 	}
@@ -88,10 +92,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 
 	public List<TutorialSchedule> getTutorialSchedules() {
 		return tutorialSchedules;
-	}
-
-	public void setAjax(boolean ajax) {
-		this.ajax = ajax;
 	}
 
 	public TutorialSchedule getTutorialSchedule() {
@@ -478,14 +478,20 @@ public class TutorialAction extends BaseAction implements Preparable {
 		}
 		boolean isRight = false;
 		for (TutorialSchedule ts : tutorial.getTutorialSchedules()) {
-			if (ts.getDurationType() == 0) {// no repeat
+			if (ts.getDurationType() == TutorialSchedule.DURATION_NO_REPEAT) {// no repeat
 				isRight = DateUtil.isSameDate(ts.getStartDate(), start);
-			} else if (ts.getDurationType() == 1) {// weekly
-				isRight = DateUtil.isWeekly(ts.getStartDate(), start);
-			} else if (ts.getDurationType() == 2) {// bi-weekly
-				isRight = DateUtil.isBiWeekly(ts.getStartDate(), start);
-			} else if (ts.getDurationType() == 3) {// monthly
-				isRight = DateUtil.isMonthly(ts.getStartDate(), start);
+			} else if (ts.getDurationType() == TutorialSchedule.DURATION_DAYLY) {// daily
+				isRight = DateUtil.isDaily(ts.getStartDate(), start, ts
+						.getEndsOccurrence());
+			} else if (ts.getDurationType() == TutorialSchedule.DURATION_WEEKLY) {// weekly
+				isRight = DateUtil.isBiWeekly(ts.getStartDate(), start, ts
+						.getEndsOccurrence());
+			} else if (ts.getDurationType() == TutorialSchedule.DURATION_BI_WEEKLY) {// bi-weekly
+				isRight = DateUtil.isMonthly(ts.getStartDate(), start, ts
+						.getEndsOccurrence());
+			} else if (ts.getDurationType() == TutorialSchedule.DURATION_MONTHLY) {// monthly
+				isRight = DateUtil.isMonthly(ts.getStartDate(), start, ts
+						.getEndsOccurrence());
 			}
 			if (isRight) {
 				tutorialSchedules.add(ts);
@@ -569,6 +575,12 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return SUCCESS;
 	}
 
+	/**
+	 * find specific date tutorial schedule
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	public String findDayTutorialSchedule() {
 		Date start = null, end = null;
 		{
@@ -586,6 +598,12 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return SUCCESS;
 	}
 
+	/**
+	 * find specific week tutorial
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	public String findWeekTutorial() {
 		Date start = null, end = null;
 		{
@@ -604,6 +622,12 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return SUCCESS;
 	}
 
+	/**
+	 * find specific month tutorial
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	public String findMonthTutorial() {
 		Date start = null, end = null;
 		{
@@ -622,6 +646,13 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return SUCCESS;
 	}
 
+	/**
+	 * separated tutorial schedules into {hour:scheduleInfo} 
+	 * @param tutorialSchedules
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	public static Map<Integer, List<Map<String, Object>>> processDaySchedule(
 			List<TutorialSchedule> tutorialSchedules) {
 		Map<Integer, List<Map<String, Object>>> map = new HashMap<Integer, List<Map<String, Object>>>();
@@ -641,6 +672,13 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return map;
 	}
 
+	/**
+	 * separated tutorial schedules into {weekDate:scheduleInfo}
+	 * @param tutorialSchedules
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	public static Map<String, List<Map<String, Object>>> processWeekSchedule(
 			List<TutorialSchedule> tutorialSchedules) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -665,6 +703,13 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return map;
 	}
 
+	/**
+	 * separated tutorial schedules into {dayOfMonth:scheduleInfo}
+	 * @param tutorialSchedules
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	public static Map<String, List<Map<String, Object>>> processMonthSchedule(
 			List<TutorialSchedule> tutorialSchedules) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -692,14 +737,60 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return map;
 	}
 
+	/**
+	 * separated tutorial schedules into morning, afternoon, evening
+	 * @param tutorialSchedules
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
+	public static Map<String, List<Map<String, Object>>> processTimeAreaTutorialSchedule(
+			List<TutorialSchedule> tutorialSchedules) {
+		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
+		{
+			map.put("morning", new ArrayList<Map<String, Object>>());
+			map.put("afternoon", new ArrayList<Map<String, Object>>());
+			map.put("evening", new ArrayList<Map<String, Object>>());
+		}
+		for (TutorialSchedule ts : tutorialSchedules) {
+			int fromMinute = DateUtil.getMinute(ts.getFromTime());
+			if (fromMinute / 60 < 12) {
+				map.get("morning").add(tutorialScheduleToMap(ts));
+			} else if (fromMinute / 60 < 18) {
+				map.get("afternoon").add(tutorialScheduleToMap(ts));
+			} else {
+				map.get("evening").add(tutorialScheduleToMap(ts));
+			}
+		}
+		int maxCount = 0;
+		for (Entry<String, List<Map<String, Object>>> entry : map.entrySet()) {
+			maxCount = Math.max(maxCount, entry.getValue().size());
+		}
+		for (Entry<String, List<Map<String, Object>>> entry : map.entrySet()) {
+			maxCount = Math.max(maxCount, entry.getValue().size());
+			while (entry.getValue().size() < maxCount) {
+				entry.getValue().add(null);
+			}
+		}
+		return map;
+	}
+
+	/**
+	 * tutorial schedule information to map
+	 * @param tutorialSchedule
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
 	private static Map<String, Object> tutorialScheduleToMap(
 			TutorialSchedule tutorialSchedule) {
 		Map<String, Object> m = new HashMap<String, Object>();
 		{
+			Tutorial t = tutorialSchedule.getTutorial();
 			int fromMinute = DateUtil.getMinute(tutorialSchedule.getFromTime());
 			int toMinute = DateUtil.getMinute(tutorialSchedule.getToTime());
-			m.put("id", tutorialSchedule.getTutorial().getId());
-			m.put("name", tutorialSchedule.getTutorial().getName());
+			m.put("id", t.getId());
+			m.put("name", t.getName());
 			m.put("scheduleId", tutorialSchedule.getId());
 			m.put("fromMinute", fromMinute);
 			m.put("toMinute", toMinute);
@@ -707,6 +798,13 @@ public class TutorialAction extends BaseAction implements Preparable {
 					Locale.ENGLISH);
 			m.put("fromTime", sdf.format(tutorialSchedule.getFromTime()));
 			m.put("toTime", sdf.format(tutorialSchedule.getToTime()));
+			if (t.getType() == Tutorial.TYPE_WORKSHOP) {
+				m.put("cost", t.getCost());
+				m.put("maxParticipate", t.getMaxParticipate());
+			} else {
+				m.put("cost", tutorialSchedule.getCost());
+				m.put("maxParticipate", tutorialSchedule.getMaxParticipate());
+			}
 		}
 		return m;
 	}

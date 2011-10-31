@@ -77,16 +77,17 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public void saveTutorial(Tutorial tutorial) throws TutorialExistsException {
-
 		try {
+			if (tutorial.getType() == Tutorial.TYPE_CLASS) {
+				tutorial.setCost(0);
+				tutorial.setMaxParticipate(0);
+			}
 			tutorialDao.saveTutorial(tutorial);
 		} catch (DataIntegrityViolationException e) {
-			//e.printStackTrace();
 			log.warn(e.getMessage());
 			throw new TutorialExistsException("tutorial '" + tutorial.getName()
 					+ "' already exists!");
 		} catch (JpaSystemException e) { // needed for JPA
-			//e.printStackTrace();
 			log.warn(e.getMessage());
 			throw new TutorialExistsException("tutorial '" + tutorial.getName()
 					+ "' already exists!");

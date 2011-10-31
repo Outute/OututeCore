@@ -34,20 +34,49 @@
 							<th><fmt:message key="page.takeTutorial.Afternoon"/></th>
 							<th><fmt:message key="page.takeTutorial.Evening"/></th>
 						</tr>
-						<c:forEach items="${tutorialSchedules}" var="ts">
-						<tr>
-							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 <fmt:message key="page.takeTutorial.mins"/>, 10 <fmt:message key="page.takeTutorial.slots"/>, $${ts.cost})</span></td>
-							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 <fmt:message key="page.takeTutorial.mins"/>, 10 <fmt:message key="page.takeTutorial.slots"/>, $${ts.cost})</span></td>
-							<td><input type="radio" name="time" value="${ts.id}" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value);"/><span><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>(50 <fmt:message key="page.takeTutorial.mins"/>, 10 <fmt:message key="page.takeTutorial.slots"/>, $${ts.cost})</span></td>
-						</tr>
-						</c:forEach>
+						<s:set value="@com.edu.webapp.action.TutorialAction@processTimeAreaTutorialSchedule(#request.tutorialSchedules)" var="mapList"/>
+						<s:if test="#mapList['morning']">
+							<s:set value="#mapList['morning']" var="morning"/>
+							<s:set value="#mapList['afternoon']" var="afternoon"/>
+							<s:set value="#mapList['evening']" var="evening"/>
+							<s:iterator value="#morning" var="ts0" status="status">
+								<s:set value="#afternoon[#status.index]" var="ts1"/>
+								<s:set value="#evening[#status.index]" var="ts2"/>
+								<tr>
+									<td>
+										<s:if test="#ts0">
+										<div style="display: block; width:130px;">
+											<input type="radio" name="time_<s:property value="#ts0['scheduleId']"/>" value="<s:property value="#ts0['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.name);"/>
+											<s:property value="#ts0['fromTime']"/>(<s:property value="#ts0['toMinute']-#ts0['fromMinute']"/> <fmt:message key="page.takeTutorial.mins"/>, <s:property value="#ts0['maxParticipate']"/> <fmt:message key="page.takeTutorial.slots"/>, $<s:property value="#ts0['cost']"/>)
+										</div>
+										</s:if>
+									</td>
+									<td>
+										<s:if test="#ts1">
+										<div style="display: block; width:130px;">
+										<input type="radio" name="time_<s:property value="#ts1['scheduleId']"/>" value="<s:property value="#ts1['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.name);"/>
+										<s:property value="#ts1['fromTime']"/>(<s:property value="#ts1['toMinute']-#ts1['fromMinute']"/> <fmt:message key="page.takeTutorial.mins"/>, <s:property value="#ts1['maxParticipate']"/> <fmt:message key="page.takeTutorial.slots"/>, $<s:property value="#ts1['cost']"/>)
+										</div>
+										</s:if>
+									</td>
+									<td>
+										<s:if test="#ts2">
+										<div style="display: block; width:130px;">
+										<input type="radio" name="time_<s:property value="#ts2['scheduleId']"/>" value="<s:property value="#ts2['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.name);"/>
+										<s:property value="#ts2['fromTime']"/>(<s:property value="#ts2['toMinute']-#ts2['fromMinute']"/> <fmt:message key="page.takeTutorial.mins"/>, <s:property value="#ts2['maxParticipate']"/> <fmt:message key="page.takeTutorial.slots"/>, $<s:property value="#ts2['cost']"/>)
+										</div>
+										</s:if>
+									</td>
+								</tr>
+							</s:iterator>
+						</s:if>
 					</table>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right">
 					<input type="button" value="<fmt:message key="page.takeTutorial.BookNow"/>" class="button buttonMin" onclick="clickBookNow('bookTutorial','${tutorial.id}','rightTakeTutorialPanel');"/>
-					<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button buttonMin"/>
+					<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button buttonMin" onclick="try{Util.id('takeMoreTutorial_0').click();}catch(err){}"/>
 				</td>
 			</tr>
 		</table>

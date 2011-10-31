@@ -234,34 +234,54 @@ public final class DateUtil {
 	}
 
 	/**
+	 * test two dates are the daily day
+	 * @param origin
+	 * @param toCompare
+	 * @param occurrence
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-10-31
+	 */
+	public static boolean isDaily(Date origin, Date toCompare, int occurrence) {
+		Calendar o = clearTimes(origin);
+		{
+			o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
+					+ occurrence - 1);
+		}
+		Calendar t = clearTimes(toCompare);
+		return o.getTimeInMillis() >= t.getTimeInMillis();
+	}
+
+	/**
 	 * test two dates are the same week day
 	 * @param origin
 	 * @param toCompare
+	 * @param occurrence
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
-	public static boolean isWeekly(Date origin, Date toCompare) {
-		Calendar o = Calendar.getInstance();
-		{
-			o.setTime(origin);
+	public static boolean isWeekly(Date origin, Date toCompare, int occurrence) {
+		Calendar o = clearTimes(origin);
+		Calendar t = clearTimes(toCompare);
+		if (o.get(Calendar.DAY_OF_WEEK) != t.get(Calendar.DAY_OF_WEEK)) {
+			return false;
 		}
-		Calendar t = Calendar.getInstance();
-		{
-			t.setTime(toCompare);
-		}
-		return o.get(Calendar.DAY_OF_WEEK) == t.get(Calendar.DAY_OF_WEEK);
+		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
+				+ (occurrence - 1) * 7);
+		return o.getTimeInMillis() >= t.getTimeInMillis();
 	}
 
 	/**
 	 * test two dates are the bi-weekly day
 	 * @param origin
 	 * @param toCompare
+	 * @param occurrence
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
-	public static boolean isBiWeekly(Date origin, Date toCompare) {
+	public static boolean isBiWeekly(Date origin, Date toCompare, int occurrence) {
 		Calendar o = clearTimes(origin);
 		Calendar t = clearTimes(toCompare);
 		boolean isWeekly = o.get(Calendar.DAY_OF_WEEK) == t
@@ -271,27 +291,38 @@ public final class DateUtil {
 		}
 		long days = (toCompare.getTime() - origin.getTime())
 				/ (24 * 3600 * 1000);
-		return days % 14 == 0;
+		if (days % 14 != 0) {
+			return false;
+		}
+		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
+				+ (occurrence - 1) * 14);
+		return o.getTimeInMillis() >= t.getTimeInMillis();
 	}
 
 	/**
 	 * test two dates are the same month day
 	 * @param origin
 	 * @param toCompare
+	 * @param occurrence
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
-	public static boolean isMonthly(Date origin, Date toCompare) {
+	public static boolean isMonthly(Date origin, Date toCompare, int occurrence) {
 		Calendar o = Calendar.getInstance();
 		{
 			o.setTime(origin);
 		}
-		Calendar t = Calendar.getInstance();
-		{
-			t.setTime(toCompare);
+		Calendar t = clearTimes(toCompare);
+		if (o.get(Calendar.DAY_OF_MONTH) != t.get(Calendar.DAY_OF_MONTH)) {
+			return false;
 		}
-		return o.get(Calendar.DAY_OF_MONTH) == t.get(Calendar.DAY_OF_MONTH);
+		for (int i = 0; i < occurrence - 1; i++) {
+			o.set(Calendar.MONTH, o.get(Calendar.MONTH) + 1);
+		}
+		return o.get(Calendar.YEAR) * 100 + o.get(Calendar.MONTH) > t
+				.get(Calendar.YEAR)
+				* 100 + t.get(Calendar.MONTH);
 	}
 
 	/**

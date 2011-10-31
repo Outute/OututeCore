@@ -36,7 +36,8 @@ import java.util.Set;
 @XmlRootElement
 public class Tutorial extends BaseObject implements Serializable {
 	private static final long serialVersionUID = 6070037639785281128L;
-
+	public static final int TYPE_CLASS=0;
+	public static final int TYPE_WORKSHOP=0;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@SearchableId
@@ -51,8 +52,12 @@ public class Tutorial extends BaseObject implements Serializable {
 	private int type; // required
 	@Column(name = "category", nullable = false)
 	private int category; // required
+	/** when is Workshop type set cost for all schedule **/
 	@Column(name = "cost", nullable = false)
 	private int cost; // required
+	/** when is Workshop type set maxParticipate for all schedule **/
+	@Column(name = "maxParticipate", nullable = false)
+	private int maxParticipate;
 	@Column(name = "method", nullable = false)
 	private int method; // required
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -240,6 +245,14 @@ public class Tutorial extends BaseObject implements Serializable {
 		this.tutorialSchedules = tutorialSchedules;
 	}
 
+	public int getMaxParticipate() {
+		return maxParticipate;
+	}
+
+	public void setMaxParticipate(int maxParticipate) {
+		this.maxParticipate = maxParticipate;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -273,6 +286,7 @@ public class Tutorial extends BaseObject implements Serializable {
 				ToStringStyle.DEFAULT_STYLE).append("name", this.name).append(
 				STRING_SEPERATOR).append("description", this.description)
 				.append(STRING_SEPERATOR).append("cost", this.cost).append(
+						"maxParticipate", this.maxParticipate).append(
 						STRING_SEPERATOR).append("schedule", this.schedule)
 				.append(STRING_SEPERATOR).append("enabled", this.enabled);
 		return sb.toString();
