@@ -110,6 +110,7 @@ public interface TutorialService {
 	 * @param start
 	 * @param end
 	 * @param tutorName
+	 * @param category
 	 * @param sortBy
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
@@ -118,7 +119,7 @@ public interface TutorialService {
 	@GET
 	@Path("/tutorialSchedule")
 	List<Tutorial> findTutorials(Long id, String name, Date start, Date end,
-			String tutorName, String sortBy);
+			String tutorName, Integer category, String sortBy);
 
 	/**
 	 * remove a user's TutorialSchedule by given tutorialScheduleId and userId

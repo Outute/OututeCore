@@ -16,7 +16,7 @@ public final class Constants {
     /**
      * The name of the ResourceBundle used in this application
      */
-    public static final String BUNDLE_KEY = "ApplicationResources";
+    public static final String BUNDLE_KEY = "i18n.ApplicationResources";
 
     /**
      * File separator from System properties

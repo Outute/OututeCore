@@ -187,7 +187,7 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findTutorials(Long id, String name, Date start,
-			Date end, String tutorName, String sortBy) {
+			Date end, String tutorName, Integer category, String sortBy) {
 		if (id != null) {
 			Tutorial t = tutorialDao.get(id);
 			List<Tutorial> list = new ArrayList<Tutorial>();
@@ -196,7 +196,8 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 			}
 			return list;
 		}
-		return tutorialDao.findTutorials(name, start, end, tutorName, sortBy);
+		return tutorialDao.findTutorials(name, start, end, tutorName, category,
+				sortBy);
 	}
 
 	/**

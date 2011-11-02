@@ -9,7 +9,7 @@
 					<td class="iconTd"></td>
 			  		<td>
 			  			<div class="title">
-			  				<div class="floatl tutorialName">${t.name}</div><div class="floatl tutor overhide"><fmt:message key="page.takeTutorial.Instructor"/><c:forEach items="${t.tutors}" var="tu" varStatus="stat">
+			  				<div class="floatl tutorialName">${t.name} <fmt:message key="page.takeTutorial.ID"/>${t.id}</div><div class="floatl tutor overhide"><fmt:message key="page.takeTutorial.Instructor"/><c:forEach items="${t.tutors}" var="tu" varStatus="stat">
 			  						<c:if test="${stat.index>0}">,</c:if>&nbsp;${tu.firstName}
 			  					</c:forEach><c:if test="${t.cost>0}">&nbsp;&nbsp;<fmt:message key="page.takeTutorial.Max"/> ${t.cost} <fmt:message key="page.takeTutorial.Cost"/>${t.cost}</c:if>
 			  				</div>

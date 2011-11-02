@@ -141,6 +141,12 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @return "success"
 	 */
 	public String execute() {
+		tutorials = new ArrayList<Tutorial>();
+		for (int i = 0; i < 30; i++) {
+			Tutorial t = new Tutorial();
+			t.setName("adfdsaf" + i);
+			tutorials.add(t);
+		}
 		return SUCCESS;
 	}
 
@@ -402,6 +408,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findTutorials() {
 		String name = null, tutorName = null, sortBy = null;
+		Integer category = null;
 		Date start = null, end = null;
 		{
 			name = getRequest().getParameter("search.name");
@@ -435,8 +442,15 @@ public class TutorialAction extends BaseAction implements Preparable {
 			sortBy = getRequest().getParameter("search.sortBy");
 			sortBy = sortBy == null ? null : sortBy.trim();
 		}
+		{
+			String categoryStr = getRequest().getParameter("search.category");
+			try {
+				category = Integer.valueOf(categoryStr.trim());
+			} catch (Exception e) {
+			}
+		}
 		tutorials = tutorialManager.findTutorials(id, name, start, end,
-				tutorName, sortBy);
+				tutorName, category, sortBy);
 		return SUCCESS;
 	}
 

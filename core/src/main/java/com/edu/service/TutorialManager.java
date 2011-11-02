@@ -92,13 +92,14 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	* @param start
 	* @param end
 	* @param tutorName
+	* @param category
 	* @param sortBy
 	* @return
 	* @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	* @since 2011-10-24
 	*/
 	List<Tutorial> findTutorials(Long id, String name, Date start, Date end,
-			String tutorName, String sortBy);
+			String tutorName, Integer category, String sortBy);
 
 	/**
 	 * remove an user's TutorialSchedule by given tutorialScheduleId and userId

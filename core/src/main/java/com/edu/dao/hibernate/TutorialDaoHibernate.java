@@ -64,7 +64,7 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findTutorials(String name, Date start, Date end,
-			String tutorName, String sortBy) {
+			String tutorName, Integer category, String sortBy) {
 		List<Object> params = new ArrayList<Object>();
 		StringBuffer hql = new StringBuffer(128);
 		{
@@ -77,9 +77,12 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 			hql.append(" join t.tutors tr ");
 		}
 		{
-			hql
-					.append(" where t.enabled=? and (1=1");
+			hql.append(" where t.enabled=? and (1=1");
 			params.add(true);
+		}
+		if (category != null) {
+			hql.append(" and t.category=? ");
+			params.add(category);
 		}
 		if (name != null) {
 			hql.append(" and t.name like ? ");
@@ -100,8 +103,8 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 		{
 			hql.append(") order by t.name");
 		}
-		String query = hql.toString().replace("1=1 and", "").replace("and (1=1)",
-				"");
+		String query = hql.toString().replace("1=1 and", "").replace(
+				"and (1=1)", "");
 		return getHibernateTemplate().find(query, params.toArray());
 	}
 
