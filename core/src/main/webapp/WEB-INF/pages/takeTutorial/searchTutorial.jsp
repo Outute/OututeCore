@@ -5,16 +5,16 @@
 	<form id="searchTutorial" action="listForSearchTutorial" method="post" class="searchContent" onsubmit="return false;">
 		<table>
 			<tr><th colspan="4"><fmt:message key="page.takeTutorial.SearchTutorial"/></th></tr>
-			<tr><td><fmt:message key="page.takeTutorial.ID"/></td><td><input type="text" name="id" class="inputMin w100px;"/></td></tr>
+			<tr><td><fmt:message key="page.takeTutorial.ID"/></td><td><input type="text" name="id" class="inputMin w150px"/></td></tr>
 			<tr>
 				<td colspan="5">
 					<div style="clear: both; position: relative; display: inline;"><hr style="margin: 10px 0px; clear: both;"/><div style="position:absolute;float: right; left: 200px; top:0px; background-color: white; padding: 0px 10px; display: block;"><fmt:message key="page.takeTutorial.OR"/></div></div>
 				</td>
 			</tr>
 			<tr>
-				<td><fmt:message key="page.takeTutorial.Name"/></td><td><input type="text" name="search.name" class="inputMin w100px"/></td>
+				<td><fmt:message key="page.takeTutorial.Name"/></td><td><input type="text" name="search.name" class="inputMin w150px"/></td>
 				<td><fmt:message key="page.takeTutorial.Category"/></td><td>
-					<select name="search.category" class="select w100px">
+					<select name="search.category" class="select w200px font12px">
 				  		<option value="1" <c:if test="${tutorial.category==1}"> elected="selected"</c:if>><fmt:message key="page.offerTutorial.Languages"/></option>
 						<option value="2" <c:if test="${tutorial.category==2}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.StudyOversea"/></option>
 						<option value="3" <c:if test="${tutorial.category==3}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.AcademicStudies"/></option>
@@ -34,8 +34,8 @@
 			  	</td>
 			</tr>
 			<tr>
-				<td><fmt:message key="page.takeTutorial.Start"/></td><td><input type="text" id="search_start" name="search.start" class="inputMin w100px"/></td>
-				<td><fmt:message key="page.takeTutorial.End"/></td><td><input type="text" id="search_end" name="search.end" class="inputMin w100px"/></td>
+				<td><fmt:message key="page.takeTutorial.Start"/></td><td><input type="text" id="search_start" name="search.start" class="inputMin w150px"/></td>
+				<td><fmt:message key="page.takeTutorial.End"/></td><td><input type="text" id="search_end" name="search.end" class="inputMin w150px"/></td>
 			</tr>
 			<tr>
 				<td><fmt:message key="page.takeTutorial.TutorName"/></td><td><input type="text" name="search.tutorName" class="inputMin w200px"/></td>

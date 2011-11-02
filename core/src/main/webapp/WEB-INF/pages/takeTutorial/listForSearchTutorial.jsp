@@ -24,4 +24,23 @@
 		</td>
 	</tr>
 </c:forEach>
+<c:if test="${empty tutorials}">
+	<tr>
+		<td colspan="2">
+			<table class=innertable>
+				<tr>
+					<td class="iconTd"></td>
+			  		<td>
+			  			<div class="title">
+			  				<div class="floatl tutorialName"><fmt:message key="page.takeTutorial.NoRecordsFound"/></div><div class="floatl tutor overhide"></div>
+			  			</div>
+			  			<div class="content overhide">
+			  			</div>
+			  		</td>
+			  		<td class="iconTextTd" nowrap="nowrap"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</c:if>
 <!--end list searched tutorials-->
