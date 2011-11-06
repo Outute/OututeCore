@@ -37,7 +37,7 @@ import java.util.Set;
 public class Tutorial extends BaseObject implements Serializable {
 	private static final long serialVersionUID = 6070037639785281128L;
 	public static final int TYPE_CLASS=0;
-	public static final int TYPE_WORKSHOP=0;
+	public static final int TYPE_WORKSHOP=1;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@SearchableId

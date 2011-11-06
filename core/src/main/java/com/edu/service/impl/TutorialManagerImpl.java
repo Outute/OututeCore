@@ -259,4 +259,20 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	public List<TutorialSchedule> findTutorialSchedule(Date start, Date end) {
 		return tutorialScheduleDao.findTutorialSchedule(start, end);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
+			String name) {
+		return tutorialDao.findCurrentTutorials(pageSize, currentPage, name);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
+			String name) {
+		return tutorialDao.findHistoryTutorials(pageSize, currentPage, name);
+	}
 }

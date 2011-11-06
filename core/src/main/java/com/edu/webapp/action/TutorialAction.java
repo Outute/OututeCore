@@ -141,12 +141,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @return "success"
 	 */
 	public String execute() {
-		tutorials = new ArrayList<Tutorial>();
-		for (int i = 0; i < 30; i++) {
-			Tutorial t = new Tutorial();
-			t.setName("adfdsaf" + i);
-			tutorials.add(t);
-		}
 		return SUCCESS;
 	}
 
@@ -657,6 +651,44 @@ public class TutorialAction extends BaseAction implements Preparable {
 			}
 		}
 		tutorialSchedules = tutorialManager.findTutorialSchedule(start, end);
+		return SUCCESS;
+	}
+
+	public String findCurrentTutorials() {
+		getRequest().setAttribute("isCurrent", true);
+		String name = null;
+		{
+			name = getRequest().getParameter("search.name");
+			name = name == null ? null : name.trim();
+		}
+		tutorials = tutorialManager.findCurrentTutorials(25, 0, name);
+//		{
+//			tutorials = new ArrayList<Tutorial>();
+//			for (int i = 0; i < 30; i++) {
+//				Tutorial t = new Tutorial();
+//				t.setName("current" + i);
+//				tutorials.add(t);
+//			}
+//		}
+		return SUCCESS;
+	}
+
+	public String findHistoryTutorials() {
+		getRequest().setAttribute("isHistory", true);
+		String name = null;
+		{
+			name = getRequest().getParameter("search.name");
+			name = name == null ? null : name.trim();
+		}
+		tutorials = tutorialManager.findHistoryTutorials(25, 0, name);
+//		{
+//			tutorials = new ArrayList<Tutorial>();
+//			for (int i = 0; i < 400; i++) {
+//				Tutorial t = new Tutorial();
+//				t.setName("history" + i);
+//				tutorials.add(t);
+//			}
+//		}
 		return SUCCESS;
 	}
 

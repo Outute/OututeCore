@@ -191,4 +191,32 @@ public interface TutorialService {
 	@GET
 	@Path("/tutorialSchedule")
 	List<TutorialSchedule> findTutorialSchedule(Date start, Date end);
+
+	/**
+	 * find current active tutorials
+	 * @param name
+	 * @param pageSize
+	 * @param currentPage
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-3
+	 */
+	@GET
+	@Path("/tutorials")
+	List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
+			String name);
+
+	/**
+	 * find history tutorials
+	 * @param name
+	 * @param pageSize
+	 * @param currentPage
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-3
+	 */
+	@GET
+	@Path("/tutorials")
+	List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
+			String name);
 }

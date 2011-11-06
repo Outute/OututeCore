@@ -187,11 +187,14 @@
         </action>
         <!-- end register tutorial -->
         <!-- manage tutorial -->
-        <action name="manageTutorial" class="tutorialAction" method="execute">
+        <action name="manageTutorial" class="tutorialAction" method="findCurrentTutorials">
             <result name="success">/WEB-INF/pages/manageTutorial/manageTutorial.jsp</result>
         </action>
-        <action name="manageTutorialList" class="tutorialAction">
-        	<result name="success">/WEB-INF/pages/manageTutorial/manageTutorial_list.jsp</result>
+        <action name="currentTutorials" class="tutorialAction" method="findCurrentTutorials">
+            <result name="success">/WEB-INF/pages/manageTutorial/displayTable.jsp</result>
+        </action>
+        <action name="historyTutorials" class="tutorialAction" method="findHistoryTutorials">
+            <result name="success">/WEB-INF/pages/manageTutorial/displayTable.jsp</result>
         </action>
         <action name="manageTutorialCalendar" class="tutorialAction">
         	<result name="success">/WEB-INF/pages/manageTutorial/manageTutorial_calendar.jsp</result>

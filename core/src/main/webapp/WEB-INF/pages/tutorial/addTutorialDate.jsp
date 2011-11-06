@@ -53,14 +53,16 @@
 							<hr style="color: #CCC; margin: 0px 0px 20px 0px;"/>
 						</td>
 					</tr>
-					<tr id="costtr" style="<c:if test="${tutorialSchedule==null||tutorialSchedule.durationType==0}">display:none;</c:if>">
-						<td colspan="2" align="right"><label for="cost"><fmt:message key="page.offerTutorial.Cost"/></label></td>
-						<td colspan="2"><input type="text" class="input" id="cost" name="tutorialSchedule.cost" size="10" value="${tutorialSchedule.cost}"/></td>
-					</tr>
-					<tr id="partr" style="<c:if test="${tutorialSchedule==null||tutorialSchedule.durationType==0}">display:none;</c:if>">
-						<td colspan="2" align="right"><label for="participate"><fmt:message key="page.offerTutorial.MaxParticipates"/></label></td>
-						<td colspan="2"><input type="text" class="input" id="participate" name="tutorialSchedule.maxParticipate" size="10" value="${tutorialSchedule.maxParticipate}"/></td>
-					</tr>
+					<c:if test="${tutorial.type!=1}">
+						<tr id="costtr" style="<c:if test="${tutorialSchedule==null||tutorialSchedule.durationType==0}">display:none;</c:if>">
+							<td colspan="2" align="right"><label for="cost"><fmt:message key="page.offerTutorial.Cost"/></label></td>
+							<td colspan="2"><input type="text" class="input" id="cost" name="tutorialSchedule.cost" size="10" value="${tutorialSchedule.cost}"/></td>
+						</tr>
+						<tr id="partr" style="<c:if test="${tutorialSchedule==null||tutorialSchedule.durationType==0}">display:none;</c:if>">
+							<td colspan="2" align="right"><label for="participate"><fmt:message key="page.offerTutorial.MaxParticipates"/></label></td>
+							<td colspan="2"><input type="text" class="input" id="participate" name="tutorialSchedule.maxParticipate" size="10" value="${tutorialSchedule.maxParticipate}"/></td>
+						</tr>
+					</c:if>
 				</table>
 			</td>
 		</tr>

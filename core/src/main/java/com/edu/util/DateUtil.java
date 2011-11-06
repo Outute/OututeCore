@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 /**
  * Date Utility Class used to convert Strings to Dates and Timestamps
@@ -194,19 +195,13 @@ public final class DateUtil {
 	 * @since 2011-10-25
 	 */
 	public static Calendar clearTimes(Date date) {
-		int year, month, day;
 		Calendar c = Calendar.getInstance();
 		{
 			c.setTime(date);
-			year = c.get(Calendar.YEAR);
-			month = c.get(Calendar.MONTH);
-			day = c.get(Calendar.DAY_OF_MONTH);
-		}
-		{
-			c.setTimeInMillis(0);
-			c.set(Calendar.YEAR, year);
-			c.set(Calendar.MONTH, month);
-			c.set(Calendar.DAY_OF_MONTH, day);
+			c.set(Calendar.MILLISECOND, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.HOUR_OF_DAY, 0);
 		}
 		return c;
 	}
@@ -244,12 +239,16 @@ public final class DateUtil {
 	 */
 	public static boolean isDaily(Date origin, Date toCompare, int occurrence) {
 		Calendar o = clearTimes(origin);
+		long originTime = o.getTimeInMillis();
 		{
 			o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
-					+ occurrence - 1);
+					+ occurrence);
 		}
 		Calendar t = clearTimes(toCompare);
-		return o.getTimeInMillis() >= t.getTimeInMillis();
+		if (t.getTimeInMillis() < originTime) {
+			return false;
+		}
+		return t.getTimeInMillis() < o.getTimeInMillis();
 	}
 
 	/**
@@ -263,13 +262,17 @@ public final class DateUtil {
 	 */
 	public static boolean isWeekly(Date origin, Date toCompare, int occurrence) {
 		Calendar o = clearTimes(origin);
+		long originTime = o.getTimeInMillis();
 		Calendar t = clearTimes(toCompare);
+		if (t.getTimeInMillis() < originTime) {
+			return false;
+		}
 		if (o.get(Calendar.DAY_OF_WEEK) != t.get(Calendar.DAY_OF_WEEK)) {
 			return false;
 		}
-		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
-				+ (occurrence - 1) * 7);
-		return o.getTimeInMillis() >= t.getTimeInMillis();
+		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH) + occurrence
+				* 7);
+		return t.getTimeInMillis() < o.getTimeInMillis();
 	}
 
 	/**
@@ -283,7 +286,11 @@ public final class DateUtil {
 	 */
 	public static boolean isBiWeekly(Date origin, Date toCompare, int occurrence) {
 		Calendar o = clearTimes(origin);
+		long originTime = o.getTimeInMillis();
 		Calendar t = clearTimes(toCompare);
+		if (t.getTimeInMillis() < originTime) {
+			return false;
+		}
 		boolean isWeekly = o.get(Calendar.DAY_OF_WEEK) == t
 				.get(Calendar.DAY_OF_WEEK);
 		if (!isWeekly) {
@@ -294,9 +301,9 @@ public final class DateUtil {
 		if (days % 14 != 0) {
 			return false;
 		}
-		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
-				+ (occurrence - 1) * 14);
-		return o.getTimeInMillis() >= t.getTimeInMillis();
+		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH) + occurrence
+				* 14);
+		return t.getTimeInMillis() < o.getTimeInMillis();
 	}
 
 	/**
@@ -310,19 +317,23 @@ public final class DateUtil {
 	 */
 	public static boolean isMonthly(Date origin, Date toCompare, int occurrence) {
 		Calendar o = Calendar.getInstance();
+		long originTime = o.getTimeInMillis();
 		{
 			o.setTime(origin);
 		}
 		Calendar t = clearTimes(toCompare);
+		if (t.getTimeInMillis() < originTime) {
+			return false;
+		}
 		if (o.get(Calendar.DAY_OF_MONTH) != t.get(Calendar.DAY_OF_MONTH)) {
 			return false;
 		}
-		for (int i = 0; i < occurrence - 1; i++) {
+		for (int i = 0; i < occurrence; i++) {
 			o.set(Calendar.MONTH, o.get(Calendar.MONTH) + 1);
 		}
-		return o.get(Calendar.YEAR) * 100 + o.get(Calendar.MONTH) > t
+		return t.get(Calendar.YEAR) * 100 + t.get(Calendar.MONTH) < o
 				.get(Calendar.YEAR)
-				* 100 + t.get(Calendar.MONTH);
+				* 100 + o.get(Calendar.MONTH);
 	}
 
 	/**
@@ -351,7 +362,7 @@ public final class DateUtil {
 		Calendar c = clearTimes(date);
 		{
 			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
-			c.set(Calendar.SECOND, c.get(Calendar.SECOND) - 1);
+			c.set(Calendar.MILLISECOND, -100);
 		}
 		return c;
 	}
@@ -424,29 +435,29 @@ public final class DateUtil {
 			break;
 		}
 		case DURATION_DAYLY: {
-			Calendar c = clearTimes(start);
+			Calendar c = getMaxDay(start);
 			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)
-					+ occurrents);
+					+ occurrents - 1);
 			end = c.getTime();
 			break;
 		}
 		case DURATION_WEEKLY: {
 			Calendar c = getMaxDay(start);
 			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)
-					+ occurrents * 7);
+					+ (occurrents - 1) * 7);
 			end = c.getTime();
 			break;
 		}
 		case DURATION_BI_WEEKLY: {
 			Calendar c = getMaxDay(start);
 			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH)
-					+ occurrents * 14);
+					+ (occurrents - 1) * 14);
 			end = c.getTime();
 			break;
 		}
 		case DURATION_MONTHLY: {
 			Calendar c = getMaxDay(start);
-			c.set(Calendar.MONTH, c.get(Calendar.MONTH) + occurrents);
+			c.set(Calendar.MONTH, c.get(Calendar.MONTH) + (occurrents - 1));
 			end = c.getTime();
 			break;
 		}

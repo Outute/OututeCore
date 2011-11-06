@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.edu.dao.TutorialDao;
 import com.edu.model.Tutorial;
 import com.edu.service.TutorialNotFoundException;
+import com.edu.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,5 +115,57 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	public List<Tutorial> findTutorialsByUserId(Long userId) {
 		String hql = "select distinct t from Tutorial t join t.tutorialSchedules ts join ts.students s where s.id=? and t.enabled=? order by t.name";
 		return getHibernateTemplate().find(hql, userId, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
+			String name) {
+		List<Object> params = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select distinct t from Tutorial t ");
+			hql.append(" join t.tutorialSchedules ts ");
+			hql.append(" where t.enabled=? and ts.endDate>=? ");
+			params.add(true);
+			params.add(DateUtil.clearTimes(new Date()).getTime());
+		}
+		if (name != null) {
+			hql.append(" and t.name like ? ");
+			params.add("%" + name + "%");
+		}
+		{
+			hql.append(" order by t.name");
+		}
+		String query = hql.toString();
+		return getHibernateTemplate().find(query, params.toArray());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
+			String name) {
+		List<Object> params = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select t from Tutorial t where");
+		}
+		if (name != null) {
+			hql.append(" and t.name like ? ");
+			params.add("%" + name + "%");
+		}
+		{
+			hql.append(" and t.id not in (select tt.id from Tutorial tt ");
+			hql.append("  join tt.tutorialSchedules ts ");
+			hql.append("  where t.enabled=? and ts.endDate>=?");
+			hql.append(")");
+			hql.append(" order by t.name");
+			params.add(true);
+			params.add(DateUtil.clearTimes(new Date()).getTime());
+		}
+		String query = hql.toString().replace("where and", "where");
+		return getHibernateTemplate().find(query, params.toArray());
 	}
 }

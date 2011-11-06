@@ -1,6 +1,22 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/common/taglibs.jsp"%>
 <!-- manage tutorial calendar -->
+<head>
+    <title><fmt:message key="userList.title"/></title>
+    <meta name="heading" content="<fmt:message key='tutorialList.heading'/>"/>
+    <meta name="menu" content="AdminMenu"/>
+</head>
+<style>
+span.pagelinks{
+	text-align: right;
+}
+</style>
+
+<div class="main-content" style="width: 100%;">
+	<h2>Select  View Options</h2>
+	<input onclick="window.location.href='manageTutorial';" name="viewtype_option" type="radio" id="viewtype_option_0"/><label for="viewtype_option_0">Table View</label>
+	<input checked="checked" onclick="window.location.href='manageTutorialCalendar';" name="viewtype_option" type="radio"  id="viewtype_option_1"/><label for="viewtype_option_1">Calendar View</label>
+</div>
 <div style="display: none;" script="Util.calender('mycalendar',{},'20110101');"></div>
 <div class="manageTutorialCalendar w100pc" style="position: relative; display: block;">
 	<div class="toolBar w100pc" style="height: 25px; position: relative; display: block; padding-top: 10px;">

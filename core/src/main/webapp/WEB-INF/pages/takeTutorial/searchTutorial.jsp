@@ -15,21 +15,22 @@
 				<td><fmt:message key="page.takeTutorial.Name"/></td><td><input type="text" name="search.name" class="inputMin w150px"/></td>
 				<td><fmt:message key="page.takeTutorial.Category"/></td><td>
 					<select name="search.category" class="select w200px font12px">
-				  		<option value="1" <c:if test="${tutorial.category==1}"> elected="selected"</c:if>><fmt:message key="page.offerTutorial.Languages"/></option>
-						<option value="2" <c:if test="${tutorial.category==2}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.StudyOversea"/></option>
-						<option value="3" <c:if test="${tutorial.category==3}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.AcademicStudies"/></option>
-						<option value="4" <c:if test="${tutorial.category==4}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.GamesSportsAndLeisure"/></option>
-						<option value="5" <c:if test="${tutorial.category==5}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.Business"/></option>
-						<option value="6" <c:if test="${tutorial.category==6}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.CareerConsultationAndDevelopment"/></option>
-						<option value="7" <c:if test="${tutorial.category==7}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.ArtsAndLiterature"/></option>
-						<option value="8" <c:if test="${tutorial.category==8}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.HowToForDummies"/></option>
-						<option value="9" <c:if test="${tutorial.category==9}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.ComputerAndInternet"/></option>
-						<option value="10" <c:if test="${tutorial.category==10}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.LegalIssues"/></option>
-						<option value="11" <c:if test="${tutorial.category==11}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.FinanceInsuranceAndRealEstate"/></option>
-						<option value="12" <c:if test="${tutorial.category==12}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.HealthAndLivingStyle"/></option>
-						<option value="13" <c:if test="${tutorial.category==13}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.Travel"/></option>
-						<option value="14" <c:if test="${tutorial.category==14}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.BeautyAndFashion"/></option>
-						<option value="0" <c:if test="${tutorial.category==0}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.Others"/></option>
+				  		<option value="" selected="selected"><fmt:message key="page.offerTutorial.ChooseACategory"/></option>
+				  		<option value="1"><fmt:message key="page.offerTutorial.Languages"/></option>
+						<option value="2"><fmt:message key="page.offerTutorial.StudyOversea"/></option>
+						<option value="3"><fmt:message key="page.offerTutorial.AcademicStudies"/></option>
+						<option value="4"><fmt:message key="page.offerTutorial.GamesSportsAndLeisure"/></option>
+						<option value="5"><fmt:message key="page.offerTutorial.Business"/></option>
+						<option value="6"><fmt:message key="page.offerTutorial.CareerConsultationAndDevelopment"/></option>
+						<option value="7"><fmt:message key="page.offerTutorial.ArtsAndLiterature"/></option>
+						<option value="8"><fmt:message key="page.offerTutorial.HowToForDummies"/></option>
+						<option value="9"><fmt:message key="page.offerTutorial.ComputerAndInternet"/></option>
+						<option value="10"><fmt:message key="page.offerTutorial.LegalIssues"/></option>
+						<option value="11"><fmt:message key="page.offerTutorial.FinanceInsuranceAndRealEstate"/></option>
+						<option value="12"><fmt:message key="page.offerTutorial.HealthAndLivingStyle"/></option>
+						<option value="13"><fmt:message key="page.offerTutorial.Travel"/></option>
+						<option value="14"><fmt:message key="page.offerTutorial.BeautyAndFashion"/></option>
+						<option value="0"><fmt:message key="page.offerTutorial.Others"/></option>
 				  	</select>
 			  	</td>
 			</tr>
