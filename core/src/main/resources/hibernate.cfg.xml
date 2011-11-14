@@ -20,9 +20,9 @@
         <mapping class="com.edu.model.Tutorial"/>
         <mapping class="com.edu.model.TutorialSchedule"/>
         
-        <class-cache usage="read-write" class="com.edu.model.User"/>
+        <!-- <class-cache usage="read-write" class="com.edu.model.User"/>
         <class-cache usage="read-write" class="com.edu.model.Role"/>
         <class-cache usage="read-write" class="com.edu.model.Tutorial"/>
-        <class-cache usage="read-write" class="com.edu.model.TutorialSchedule"/>
+        <class-cache usage="read-write" class="com.edu.model.TutorialSchedule"/> -->
     </session-factory>
 </hibernate-configuration>
