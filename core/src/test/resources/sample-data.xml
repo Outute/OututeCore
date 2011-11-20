@@ -138,4 +138,15 @@
         <value description="version">0</value>
       </row>
     </table>
+    
+    <table name="system_configure">
+    	<column>id</column>
+    	<column>name</column>
+    	<column>value</column>
+    	<row>
+    		<value description="id">1</value>
+    		<value description="name">NOTIFICATION_DUETIME_MINUTE</value>
+    		<value description="value">15</value>
+    	</row>
+    </table>
 </dataset>

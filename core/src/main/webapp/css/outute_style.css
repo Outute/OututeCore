@@ -402,6 +402,14 @@ input.button:hover{cursor:pointer; color:#fff; background:#663300; border:1px so
 /* inner pages css ends */osted-row{padding:3px;}
 /* inner pages css ends */
 
+/* start error messages */
+.error{
+	border-color: red;
+	border-width: 1px;
+	color: red; 
+}
+/* end error messages*/
+
 /* calendar css*/
 div.calendar-panel {
     padding:1px;
@@ -467,6 +475,9 @@ table.calendar-day tr.last td{
 table.calendar-day td.last{
 	border-right: solid 1px #CCCCCC;
 }
+.calendar-panel .highlight{
+	background-color: #FFAFDF;
+}
 /* end calendar css*/
 
 .rightTutorialPanel{
@@ -527,7 +538,7 @@ span.addIcon{background: url("../images/add.png") no-repeat 0 0; padding: 3px 7p
 span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 0px 8px; margin: 0 3px; font-size: 14px;}
 
 /*tutorial detail*/
-.classTutorialDetail { background-color: #e5e5e5; display: block; height: 100px; padding: 10px; }
+.classTutorialDetail { background-color: #e5e5e5; display: block; height: 105px; padding: 10px; }
 .classTutorialTitle { width: 300px; overflow:hidden; height: 24px; font-size:16px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif; }
 .classDescription { width: 300px; overflow:hidden; height: 20px; color: #6c6c6c; font-size:14px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif; }
 .tutorialHr{ margin: 5px 0px; color: #FFFFFF; }

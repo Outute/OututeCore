@@ -9,9 +9,11 @@
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
        default-lazy-init="true">
 
-    <!-- =================================================================== -->
+    <!-- ===================================================================
+-->
     <!-- AOP: Configuration and Aspects                                      -->
-    <!-- =================================================================== -->
+    <!-- ===================================================================
+-->
     <aop:config>
         <aop:advisor id="userManagerTx" advice-ref="userManagerTxAdvice" pointcut="execution(* *..service.UserManager.*(..))" order="0"/>        
         <aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.UserManager.saveUser(..))" order="1"/>
@@ -47,9 +49,11 @@
     
     <bean id="userSecurityAdvice" class="com.edu.service.UserSecurityAdvice"/>
     
-    <!-- =================================================================== -->
+    <!-- ===================================================================
+-->
     <!-- Mail: Sender and Velocity configuration                             -->
-    <!-- =================================================================== -->
+    <!-- ===================================================================
+-->
     <bean id="mailEngine" class="com.edu.service.MailEngine">
         <property name="mailSender" ref="mailSender"/>
         <property name="velocityEngine" ref="velocityEngine"/>
@@ -86,9 +90,12 @@
         <property name="from" value="${mail.default.from}"/>
     </bean>
 
-    <!-- =================================================================== -->
+    <!-- ===================================================================
+-->
     <!-- Security class from Spring Security - used to configure Password    -->
     <!-- Encryption in UserManagerImpl. Can override in security.xml.        -->
-    <!-- =================================================================== -->
+    <!-- ===================================================================
+-->
     <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+    
 </beans>

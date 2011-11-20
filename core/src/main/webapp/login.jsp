@@ -5,6 +5,7 @@
     <title><fmt:message key="login.title"/></title>
     <meta name="heading" content="<fmt:message key='login.heading'/>"/>
     <meta name="menu" content="Login"/>
+    <script type="text/javascript" src="<c:url value='/scripts/login.js'/>"></script>
     <link rel="stylesheet" type="text/css" media="all" href="<c:url value='/styles/${appConfig["csstheme"]}/layout-1col.css'/>" />
 </head>
 <body>

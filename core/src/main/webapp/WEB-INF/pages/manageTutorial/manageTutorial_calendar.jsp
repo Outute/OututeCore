@@ -17,7 +17,6 @@ span.pagelinks{
 	<input onclick="window.location.href='manageTutorial';" name="viewtype_option" type="radio" id="viewtype_option_0"/><label for="viewtype_option_0">Table View</label>
 	<input checked="checked" onclick="window.location.href='manageTutorialCalendar';" name="viewtype_option" type="radio"  id="viewtype_option_1"/><label for="viewtype_option_1">Calendar View</label>
 </div>
-<div style="display: none;" script="Util.calender('mycalendar',{},'20110101');"></div>
 <div class="manageTutorialCalendar w100pc" style="position: relative; display: block;">
 	<div class="toolBar w100pc" style="height: 25px; position: relative; display: block; padding-top: 10px;">
 		<div style="display: inline;">

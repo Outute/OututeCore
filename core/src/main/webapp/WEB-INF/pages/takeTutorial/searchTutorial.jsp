@@ -16,21 +16,8 @@
 				<td><fmt:message key="page.takeTutorial.Category"/></td><td>
 					<select name="search.category" class="select w200px font12px">
 				  		<option value="" selected="selected"><fmt:message key="page.offerTutorial.ChooseACategory"/></option>
-				  		<option value="1"><fmt:message key="page.offerTutorial.Languages"/></option>
-						<option value="2"><fmt:message key="page.offerTutorial.StudyOversea"/></option>
-						<option value="3"><fmt:message key="page.offerTutorial.AcademicStudies"/></option>
-						<option value="4"><fmt:message key="page.offerTutorial.GamesSportsAndLeisure"/></option>
-						<option value="5"><fmt:message key="page.offerTutorial.Business"/></option>
-						<option value="6"><fmt:message key="page.offerTutorial.CareerConsultationAndDevelopment"/></option>
-						<option value="7"><fmt:message key="page.offerTutorial.ArtsAndLiterature"/></option>
-						<option value="8"><fmt:message key="page.offerTutorial.HowToForDummies"/></option>
-						<option value="9"><fmt:message key="page.offerTutorial.ComputerAndInternet"/></option>
-						<option value="10"><fmt:message key="page.offerTutorial.LegalIssues"/></option>
-						<option value="11"><fmt:message key="page.offerTutorial.FinanceInsuranceAndRealEstate"/></option>
-						<option value="12"><fmt:message key="page.offerTutorial.HealthAndLivingStyle"/></option>
-						<option value="13"><fmt:message key="page.offerTutorial.Travel"/></option>
-						<option value="14"><fmt:message key="page.offerTutorial.BeautyAndFashion"/></option>
-						<option value="0"><fmt:message key="page.offerTutorial.Others"/></option>
+			  			<c:set var="category_type" scope="request" value="1"/>
+			  			<jsp:include page="/WEB-INF/pages/fregment/tutorial_category.jsp"/>
 				  	</select>
 			  	</td>
 			</tr>

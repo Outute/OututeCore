@@ -336,6 +336,43 @@ public final class DateUtil {
 				* 100 + o.get(Calendar.MONTH);
 	}
 
+	public static boolean isInDate(Date origin, Date toCompare,
+			int durationType, int occurrents) {
+		if (occurrents < 1) {
+			return isSameDate(origin, toCompare);
+		}
+		switch (durationType) {
+		case DURATION_NO_REPEAT:
+			return isSameDate(origin, toCompare);
+		case DURATION_DAYLY:
+			return isDaily(origin, toCompare, occurrents);
+		case DURATION_WEEKLY:
+			return isWeekly(origin, toCompare, occurrents);
+		case DURATION_BI_WEEKLY:
+			return isBiWeekly(origin, toCompare, occurrents);
+		case DURATION_MONTHLY:
+			return isMonthly(origin, toCompare, occurrents);
+		}
+		return false;
+	}
+
+	public static Date changeToDate(Date currentDate, Date toDate) {
+		Calendar c = Calendar.getInstance();
+		{
+			c.setTime(currentDate);
+		}
+		Calendar t = Calendar.getInstance();
+		{
+			t.setTime(toDate);
+		}
+		{
+			c.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH));
+			c.set(Calendar.MONTH, t.get(Calendar.MONTH));
+			c.set(Calendar.YEAR, t.get(Calendar.YEAR));
+		}
+		return c.getTime();
+	}
+
 	/**
 	 * return the max date(2050/01/01)
 	 * @return

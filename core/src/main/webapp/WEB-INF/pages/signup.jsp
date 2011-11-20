@@ -111,7 +111,7 @@
 </s:form>
 
 <script type="text/javascript">
-    Form.focusFirstElement(document.forms["signupForm"]);
+    /*Form.focusFirstElement(document.forms["signupForm"]);*/
 </script>
 
 

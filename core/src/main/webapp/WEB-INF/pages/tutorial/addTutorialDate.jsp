@@ -15,28 +15,30 @@
 			<td>
 				<table class="formContent">
 					<tr valign="top">
-						<td><label for="from"><fmt:message key="page.offerTutorial.From"/></label></td>
+						<td><label for="fromTime"><fmt:message key="page.offerTutorial.From"/></label></td>
 						<td>
-							<input type="text" class="input" id="form" name="fromTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.fromTime}" pattern="hh:mmaaa"/>"/>
-							<div id="fromam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
-							<div id="frompm" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">pm</div></div>
+							<input type="text" class="input" id="fromTime" name="fromTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.fromTime}" pattern="hh:mmaaa"/>"/>
+							<div id="fromTime_maxError" style="display:none;" class="error" title="from time is over day">from time is over day time</div>
+							<div id="fromTime_gtError" style="display:none;" class="error" title="from time is greater than to time">from time is greater than to time</div>
+							<!-- <div id="fromam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
+							<div id="frompm" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">pm</div></div> -->
 						</td>
-						<td><label for="to"><fmt:message key="page.offerTutorial.To"/></label></td>
+						<td><label for="toTime"><fmt:message key="page.offerTutorial.To"/></label></td>
 						<td>
-							<input type="text" class="input" id="tc" name="toTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.toTime}" pattern="hh:mmaaa"/>"/>
-							<div id="toam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
-							<div id="topm" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">pm</div></div>
+							<input type="text" class="input" id="toTime" name="toTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.toTime}" pattern="hh:mmaaa"/>" validate="validateFromTo(Util.id('fromTime'),Util.id('toTime'),'maxError','gtError');"/>
+							<div id="toTime_maxError" style="display:none;" class="error" title="from time is over day">from time is over day time</div>
+							<div id="toTime_gtError" style="display:none;" class="error" title="from time is greater than to time">from time is greater than to time</div>
+							<!-- <div id="toam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
+							<div id="topm" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">pm</div></div>!-->
 						</td>
 					</tr>
 					<tr>
 						<td><label for="repeat"><fmt:message key="page.offerTutorial.Repeats"/></label></td>
-						<td colspan="3"><select id="repeat" name="tutorialSchedule.durationType" class="select w200px" onchange="this.value=='0'?Util.hideId(['endstr','costtr','partr']):Util.showId(['endstr','costtr','partr']);">
-								<option value="<s:property value="@com.edu.util.DateUtil@DURATION_NO_REPEAT"/>" <c:if test="${tutorialSchedule.durationType==0}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.NoRepeat"/></option>
-								<option value="<s:property value="@com.edu.util.DateUtil@DURATION_DAYLY"/>" <c:if test="${tutorialSchedule.durationType==1}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.Daily"/></option>
-								<option value="<s:property value="@com.edu.util.DateUtil@DURATION_WEEKLY"/>" <c:if test="${tutorialSchedule.durationType==2}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.Weekly"/></option>
-								<option value="<s:property value="@com.edu.util.DateUtil@DURATION_BI_WEEKLY"/>" <c:if test="${tutorialSchedule.durationType==3}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.BiWeekly"/></option>
-								<option value="<s:property value="@com.edu.util.DateUtil@DURATION_MONTHLY"/>" <c:if test="${tutorialSchedule.durationType==4}">selected="selected"</c:if>><fmt:message key="page.offerTutorial.Monthly"/></option>
-								
+						<td colspan="3">
+							<select id="repeat" name="tutorialSchedule.durationType" class="select w200px" onchange="this.value=='0'?Util.hideId(['endstr','costtr','partr']):Util.showId(['endstr','costtr','partr']);">
+								<c:set var="duration_type" scope="request" value="${tutorialSchedule.durationType}"/>
+								<c:set var="duration_showtype" scope="request" value="0"/>
+								<jsp:include page="/WEB-INF/pages/fregment/tutorial_schedule_duration.jsp"/>
 							</select>
 						</td>
 					</tr>

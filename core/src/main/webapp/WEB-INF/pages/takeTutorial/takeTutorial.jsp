@@ -15,7 +15,7 @@
 				<div class="takeTutorial" style="text-align: right;background-color: #DDD; height: 30px; line-height: 30px; padding-right: 10px;">
 					<a href="javascript:;" id="takeMoreTutorial_0" onclick="clickTakeTutorial('rightTakeTutorialPanel','searchTutorialPage');return false;"><span class="addIcon"></span><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
 				</div>
-				<div id="takeTutorialList" class="tutorialList"  style="overflow-y: scroll; height: 415px; background-color: white;">
+				<div id="takeTutorialList" class="tutorialList"  style="overflow-y: scroll; height: 425px; background-color: white;">
 					<jsp:include page="/WEB-INF/pages/takeTutorial/listTutorial.jsp"></jsp:include>
 				</div>
 			<!-- end Tutorials list -->

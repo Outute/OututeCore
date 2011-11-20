@@ -15,7 +15,6 @@ import org.appfuse.dao.hibernate.GenericDaoHibernate;
 import org.springframework.stereotype.Repository;
 
 import com.edu.dao.TutorialScheduleDao;
-import com.edu.model.Tutorial;
 import com.edu.model.TutorialSchedule;
 
 /**
@@ -71,12 +70,4 @@ public class TutorialScheduleDaoHibernate extends
 		return getHibernateTemplate().find(query, params.toArray());
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public List<TutorialSchedule> findTutorialSchedulesByUserId(
-			Long tutorialId, Long userId) {
-		String hql = "select distinct ts from Tutorial t join t.tutorialSchedules ts join ts.students s where t.id=? and s.id=? and t.enabled=? order by t.name";
-		return getHibernateTemplate().find(hql, tutorialId, userId, true);
-	}
 }

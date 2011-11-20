@@ -1,6 +1,7 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/common/taglibs.jsp"%>
 <!-- day tutorial schedule -->
+<div style="display: none;" script="highLightCalendar('${highLight}','mycalendar');"></div>
 <s:iterator value="@com.edu.webapp.action.TutorialAction@processDaySchedule(#request.tutorialSchedules)" status="status" var="entry">
 <div class="day_schedule_<s:property value="#entry.key"/>">
 	<s:iterator value="#entry.value" status="s" var="l">

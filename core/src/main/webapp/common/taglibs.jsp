@@ -11,5 +11,5 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <%@ taglib uri="http://www.appfuse.org/tags/struts" prefix="appfuse" %>
 
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <c:set var="datePattern"><fmt:message key="date.format"/></c:set>

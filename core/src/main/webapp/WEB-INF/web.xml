@@ -30,6 +30,7 @@
             classpath:/applicationContext-resources.xml
             classpath:/applicationContext-dao.xml
             classpath:/applicationContext-service.xml
+            classpath:/applicationContext-schedule.xml
             classpath*:/applicationContext.xml
             /WEB-INF/applicationContext*.xml
             /WEB-INF/cxf-servlet.xml

@@ -1,21 +1,5 @@
 package com.edu.webapp.action;
 
-import com.opensymphony.xwork2.Preparable;
-
-import com.edu.Constants;
-import com.edu.model.TutorialSchedule;
-import com.edu.model.Tutorial;
-import com.edu.model.User;
-import com.edu.util.DateUtil;
-import com.edu.webapp.util.RequestUtil;
-import org.springframework.mail.MailException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.core.context.SecurityContext;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +12,21 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.mail.MailException;
+
+import com.edu.Constants;
+import com.edu.model.Tutorial;
+import com.edu.model.TutorialSchedule;
+import com.edu.model.TutorialScheduleStudent;
+import com.edu.model.TutorialScheduleStudentKey;
+import com.edu.model.User;
+import com.edu.util.DateUtil;
+import com.edu.webapp.util.RequestUtil;
+import com.opensymphony.xwork2.Preparable;
 
 /**
  * Action for facilitating User Management feature.
@@ -387,9 +386,28 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findRegisteredTutorialSchedule() {
 		User user = getUser();
+		int totalCost = 0;
 		if (user != null) {
-			tutorialSchedules = tutorialManager.findTutorialSchedulesByUserId(
-					tutorial.getId(), user.getId());
+			List<TutorialScheduleStudent> find = tutorialManager
+					.findTutorialSchedulesByUserId(tutorial.getId(), user
+							.getId());
+			tutorialSchedules = new ArrayList<TutorialSchedule>();
+			for (TutorialScheduleStudent tss : find) {
+				TutorialSchedule clone = tss.getTutorialSchedule().clone();
+				clone.setFromTime(DateUtil.changeToDate(clone.getFromTime(),
+						tss.getId().getLectureDate()));
+				clone.setToTime(DateUtil.changeToDate(clone.getToTime(), tss
+						.getId().getLectureDate()));
+				tutorialSchedules.add(clone);
+				if (clone.getTutorial().getType() == Tutorial.TYPE_WORKSHOP) {
+					totalCost += clone.getTutorial().getCost();
+				} else {
+					totalCost += clone.getCost();
+				}
+			}
+		}
+		{
+			getRequest().setAttribute("totalCost", totalCost);
 		}
 		return SUCCESS;
 	}
@@ -484,24 +502,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 		{
 			getRequest().setAttribute("startDate", start);
 		}
-		boolean isRight = false;
 		for (TutorialSchedule ts : tutorial.getTutorialSchedules()) {
-			if (ts.getDurationType() == TutorialSchedule.DURATION_NO_REPEAT) {// no repeat
-				isRight = DateUtil.isSameDate(ts.getStartDate(), start);
-			} else if (ts.getDurationType() == TutorialSchedule.DURATION_DAYLY) {// daily
-				isRight = DateUtil.isDaily(ts.getStartDate(), start, ts
-						.getEndsOccurrence());
-			} else if (ts.getDurationType() == TutorialSchedule.DURATION_WEEKLY) {// weekly
-				isRight = DateUtil.isBiWeekly(ts.getStartDate(), start, ts
-						.getEndsOccurrence());
-			} else if (ts.getDurationType() == TutorialSchedule.DURATION_BI_WEEKLY) {// bi-weekly
-				isRight = DateUtil.isMonthly(ts.getStartDate(), start, ts
-						.getEndsOccurrence());
-			} else if (ts.getDurationType() == TutorialSchedule.DURATION_MONTHLY) {// monthly
-				isRight = DateUtil.isMonthly(ts.getStartDate(), start, ts
-						.getEndsOccurrence());
-			}
-			if (isRight) {
+			if (DateUtil.isInDate(ts.getStartDate(), start, ts
+					.getDurationType(), ts.getEndsOccurrence())) {
 				tutorialSchedules.add(ts);
 			}
 		}
@@ -517,11 +520,67 @@ public class TutorialAction extends BaseAction implements Preparable {
 	public String bookTutorial() {
 		tutorialSchedules = new ArrayList<TutorialSchedule>();
 		String ids = getRequest().getParameter("book.ids");
-		ids = "," + ids + ",";
-		for (TutorialSchedule ts : tutorial.getTutorialSchedules()) {
-			if (ids.indexOf("," + ts.getId() + ",") > -1) {
-				tutorialSchedules.add(ts);
+		String dates = getRequest().getParameter("book.dates");
+		if (ids == null || dates == null) {
+			return SUCCESS;
+		}
+		String[] idArr = ids.split(",");
+		String[] dateArr = dates.split(",");
+		if (idArr.length < 1 || idArr.length != dateArr.length) {
+			return SUCCESS;
+		}
+		int totalCost = 0;
+		if (tutorial.getType() == Tutorial.TYPE_WORKSHOP) {
+			Map<String, Integer> idMap = new HashMap<String, Integer>();
+			{
+				for (int i = 0; i < idArr.length; i++) {
+					idMap.put(idArr[i], i);
+				}
 			}
+			for (TutorialSchedule ts : tutorial.getTutorialSchedules()) {
+				if (idMap.containsKey(ts.getId().toString())) {
+					try {
+						TutorialSchedule clone = ts.clone();
+						Date date = DateUtil.convertStringToDate(dateArr[idMap
+								.get(clone.getId().toString())]);
+						clone.setFromTime(DateUtil.changeToDate(clone
+								.getFromTime(), date));
+						clone.setToTime(DateUtil.changeToDate(
+								clone.getToTime(), date));
+						tutorialSchedules.add(clone);
+						totalCost += ts.getTutorial().getCost();
+					} catch (Exception e) {
+					}
+				}
+			}
+		} else if (tutorial.getType() == Tutorial.TYPE_CLASS) {
+			Map<Long, TutorialSchedule> tsMap = new HashMap<Long, TutorialSchedule>();
+			{
+				for (TutorialSchedule ts : tutorial.getTutorialSchedules()) {
+					tsMap.put(ts.getId(), ts);
+				}
+			}
+			for (int i = 0; i < idArr.length; i++) {
+				try {
+					Long tsId = Long.valueOf(idArr[i].trim());
+					TutorialSchedule ts = tsMap.get(tsId);
+					if (ts == null) {
+						continue;
+					}
+					TutorialSchedule clone = ts.clone();
+					Date date = DateUtil.convertStringToDate(dateArr[i]);
+					clone.setFromTime(DateUtil.changeToDate(
+							clone.getFromTime(), date));
+					clone.setToTime(DateUtil.changeToDate(clone.getToTime(),
+							date));
+					tutorialSchedules.add(clone);
+					totalCost += clone.getCost();
+				} catch (Exception e) {
+				}
+			}
+		}
+		{
+			getRequest().setAttribute("totalCost", totalCost);
 		}
 		return SUCCESS;
 	}
@@ -534,21 +593,23 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String registerTutorial() {
 		String ids = getRequest().getParameter("register.ids");
-		List<Long> idList = new ArrayList<Long>();
-		if (ids != null) {
+		String dates = getRequest().getParameter("register.dates");
+		User user = getUser();
+		List<TutorialScheduleStudentKey> list = new ArrayList<TutorialScheduleStudentKey>();
+		if (user != null && ids != null && dates != null) {
 			String[] idArr = ids.split(",");
-			for (String id : idArr) {
+			String[] dateArr = dates.split(",");
+			for (int i = 0; i < idArr.length; i++) {
 				try {
-					idList.add(Long.valueOf(id.trim()));
+					TutorialScheduleStudentKey key = new TutorialScheduleStudentKey(
+							Long.valueOf(idArr[i].trim()), user.getId(),
+							DateUtil.convertStringToDate(dateArr[i]));
+					list.add(key);
 				} catch (Exception e) {
 				}
 			}
-		}
-		Long[] array = idList.toArray(new Long[idList.size()]);
-		User user = getUser();
-		if (user != null) {
-			tutorialManager.registerTutorial(tutorial.getId(), array, user
-					.getId());
+			tutorialManager.registerTutorial(tutorial.getId(), list
+					.toArray(new TutorialScheduleStudentKey[list.size()]));
 		}
 		return SUCCESS;
 	}
@@ -561,9 +622,15 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String cancelTutorialSchedule() {
 		User user = getUser();
-		if (user != null && tutorialSchedule != null) {
+		Date date = null;
+		try {
+			date = DateUtil.convertStringToDate(getRequest().getParameter(
+					"scheduleDate"));
+		} catch (Exception e) {
+		}
+		if (user != null && tutorialSchedule != null && date != null) {
 			tutorialManager.cancelTutorialSchedule(tutorialSchedule.getId(),
-					user.getId());
+					user.getId(), date);
 		}
 		return SUCCESS;
 	}
@@ -577,8 +644,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	public String cancelTutorial() {
 		User user = getUser();
 		if (user != null && tutorial != null) {
-			tutorialManager.cancelTutorialSchedule(tutorial.getId(), user
-					.getId());
+			tutorialManager.cancelTutorial(tutorial.getId(), user.getId());
 		}
 		return SUCCESS;
 	}
@@ -591,6 +657,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findDayTutorialSchedule() {
 		Date start = null, end = null;
+		User user = getUser();
 		{
 			String startStr = getRequest().getParameter("search.start");
 			if (startStr != null && (startStr.trim()).length() > 0) {
@@ -599,10 +666,29 @@ public class TutorialAction extends BaseAction implements Preparable {
 					end = DateUtil.getMaxDay(start).getTime();
 				} catch (Exception e) {
 					addFieldError("start date", "is invalid value(MM/dd/yyyy).");
+					return SUCCESS;
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorialSchedule(start, end);
+		tutorialSchedules = tutorialManager.findTutorialSchedule(
+				user == null ? null : user.getId(), start, end);
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			StringBuffer sb = new StringBuffer();
+			Date monthFirst = DateUtil.getMonthFirstDay(start);
+			Date monthLast = DateUtil.getMonthLastDay(start);
+			Date temp = monthFirst;
+			for (TutorialSchedule ts : tutorialSchedules) {
+				while (!temp.after(monthLast)) {
+					if (DateUtil.isInDate(ts.getStartDate(), temp, ts
+							.getDurationType(), ts.getEndsOccurrence())) {
+						sb.append(sdf.format(temp)).append(",");
+					}
+					temp = DateUtil.nextDate(temp);
+				}
+			}
+			getRequest().setAttribute("highLight", sb.toString());
+		}
 		return SUCCESS;
 	}
 
@@ -614,6 +700,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findWeekTutorial() {
 		Date start = null, end = null;
+		User user = getUser();
 		{
 			String startStr = getRequest().getParameter("search.start");
 			if (startStr != null && (startStr.trim()).length() > 0) {
@@ -626,7 +713,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorialSchedule(start, end);
+		tutorialSchedules = tutorialManager.findTutorialSchedule(
+				user == null ? null : user.getId(), start, end);
 		return SUCCESS;
 	}
 
@@ -638,6 +726,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findMonthTutorial() {
 		Date start = null, end = null;
+		User user = getUser();
 		{
 			String startStr = getRequest().getParameter("search.start");
 			if (startStr != null && (startStr.trim()).length() > 0) {
@@ -650,7 +739,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorialSchedule(start, end);
+		tutorialSchedules = tutorialManager.findTutorialSchedule(
+				user == null ? null : user.getId(), start, end);
 		return SUCCESS;
 	}
 
@@ -662,14 +752,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 			name = name == null ? null : name.trim();
 		}
 		tutorials = tutorialManager.findCurrentTutorials(25, 0, name);
-//		{
-//			tutorials = new ArrayList<Tutorial>();
-//			for (int i = 0; i < 30; i++) {
-//				Tutorial t = new Tutorial();
-//				t.setName("current" + i);
-//				tutorials.add(t);
-//			}
-//		}
 		return SUCCESS;
 	}
 
@@ -681,14 +763,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 			name = name == null ? null : name.trim();
 		}
 		tutorials = tutorialManager.findHistoryTutorials(25, 0, name);
-//		{
-//			tutorials = new ArrayList<Tutorial>();
-//			for (int i = 0; i < 400; i++) {
-//				Tutorial t = new Tutorial();
-//				t.setName("history" + i);
-//				tutorials.add(t);
-//			}
-//		}
 		return SUCCESS;
 	}
 
@@ -836,6 +910,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 			int fromMinute = DateUtil.getMinute(tutorialSchedule.getFromTime());
 			int toMinute = DateUtil.getMinute(tutorialSchedule.getToTime());
 			m.put("id", t.getId());
+			m.put("tutorial", t);
 			m.put("name", t.getName());
 			m.put("scheduleId", tutorialSchedule.getId());
 			m.put("fromMinute", fromMinute);

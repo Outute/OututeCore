@@ -1,32 +1,33 @@
 package com.edu.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.jws.WebService;
+
 import org.appfuse.service.impl.GenericManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
-import com.edu.dao.TutorialScheduleDao;
 import com.edu.dao.TutorialDao;
+import com.edu.dao.TutorialScheduleDao;
+import com.edu.dao.TutorialScheduleStudentDao;
 import com.edu.dao.UserDao;
-import com.edu.model.TutorialSchedule;
 import com.edu.model.Tutorial;
+import com.edu.model.TutorialSchedule;
+import com.edu.model.TutorialScheduleStudent;
+import com.edu.model.TutorialScheduleStudentKey;
 import com.edu.model.User;
+import com.edu.service.TutorNotFoundException;
 import com.edu.service.TutorialExistsException;
 import com.edu.service.TutorialManager;
 import com.edu.service.TutorialNotFoundException;
 import com.edu.service.TutorialService;
 import com.edu.service.UserManager;
 import com.edu.util.DateUtil;
-
-import javax.jws.WebService;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Implementation of TutorialManager interface.
@@ -42,6 +43,8 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	@Autowired
 	private TutorialScheduleDao tutorialScheduleDao;
 	@Autowired
+	private TutorialScheduleStudentDao tutorialScheduleStudentDao;
+	@Autowired
 	private UserDao userDao;
 
 	//private TutorialTutorMappingDao tutorialTutorMappingDao;
@@ -53,6 +56,11 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 
 	public void setTutorialScheduleDao(TutorialScheduleDao tutorialScheduleDao) {
 		this.tutorialScheduleDao = tutorialScheduleDao;
+	}
+
+	public void setTutorialScheduleStudentDao(
+			TutorialScheduleStudentDao tutorialScheduleStudentDao) {
+		this.tutorialScheduleStudentDao = tutorialScheduleStudentDao;
 	}
 
 	public void setUserDao(UserDao userDao) {
@@ -177,10 +185,10 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TutorialSchedule> findTutorialSchedulesByUserId(
+	public List<TutorialScheduleStudent> findTutorialSchedulesByUserId(
 			Long tutorialId, Long userId) {
-		return tutorialScheduleDao.findTutorialSchedulesByUserId(tutorialId,
-				userId);
+		return tutorialScheduleStudentDao.findTutorialSchedulesByUserId(
+				tutorialId, userId);
 	}
 
 	/**
@@ -203,15 +211,17 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public void cancelTutorialSchedule(Long tutorialScheduleId, Long userId) {
+	public void cancelTutorialSchedule(Long tutorialScheduleId, Long userId,
+			Date date) {
 		TutorialSchedule tutorialSchedule = tutorialScheduleDao
 				.get(tutorialScheduleId);
-		if (tutorialSchedule != null) {
-			User user = userDao.get(userId);
-			if (tutorialSchedule.getStudents().contains(user)) {
-				tutorialSchedule.getStudents().remove(user);
-				tutorialScheduleDao.save(tutorialSchedule);
-			}
+		if (tutorialSchedule.getTutorial().getType() == Tutorial.TYPE_WORKSHOP) {
+			tutorialScheduleStudentDao.remove(tutorialScheduleId, userId, date);
+		} else if (tutorialSchedule.getTutorial().getType() == Tutorial.TYPE_CLASS
+				&& date != null) {
+			tutorialScheduleStudentDao
+					.remove(tutorialScheduleId, userId, DateUtil.changeToDate(
+							tutorialSchedule.getFromTime(), date));
 		}
 	}
 
@@ -219,13 +229,35 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public void cancelTutorial(Long tutorialId, Long userId) {
-		List<TutorialSchedule> list = tutorialScheduleDao
-				.getAllTutorialScheduleByTutorialId(tutorialId);
-		User user = userDao.get(userId);
-		for (TutorialSchedule tutorialSchedule : list) {
-			if (tutorialSchedule.getStudents().contains(user)) {
-				tutorialSchedule.getStudents().remove(user);
-				tutorialScheduleDao.save(tutorialSchedule);
+		tutorialScheduleStudentDao.remove(tutorialId, userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void registerTutorial(Long tutorialId,
+			TutorialScheduleStudentKey[] ids) {
+		if (ids == null || ids.length == 0) {
+			return;
+		}
+		for (TutorialScheduleStudentKey id : ids) {
+			if (tutorialScheduleStudentDao.exists(id)) {
+				continue;
+			}
+			TutorialSchedule ts = tutorialScheduleDao.get(id
+					.getTutorialScheduleId());
+			Tutorial tutorial = ts.getTutorial();
+			if (!tutorial.getId().equals(tutorialId)) {
+				continue;
+			}
+			if (tutorial.getType() == Tutorial.TYPE_WORKSHOP) {
+				tutorialScheduleStudentDao.save(new TutorialScheduleStudent(id,
+						ts.getFromTime()));
+			} else if (tutorial.getType() == Tutorial.TYPE_CLASS) {
+				Date changeToDate = DateUtil.changeToDate(ts.getFromTime(), id
+						.getLectureDate());
+				tutorialScheduleStudentDao.save(new TutorialScheduleStudent(id,
+						changeToDate));
 			}
 		}
 	}
@@ -233,30 +265,21 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public void registerTutorial(Long tutorialId, Long[] tutorialScheduleIds,
-			Long userId) {
-		List<TutorialSchedule> list = tutorialScheduleDao
-				.getAllTutorialScheduleByTutorialId(tutorialId);
-		Set<Long> set = new HashSet<Long>(Arrays.asList(tutorialScheduleIds));
-		User user = userDao.get(userId);
-		for (TutorialSchedule tutorialSchedule : list) {
-			boolean isContains = set.contains(tutorialSchedule.getId());
-			if (tutorialSchedule.getStudents().contains(user)) {
-				if (!isContains) {
-					tutorialSchedule.getStudents().remove(user);
-					tutorialScheduleDao.save(tutorialSchedule);
-				}
-			} else if (isContains) {
-				tutorialSchedule.getStudents().add(user);
-				tutorialScheduleDao.save(tutorialSchedule);
+	public List<TutorialSchedule> findTutorialSchedule(Long userId, Date start,
+			Date end) {
+		if (userId != null) {
+			List<TutorialSchedule> list = new ArrayList<TutorialSchedule>();
+			List<TutorialScheduleStudent> find = tutorialScheduleStudentDao
+					.findTutorialSchedules(userId, start, end);
+			for (TutorialScheduleStudent tss : find) {
+				TutorialSchedule clone = tss.getTutorialSchedule().clone();
+				clone.setFromTime(tss.getLectureTime());
+				clone.setToTime(DateUtil.changeToDate(clone.getToTime(), tss
+						.getLectureTime()));
+				list.add(clone);
 			}
+			return list;
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public List<TutorialSchedule> findTutorialSchedule(Date start, Date end) {
 		return tutorialScheduleDao.findTutorialSchedule(start, end);
 	}
 

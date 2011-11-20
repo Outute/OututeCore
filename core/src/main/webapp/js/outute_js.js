@@ -3,71 +3,31 @@
 	setInterval('CollectGarbage', 10000);
 }
 function clearErrorMessages(form) {
-	// clear out any rows with an "errorFor" attribute
-	var divs = form.getElementsByTagName("div");
-    var paragraphsToDelete = new Array();
-
-    for(var i = 0; i < divs.length; i++) {
-        var p = divs[i];
-        if (p.getAttribute("errorFor")) {
-            paragraphsToDelete.push(p);
+	try {
+        var divs = form.getElementsByTagName("div");
+        for(var i=0;i<divs.length;i++){
+        	if(divs[i].className=='error'){
+        		divs[i].style.display='none';
+        	}
         }
+    } catch (e) {
+        alert(e);
     }
-
-    // now delete the paragraphsToDelete
-    for (var i = 0; i < paragraphsToDelete.length; i++) {
-        var r = paragraphsToDelete[i];
-        var parent = r.parentNode;
-        parent.removeChild(r);
-    }
-}
-
-function clearErrorLabels(form) {
-    // set all labels back to the normal class
-    var labels = form.getElementsByTagName("label");
-    for (var i = 0; i < labels.length; i++) {
-        var label = labels[i];
-        if (label) {
-            if (label.className.indexOf("error") > -1) {
-                label.className = label.className.substring(0, label.className.indexOf("error"));
-            }
-        }
-    }
-
 }
 
 function addError(e, errorText) {
-    try {
+	try {
         var ctrlDiv = e.parentNode; // wwctrl_ div or span
-        var enclosingDiv = ctrlDiv.parentNode; // wwgrp_ div
-
-        /*alert(ctrlDiv.nodeName);
-		if (!ctrlDiv || (ctrlDiv.nodeName != "DIV" && ctrlDiv.nodeName != "SPAN") || !enclosingDiv || enclosingDiv.nodeName != "DIV") {
-			alert("do not validate:" + e.id);
-			return;
-		}*/
-		
-        var label = enclosingDiv.getElementsByTagName("label")[0];
-		if (label) {
-		    label.className += " error";
-	    }
-	    
-	    var input = enclosingDiv.getElementsByTagName("input")[0];
-	    if (input) {
-	        input.className += " error";
-	    }
-
-		var firstDiv = enclosingDiv.getElementsByTagName("div")[0]; // either wwctrl_ or wwlbl_
-		if (!firstDiv) {
-			firstDiv = enclosingDiv.getElementsByTagName("span")[0];
-		}
-        var error = document.createTextNode(errorText);
-        var errorDiv = document.createElement("div");
-        
-        errorDiv.className = "errorMessage";
-        errorDiv.setAttribute("errorFor", e.id);;
-        errorDiv.appendChild(error);
-        firstDiv.appendChild(errorDiv);
+        var divs = ctrlDiv.getElementsByTagName("div");
+        for(var i=0;i<divs.length;i++){
+        	if(divs[i].className=='error'){
+        		if(divs[i].id==(e.id+'_'+errorText)){
+        			divs[i].style.display='';
+        		}else{
+        			divs[i].style.display='none';
+        		}
+        	}
+        }
     } catch (e) {
         alert(e);
     }
@@ -105,6 +65,15 @@ Util = typeof(Util)!='undefined' || {
 	__idSeed : 1,
 	getIdSeed : function() {
 		return 'tcid_'.concat(++Util.__idSeed);
+	},
+	getCtx: function(){
+		if(window['app_ctx']){
+			return window['app_ctx'];
+		}
+		try{
+			var e = Util.id('app_ctx');
+			window['app_ctx']=e?e.value:null;
+		}catch(err){}
 	},
 	ajax : function(url, data, callbackArr, async, timeout){
 		var xhr = Util.getXHR(), isAsync = async!==false, callbackArr = callbackArr || [], timeouter;
@@ -162,9 +131,13 @@ Util = typeof(Util)!='undefined' || {
 		});
 		script = arr&&arr.length?arr[0]:null;
 		if(script){
-			setTimeout(function(){eval(('{'+script+'}'))},100);
+			setTimeout(function(){Util.eval(script);},100);
 		}
 		return this;
+	},
+	eval: function(script){
+		try{return eval(('{'+script+'}'));}catch(err){}
+		return undefined;
 	},
 	getAttr: function(id,name){
 		var el = Util.id(id), attrNode = el?el.getAttributeNode(name):null;
@@ -204,16 +177,36 @@ Util = typeof(Util)!='undefined' || {
 	showId : function(id){
 		id = id?(id instanceof Array)?id:[id]:[];
 		for(var i=0;i<id.length;i++){
-			Util.id(id[i]).style.display='';
+			var el=Util.id(id[i]);
+			if(el){
+				el.style.display='';
+			}
 		}
 		return this;
 	},
 	hideId : function(id){
 		id = id?(id instanceof Array)?id:[id]:[];
 		for(var i=0;i<id.length;i++){
-			Util.id(id[i]).style.display='none';
+			var el=Util.id(id[i]);
+			if(el){
+				el.style.display='none';
+			}
 		}
 		return this;
+	},
+	validate: function(formId){
+		var form=Util.id(formId), result=true;
+		if(!form||!form.elements||!form.elements.length){return true;}
+		for(var i=0, len=form.elements.length; i<len; i++){
+			var a = form.elements[i];
+			if(a.name && !a.disabled && (a.checked || Util.rselectTextarea.test(a.nodeName) || Util.rinput.test(a.type))){
+				var script = Util.getAttr(a,'validate');
+				if(script){
+					result = result && (Util.eval(script)||false);
+				}
+			}
+		}
+		return result;
 	},
 	serialize: function(formId) {
 		var s=[], form=Util.id(formId);
@@ -292,7 +285,7 @@ Util = typeof(Util)!='undefined' || {
 		return this;
 	},
 	childFilter: function(id, fun){
-		var el = typeof(id)=='string'?Util.id(id):id, arr=[];
+		var el = Util.id(id), arr=[];
 		if(!el||!el.childNodes.length){return null;}
 		for(var i=0;i<el.childNodes.length;i++){
 			var elem = el.childNodes[i];
@@ -382,7 +375,7 @@ Util = typeof(Util)!='undefined' || {
 				props=typeof(props)=='string'?{input:props}:props;props['id']=id;
 				var input = props.input||'', click=props.click, funcParams=props.funcParams, cellRender=props.cellRender;
 				var dateHtml=[], c=0, x=0, tr=[], param=[], date = Util.toDay();
-				var monthStr=Util.monthStr(), weekStr=Util.weekStr(), idPrefix=Util.getIdSeed()+'_';
+				var monthStr=Util.monthStr(), weekStr=Util.weekStr(), idPrefix=this.idPrefix=Util.getIdSeed()+'_';
 				dateHtml[c++]='<div class="calendar-panel" id="{id}" selectedId="{selectedId}" date="{yyyyMMdd}" today="{today}" todayid="{todayid}" idPrefix="{idPrefix}" viewType="month">';
 				dateHtml[c++]='<div class="calendar-header"><table style="width: 100%;">';
 				dateHtml[c++]=/*   */'<tr><td class="calendar-premonth" style="width: 15px; cursor: pointer;">◄</td>';
@@ -663,6 +656,33 @@ function getTutorialId(tutorialId){
 function getTutoriaSchedulelId(tutorialScheduleId){
 	return {name:'tutorialSchedule.id',value:tutorialScheduleId};
 }
+function getTime(time){
+	var ampm=['am','pm'], time=(time||'').toLowerCase(), minute=0;
+	for(var i=0;i<ampm.length;i++){
+		var contains = time.indexOf(ampm[i])>-1 && (time=time.replace(ampm[i],''));
+		if(contains || i+1==ampm.length){
+			var arr = time.split(':');
+			minute=(arr.length>0?(~~arr[0]*60):0)+(contains?i*12*60:0)+(arr.length>1?(~~arr[1]):0);
+		}
+	}
+	return minute;
+}
+function validateFromTo(from,to,maxError,gtError){
+	var fromTime = getTime(from.value), toTime = getTime(to.value);
+	if(fromTime<0||fromTime>=24*60){
+		addError(from,maxError);
+		return false;
+	}
+	if(toTime<0||toTime>24*60){
+		addError(to,maxError);
+		return false;
+	}
+	if(fromTime>=toTime){
+		addError(to,gtError);
+		return false;
+	}
+	return true;
+}
 function clickAddTutorial(id,url){
 	loadPage(url,null,id);
 }
@@ -690,6 +710,9 @@ function clickAddDate(url,tutorialId,id){
 	loadPage(url,Util.param([getTutorialId(tutorialId)]),id);
 }
 function saveTutorialSchedule(commitUrl,formId,reloadUrl,id){
+	if(!Util.validate(formId)){
+		return;
+	}
 	var param = Util.serialize(formId);
 	commitPage(commitUrl,param,reloadUrl,param,id);
 }
@@ -727,52 +750,95 @@ function viewTutorial(url,tutorialId,id,start,end){
 	}
 	loadPage(url,Util.param([getTutorialId(tutorialId),{name:'search.start',value:startDate},{name:'search.end',value:endDate}]),id);
 }
-function clickTutorialSchedule(id, tutorialScheduleId){
-	var el = Util.id(id);
-	if(el){
-		var ids = Util.data(el,'ids')||{}; 
-		ids[tutorialScheduleId]=tutorialScheduleId;
+function clickTutorialSchedule(id, tutorialScheduleId,isCheck,isWorkshop,cost,totalCostId, dateId){
+	var el = Util.id(id), dateEl = Util.id(dateId);
+	if(el&&dateEl&&dateEl.value){
+		var ids = isWorkshop=='true'?{}:(Util.data(el,'ids')||{}), date=dateEl.value, key=tutorialScheduleId+"_"+date;
+		if(isCheck){
+			ids[key]=[tutorialScheduleId,date,~~cost||0];
+		}else{
+			ids[key]=null;
+			try{delete ids[key];}catch(err){}
+		}
 		Util.data(el,'ids',ids); 
+		calculateTotalCost(ids,totalCostId);
 	}
 }
-function clickBookNow(url,tutorialId,id){
-	var el = Util.id(id), a=[], ids=el?Util.data(el,'ids'):null;
-	if(ids){
+function calculateTotalCost(ids,totalCostId){
+	var totalCost=0, el=Util.id(totalCostId);
+	if(el&&ids){
 		for(var k in ids){
 			if(ids[k]){
-				a.push(ids[k]);
+				totalCost+=ids[k][2]||0;
 			}
 		}
 	}
-	loadPage(url,Util.param([getTutorialId(tutorialId),{name:'book.ids',value:a.join(',')}]),id);
+	if(el){
+		Util.html(el,totalCost+"");
+	}
+}
+function clickBookNow(url,tutorialId,id){
+	var el = Util.id(id), a=[],b=[], ids=el?Util.data(el,'ids'):null;
+	if(ids){
+		for(var k in ids){
+			if(ids[k]){
+				a.push(ids[k][0]);
+				b.push(ids[k][1]);
+			}
+		}
+		for(var k in ids){
+			loadPage(url,Util.param([getTutorialId(tutorialId),{name:'book.ids',value:a.join(',')},{name:'book.dates',value:b.join(',')}]),id);
+			break;
+		}
+	}
 }
 function unRegisterTutorial(commitUrl,reloadUrl,tutorialId,id){
 	commitPage(commitUrl,Util.param([getTutorialId(tutorialId)]),reloadUrl,null,id);
 }
-function unRegisterTutorialSchedule(commitUrl,reloadUrl,tutorialScheduleId,tutorialId,id){
-	commitPage(commitUrl,Util.param([getTutoriaSchedulelId(tutorialScheduleId)]),reloadUrl,Util.param([{name:'id',value:tutorialId}]),id);
+function unRegisterTutorialSchedule(commitUrl,reloadUrl,tutorialScheduleId,date,tutorialId,id){
+	commitPage(commitUrl,Util.param([getTutoriaSchedulelId(tutorialScheduleId),{name:'scheduleDate',value:date}]),reloadUrl,Util.param([{name:'id',value:tutorialId}]),id);
 }
-function cancelTutorialSchedule(tutorialScheduleId,id,trId){
+function cancelTutorialSchedule(tutorialScheduleId_date,id,trId,totalCostId){
 	var el = Util.id(id), tr=Util.id(trId), trParent=tr?tr.parentNode:null, ids=el?Util.data(el,'ids'):null;
-	if(el&&ids&&(tutorialScheduleId in ids)){
-		ids[tutorialScheduleId]=null;
-		try{delete ids[tutorialScheduleId];}catch(err){}
+	if(el&&ids&&(tutorialScheduleId_date in ids)){
+		ids[tutorialScheduleId_date]=null;
+		try{delete ids[tutorialScheduleId_date];}catch(err){}
 		Util.data(el,'ids',ids);
+		calculateTotalCost(ids,totalCostId);
 	}
 	if(trParent){
 		trParent.removeChild(tr);
 	}
 }
 function clickRegister(commitUrl,reloadUrl,tutorialId,id,pId){
-	var el = Util.id(id), a=[], ids=el?Util.data(el,'ids'):null;
+	var el = Util.id(id), a=[],b=[], ids=el?Util.data(el,'ids'):null;
 	if(ids){
 		for(var k in ids){
 			if(ids[k]){
-				a.push(ids[k]);
+				a.push(ids[k][0]);
+				b.push(ids[k][1]);
 			}
 		}
+		commitPage(commitUrl,Util.param([getTutorialId(tutorialId),{name:'register.ids',value:a.join(',')},{name:'register.dates',value:b.join(',')}]),reloadUrl,Util.param([{name:'id',value:tutorialId}]),pId);
 	}
-	commitPage(commitUrl,Util.param([getTutorialId(tutorialId),{name:'register.ids',value:a.join(',')}]),reloadUrl,Util.param([{name:'id',value:tutorialId}]),pId);
+}
+function highLightCalendar(yyyyMMdd_array,calId){
+	var arr=[], el = Util.id(calId);
+	if(!yyyyMMdd_array||!calId){return;}
+	if(typeof(yyyyMMdd_array)=='string'){
+		arr = yyyyMMdd_array.split(',');
+	}else if(yyyyMMdd_array instanceof Array){
+		arr = yyyyMMdd_array;
+	}else{
+		return;
+	}
+	var data = Util.getCalendarData(el), idPrefix = data['idPrefix'];
+	for(var i=0;i<arr.length;i++){
+		var e = Util.id(idPrefix+arr[i]);
+		if(Util.hasClass(e,'calendar-selectabled')){
+			Util.addClass(idPrefix+arr[i],'highlight');
+		}
+	}
 }
 function loadDaySchedule(url,dateStr,calId){
 	Util.ajax(url,Util.param([{name:'search.start',value:dateStr.substring(4,6)+"/"+dateStr.substring(6,8)+"/"+dateStr.substring(0,4)}]),[function(a,b,c){
@@ -844,7 +910,7 @@ function loadMonthSchedule(url,dateStr,calId){
 }
 function clickDay(date){
 	date = date||Util.dateToStr(Util.toDay());
-	Util.calenderDayView('mycalendar1',{},date);
+	var calDay = Util.calenderDayView('mycalendar1',{},date);
 	loadDaySchedule('dayTutorialSchedule',date,'mycalendar1');
 }
 function clickWeek(date){

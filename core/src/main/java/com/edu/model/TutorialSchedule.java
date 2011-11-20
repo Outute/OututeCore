@@ -2,18 +2,13 @@ package com.edu.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,7 +34,8 @@ import com.edu.util.DateUtil;
 @Table(name = "tutorial_schedule")
 @Searchable
 @javax.xml.bind.annotation.XmlRootElement
-public class TutorialSchedule extends BaseObject implements Serializable {
+public class TutorialSchedule extends BaseObject implements Serializable,
+		Cloneable {
 
 	private static final long serialVersionUID = -2146302697966361308L;
 	public static final int DURATION_NO_REPEAT = DateUtil.DURATION_NO_REPEAT;
@@ -81,9 +77,6 @@ public class TutorialSchedule extends BaseObject implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "tutorial_id", nullable = false)
 	private Tutorial tutorial;
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinTable(name = "tutorial_schedule_student", joinColumns = { @JoinColumn(name = "tutorial_schedule_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
-	private Set<User> students; // required
 	@Version
 	private Integer version;
 
@@ -190,14 +183,6 @@ public class TutorialSchedule extends BaseObject implements Serializable {
 		this.tutorial = tutorial;
 	}
 
-	public Set<User> getStudents() {
-		return students;
-	}
-
-	public void setStudents(Set<User> students) {
-		this.students = students;
-	}
-
 	public Integer getVersion() {
 		return version;
 	}
@@ -256,4 +241,23 @@ public class TutorialSchedule extends BaseObject implements Serializable {
 				"toTime", toTime).append("tutorial", tutorial);
 		return sb.toString();
 	}
+
+	public TutorialSchedule clone() {
+		TutorialSchedule ts = new TutorialSchedule();
+		ts.setCost(getCost());
+		ts.setCreateTime(getCreateTime());
+		ts.setDurationType(getDurationType());
+		ts.setEndDate(getEndDate());
+		ts.setEndsOccurrence(getEndsOccurrence());
+		ts.setFromTime(getFromTime());
+		ts.setId(getId());
+		ts.setMaxParticipate(getMaxParticipate());
+		ts.setModifyTime(getModifyTime());
+		ts.setStartDate(getStartDate());
+		ts.setToTime(getToTime());
+		ts.setTutorial(getTutorial());
+		ts.setVersion(getVersion());
+		return ts;
+	}
+
 }

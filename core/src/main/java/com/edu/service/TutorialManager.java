@@ -4,6 +4,8 @@ import org.appfuse.service.GenericManager;
 
 import com.edu.model.TutorialSchedule;
 import com.edu.model.Tutorial;
+import com.edu.model.TutorialScheduleStudent;
+import com.edu.model.TutorialScheduleStudentKey;
 import com.edu.model.User;
 
 import java.util.Date;
@@ -105,10 +107,11 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * remove an user's TutorialSchedule by given tutorialScheduleId and userId
 	 * @param tutorialScheduleId
 	 * @param userId
+	 * @param date
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
-	void cancelTutorialSchedule(Long tutorialScheduleId, Long userId);
+	void cancelTutorialSchedule(Long tutorialScheduleId, Long userId, Date date);
 
 	/**
 	 * remove an user's Tutorial by given tutorialId and userId
@@ -120,15 +123,13 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	void cancelTutorial(Long tutorialId, Long userId);
 
 	/**
-	 * register class
+	 * register class or workshop
 	 * @param tutorialId
-	 * @param tutorialScheduleIds
-	 * @param userId
+	 * @param ids
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
-	void registerTutorial(Long tutorialId, Long[] tutorialScheduleIds,
-			Long userId);
+	void registerTutorial(Long tutorialId, TutorialScheduleStudentKey[] ids);
 
 	/**
 	 * find an user's tutorials
@@ -147,18 +148,20 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
-	List<TutorialSchedule> findTutorialSchedulesByUserId(Long tutorialId,
-			Long userId);
+	List<TutorialScheduleStudent> findTutorialSchedulesByUserId(
+			Long tutorialId, Long userId);
 
 	/**
 	 * find TutorialSchedule by date between start and end
+	 * @param userId
 	 * @param start
 	 * @param end
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-28
 	 */
-	List<TutorialSchedule> findTutorialSchedule(Date start, Date end);
+	List<TutorialSchedule> findTutorialSchedule(Long userId, Date start,
+			Date end);
 
 	/**
 	 * find current active tutorials

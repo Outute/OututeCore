@@ -6,6 +6,7 @@
     <meta name="heading" content="<fmt:message key='userProfile.heading'/>"/>
     <meta name="menu" content="UserMenu"/>
     <script type="text/javascript" src="<c:url value='/scripts/selectbox.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/scripts/global.js'/>"></script>
 </head>
 
 <s:form name="userForm" action="saveUser" method="post" validate="true">
@@ -204,7 +205,7 @@
 </s:form>
 
 <script type="text/javascript">
-    Form.focusFirstElement(document.forms["userForm"]);
+    /*Form.focusFirstElement(document.forms["userForm"]);*/
     highlightFormElements();
 
     function passwordChanged(passwordField) {

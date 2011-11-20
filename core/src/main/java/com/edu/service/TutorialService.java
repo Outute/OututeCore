@@ -2,6 +2,8 @@ package com.edu.service;
 
 import com.edu.model.TutorialSchedule;
 import com.edu.model.Tutorial;
+import com.edu.model.TutorialScheduleStudent;
+import com.edu.model.TutorialScheduleStudentKey;
 
 import javax.jws.WebService;
 import javax.ws.rs.DELETE;
@@ -125,12 +127,13 @@ public interface TutorialService {
 	 * remove a user's TutorialSchedule by given tutorialScheduleId and userId
 	 * @param tutorialScheduleId
 	 * @param userId
+	 * @param date
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
 	@DELETE
 	@Path("/tutorialSchedule")
-	void cancelTutorialSchedule(Long tutorialScheduleId, Long userId);
+	void cancelTutorialSchedule(Long tutorialScheduleId, Long userId, Date date);
 
 	/**
 	 * remove an user's Tutorial by given tutorialId and userId
@@ -146,15 +149,13 @@ public interface TutorialService {
 	/**
 	 * register class
 	 * @param tutorialId
-	 * @param tutorialScheduleIds
-	 * @param userId
+	 * @param ids
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
 	 */
 	@POST
 	@Path("/tutorialSchedule")
-	void registerTutorial(Long tutorialId, Long[] tutorialScheduleIds,
-			Long userId);
+	void registerTutorial(Long tutorialId, TutorialScheduleStudentKey[] ids);
 
 	/**
 	 * find an user's tutorials
@@ -177,11 +178,12 @@ public interface TutorialService {
 	 */
 	@GET
 	@Path("/tutorialSchedule")
-	List<TutorialSchedule> findTutorialSchedulesByUserId(Long tutorialId,
-			Long userId);
+	List<TutorialScheduleStudent> findTutorialSchedulesByUserId(
+			Long tutorialId, Long userId);
 
 	/**
 	 * find TutorialSchedule by date between start and end
+	 * @param userId
 	 * @param start
 	 * @param end
 	 * @return
@@ -190,7 +192,8 @@ public interface TutorialService {
 	 */
 	@GET
 	@Path("/tutorialSchedule")
-	List<TutorialSchedule> findTutorialSchedule(Date start, Date end);
+	List<TutorialSchedule> findTutorialSchedule(Long userId, Date start,
+			Date end);
 
 	/**
 	 * find current active tutorials

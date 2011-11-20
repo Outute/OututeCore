@@ -113,7 +113,7 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findTutorialsByUserId(Long userId) {
-		String hql = "select distinct t from Tutorial t join t.tutorialSchedules ts join ts.students s where s.id=? and t.enabled=? order by t.name";
+		String hql = "select distinct t from TutorialScheduleStudent tss join tss.tutorialSchedule.tutorial t where tss.student.id=? and t.enabled=? order by t.name";
 		return getHibernateTemplate().find(hql, userId, true);
 	}
 

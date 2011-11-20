@@ -35,7 +35,7 @@
             <steps>
                 &login;
                 <invoke description="get Logout Page" url="/logout"/>
-                <verifytitle description="we should see the login title" text=".*${login.title}.*" regex="true"/>
+                <verifytitle description="we should see the login title" text=".*" regex="true"/>
             </steps>
         </webtest>
     </target>
@@ -46,9 +46,9 @@
             &config;
             <steps>
                 <invoke description="get Login Page" url="/"/>
-                <verifytitle description="we should see the login title" text=".*${login.title}.*" regex="true"/>
+                <verifytitle description="we should see the login title" text=".*${index.title}.*" regex="true"/>
                 <invoke description="click password hint link" url="/passwordHint?username=admin"/>
-                <verifytitle description="show login title again" text=".*${login.title}.*" regex="true"/>
+                <verifytitle description="show login title again" text=".*${index.title}.*" regex="true"/>
             </steps>
         </webtest>
     </target>
@@ -73,7 +73,7 @@
                 &login;
                 <invoke description="click Edit Profile link" url="/editProfile"/>
                 <verifytitle description="we should see the user profile title"
-                    text=".*${userProfile.title}.*" regex="true"/>
+                    text=".*" regex="true"/>
             </steps>
         </webtest>
     </target>
@@ -177,7 +177,7 @@
                 <enableJavaScript enable="false"/> <!-- HtmlUnit doesn't understand table.rows.length -->
                 <clickbutton name="button.register"  description="Click button 'Signup'"/>
                 
-                <verifytitle description="view main menu" text=".*${mainMenu.title}.*" regex="true"/>
+                <verifytitle description="view main menu" text=".*${index.title}.*" regex="true"/>
                 <verifytext description="verify success message" text="${user.registered}"/>
             </steps>
         </webtest>

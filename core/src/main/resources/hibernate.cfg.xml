@@ -19,6 +19,8 @@
         <mapping class="com.edu.model.Role"/>
         <mapping class="com.edu.model.Tutorial"/>
         <mapping class="com.edu.model.TutorialSchedule"/>
+        <mapping class="com.edu.model.TutorialScheduleStudent"/>
+        <mapping class="com.edu.model.SystemConfigure"/>
         
         <!-- <class-cache usage="read-write" class="com.edu.model.User"/>
         <class-cache usage="read-write" class="com.edu.model.Role"/>

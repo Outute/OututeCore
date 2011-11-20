@@ -28,17 +28,7 @@ public interface TutorialScheduleDao extends GenericDao<TutorialSchedule, Long> 
 	 * @since 2011-10-18
 	 */
 	List<TutorialSchedule> getAllTutorialScheduleByTutorialId(Long tutorialId);
-	
-	/**
-	 * find an user's tutorial schedules
-	 * @param tutorialId
-	 * @param userId
-	 * @return
-	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
-	 * @since 2011-10-25
-	 */
-	List<TutorialSchedule> findTutorialSchedulesByUserId(Long tutorialId, Long userId);
-	
+
 	/**
 	 * find TutorialSchedule by date between start and end
 	 * @param start
