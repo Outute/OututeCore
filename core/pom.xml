@@ -140,7 +140,7 @@
 				<configuration>
 					<webAppConfig>
 						<defaultsDescriptor>src/test/resources/webdefault.xml</defaultsDescriptor>
-						<contextPath>/core</contextPath>
+						<contextPath>/</contextPath>
 					</webAppConfig>
 				</configuration>
 			</plugin>
