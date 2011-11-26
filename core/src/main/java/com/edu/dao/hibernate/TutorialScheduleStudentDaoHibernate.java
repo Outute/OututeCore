@@ -7,6 +7,7 @@
  ******************************************************************************/
 package com.edu.dao.hibernate;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +63,34 @@ public class TutorialScheduleStudentDaoHibernate
 			Long tutorialId, Long userId) {
 		String hql = "select distinct tss from TutorialScheduleStudent tss join tss.tutorialSchedule.tutorial t where t.id=? and tss.student.id=? and t.enabled=? order by t.name";
 		return getHibernateTemplate().find(hql, tutorialId, userId, true);
+	}
+
+	public List<TutorialScheduleStudent> findTutorialSchedulesByStudentIdAndDate(
+			Long studentId, Date start, Date end) {
+		String hql = "select distinct tss from TutorialScheduleStudent tss where 1=1 ";
+		List<Object> params = new ArrayList<Object>();
+		if (studentId != null) {
+			hql += " and tss.id.studentId=? ";
+			params.add(studentId);
+		}
+		if (start != null && end != null) {
+			hql += " and tss.id.lectureDate between ? and ? ";
+			params.add(start);
+			params.add(end);
+		} else {
+			if (start != null) {
+				hql += " and tss.id.lectureDate>=?";
+				params.add(start);
+			}
+			if (end != null) {
+				hql += " and tss.id.lectureDate<=?";
+				params.add(end);
+			}
+		}
+		{
+			hql += "order by tss.id.lectureDate";
+		}
+		return getHibernateTemplate().find(hql, params.toArray());
 	}
 
 	/**

@@ -41,8 +41,9 @@ public class TutorialScheduleDaoHibernate extends
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TutorialSchedule> findTutorialSchedule(Date start, Date end) {
-		if (start == null && end == null) {
+	public List<TutorialSchedule> findTutorialSchedule(Date start, Date end,
+			Long tutorId) {
+		if (start == null && end == null && tutorId == null) {
 			return new ArrayList<TutorialSchedule>();
 		}
 		List<Object> params = new ArrayList<Object>();
@@ -51,9 +52,16 @@ public class TutorialScheduleDaoHibernate extends
 			hql.append("select distinct ts from Tutorial t ");
 			hql.append(" join t.tutorialSchedules ts ");
 		}
+		if (tutorId != null) {
+			hql.append(" join t.tutors tutor ");
+		}
 		{
 			hql.append(" where t.enabled=? ");
 			params.add(true);
+		}
+		if (tutorId != null) {
+			hql.append(" and tutor.id=? ");
+			params.add(tutorId);
 		}
 		if (start != null) {
 			hql.append(" and ts.endDate>=? ");

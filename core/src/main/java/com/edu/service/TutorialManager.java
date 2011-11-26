@@ -150,9 +150,21 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 */
 	List<TutorialScheduleStudent> findTutorialSchedulesByUserId(
 			Long tutorialId, Long userId);
+	
+	/**
+	 * find student's tutorial schedule between start and end date.
+	 * @param studentId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	List<TutorialScheduleStudent> findTutorialSchedulesByStudentIdAndDate(
+			Long studentId, Date start, Date end);
 
 	/**
-	 * find TutorialSchedule by date between start and end
+	 * find student's TutorialSchedule by date between start and end
 	 * @param userId
 	 * @param start
 	 * @param end
@@ -160,7 +172,19 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-28
 	 */
-	List<TutorialSchedule> findTutorialSchedule(Long userId, Date start,
+	List<TutorialSchedule> findStudentTutorialSchedule(Long userId, Date start,
+			Date end);
+
+	/**
+	 * find tutor's TutorialSchedule by date between start and end
+	 * @param tutorId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	List<TutorialSchedule> findTutorTutorialSchedule(Long tutorId, Date start,
 			Date end);
 
 	/**

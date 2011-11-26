@@ -316,9 +316,10 @@ public class TutorialAction extends BaseAction implements Preparable {
 			return SUCCESS;
 		}
 		tutorialSchedule.setCreateTime(new Date());
+		Date startDate = tutorialSchedule.getStartDate();
 		{
 			Calendar c = Calendar.getInstance();
-			c.setTime(tutorialSchedule.getStartDate());
+			c.setTime(startDate);
 			c.set(Calendar.HOUR_OF_DAY, fromto[0] / 60);
 			c.set(Calendar.MINUTE, fromto[0] % 60);
 			tutorialSchedule.setFromTime(c.getTime());
@@ -326,7 +327,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 		tutorialSchedule.setModifyTime(new Date());
 		{
 			Calendar c = Calendar.getInstance();
-			c.setTime(tutorialSchedule.getStartDate());
+			c.setTime(startDate);
 			c.set(Calendar.HOUR_OF_DAY, fromto[1] / 60);
 			c.set(Calendar.MINUTE, fromto[1] % 60);
 			tutorialSchedule.setToTime(c.getTime());
@@ -334,7 +335,32 @@ public class TutorialAction extends BaseAction implements Preparable {
 		if (tutorialSchedule.getId() == null) {
 			tutorialSchedule.setTutorial(tutorial);
 		}
-		System.out.println(tutorialSchedule.getStartDate());
+		{
+			User user = getUser();
+			List<TutorialSchedule> had = tutorialManager
+					.findTutorTutorialSchedule(user.getId(), startDate,
+							startDate);
+			long newFrom = tutorialSchedule.getFromTime().getTime();
+			long newTo = tutorialSchedule.getToTime().getTime();
+			boolean hasError = false;
+			for (TutorialSchedule ts : had) {
+				long tsFrom = DateUtil
+						.changeToDate(ts.getFromTime(), startDate).getTime();
+				long tsTo = DateUtil.changeToDate(ts.getToTime(), startDate)
+						.getTime();
+				if (newFrom >= tsFrom && newFrom <= tsTo || newTo >= tsFrom
+						&& newTo <= tsTo) {
+					super.addActionError("tutorial: name="
+							+ ts.getTutorial().getName() + ", id="
+							+ ts.getTutorial().getId()
+							+ ", tutorial schedule time conflict.");
+					hasError = true;
+				}
+			}
+			if (hasError) {
+				return SUCCESS;
+			}
+		}
 		try {
 			tutorialManager.saveTutorialSchedule(tutorialSchedule);
 		} catch (Exception ade) {
@@ -657,7 +683,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findDayTutorialSchedule() {
 		Date start = null, end = null;
-		User user = getUser();
 		{
 			String startStr = getRequest().getParameter("search.start");
 			if (startStr != null && (startStr.trim()).length() > 0) {
@@ -670,25 +695,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorialSchedule(
-				user == null ? null : user.getId(), start, end);
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			StringBuffer sb = new StringBuffer();
-			Date monthFirst = DateUtil.getMonthFirstDay(start);
-			Date monthLast = DateUtil.getMonthLastDay(start);
-			Date temp = monthFirst;
-			for (TutorialSchedule ts : tutorialSchedules) {
-				while (!temp.after(monthLast)) {
-					if (DateUtil.isInDate(ts.getStartDate(), temp, ts
-							.getDurationType(), ts.getEndsOccurrence())) {
-						sb.append(sdf.format(temp)).append(",");
-					}
-					temp = DateUtil.nextDate(temp);
-				}
-			}
-			getRequest().setAttribute("highLight", sb.toString());
-		}
+		tutorialSchedules = tutorialManager.findTutorTutorialSchedule(null,
+				start, end);
+		getHighLightDate(start);
 		return SUCCESS;
 	}
 
@@ -713,8 +722,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorialSchedule(
+		tutorialSchedules = tutorialManager.findStudentTutorialSchedule(
 				user == null ? null : user.getId(), start, end);
+		getHighLightDate(start);
 		return SUCCESS;
 	}
 
@@ -739,9 +749,32 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorialSchedule(
+		tutorialSchedules = tutorialManager.findStudentTutorialSchedule(
 				user == null ? null : user.getId(), start, end);
+		getHighLightDate(start);
 		return SUCCESS;
+	}
+
+	/**
+	 * get the highLight dates and set to request
+	 * @param start
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	private void getHighLightDate(Date start) {
+		User user = getUser();
+		Date monthFirst = DateUtil.getMonthFirstDay(start);
+		Date monthLast = DateUtil.getMonthLastDay(start);
+		List<TutorialScheduleStudent> list = tutorialManager
+				.findTutorialSchedulesByStudentIdAndDate(user.getId(),
+						monthFirst, monthLast);
+		StringBuffer sb = new StringBuffer();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		for (TutorialScheduleStudent tss : list) {
+			Date lectureDate = tss.getId().getLectureDate();
+			sb.append(sdf.format(lectureDate)).append(",");
+		}
+		getRequest().setAttribute("highLight", sb.toString());
 	}
 
 	public String findCurrentTutorials() {

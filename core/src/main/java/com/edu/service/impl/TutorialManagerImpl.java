@@ -194,6 +194,15 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
+	public List<TutorialScheduleStudent> findTutorialSchedulesByStudentIdAndDate(
+			Long studentId, Date start, Date end) {
+		return tutorialScheduleStudentDao
+				.findTutorialSchedulesByStudentIdAndDate(studentId, start, end);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Tutorial> findTutorials(Long id, String name, Date start,
 			Date end, String tutorName, Integer category, String sortBy) {
 		if (id != null) {
@@ -265,8 +274,8 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TutorialSchedule> findTutorialSchedule(Long userId, Date start,
-			Date end) {
+	public List<TutorialSchedule> findStudentTutorialSchedule(Long userId,
+			Date start, Date end) {
 		if (userId != null) {
 			List<TutorialSchedule> list = new ArrayList<TutorialSchedule>();
 			List<TutorialScheduleStudent> find = tutorialScheduleStudentDao
@@ -280,7 +289,15 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 			}
 			return list;
 		}
-		return tutorialScheduleDao.findTutorialSchedule(start, end);
+		return tutorialScheduleDao.findTutorialSchedule(start, end, null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialSchedule> findTutorTutorialSchedule(Long tutorId,
+			Date start, Date end) {
+		return tutorialScheduleDao.findTutorialSchedule(start, end, tutorId);
 	}
 
 	/**

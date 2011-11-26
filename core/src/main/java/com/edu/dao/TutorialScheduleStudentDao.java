@@ -53,6 +53,18 @@ public interface TutorialScheduleStudentDao extends
 			Long tutorialId, Long userId);
 
 	/**
+	 * find student's tutorial schedule between start and end date.
+	 * @param studentId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	List<TutorialScheduleStudent> findTutorialSchedulesByStudentIdAndDate(
+			Long studentId, Date start, Date end);
+
+	/**
 	 * find student's tutorial schedules between start date and end date
 	 * @param userId
 	 * @param start

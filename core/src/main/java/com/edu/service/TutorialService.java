@@ -182,6 +182,20 @@ public interface TutorialService {
 			Long tutorialId, Long userId);
 
 	/**
+	 * find student's tutorial schedule between start and end date.
+	 * @param studentId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	@GET
+	@Path("/tutorialSchedule")
+	List<TutorialScheduleStudent> findTutorialSchedulesByStudentIdAndDate(
+			Long studentId, Date start, Date end);
+
+	/**
 	 * find TutorialSchedule by date between start and end
 	 * @param userId
 	 * @param start
@@ -192,7 +206,21 @@ public interface TutorialService {
 	 */
 	@GET
 	@Path("/tutorialSchedule")
-	List<TutorialSchedule> findTutorialSchedule(Long userId, Date start,
+	List<TutorialSchedule> findStudentTutorialSchedule(Long userId, Date start,
+			Date end);
+
+	/**
+	 * find tutor's TutorialSchedule by date between start and end
+	 * @param tutorId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	@GET
+	@Path("/tutorialSchedule")
+	List<TutorialSchedule> findTutorTutorialSchedule(Long tutorId, Date start,
 			Date end);
 
 	/**

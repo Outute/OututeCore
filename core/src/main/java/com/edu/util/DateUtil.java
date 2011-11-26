@@ -14,7 +14,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 /**
  * Date Utility Class used to convert Strings to Dates and Timestamps
@@ -207,7 +206,7 @@ public final class DateUtil {
 	}
 
 	/**
-	 * test two day
+	 * test two day is same date
 	 * @param origin
 	 * @param toCompare
 	 * @return
@@ -226,6 +225,53 @@ public final class DateUtil {
 		return o.get(Calendar.YEAR) == t.get(Calendar.YEAR)
 				&& o.get(Calendar.MONTH) == t.get(Calendar.MONTH)
 				&& o.get(Calendar.DAY_OF_MONTH) == t.get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * test two day is in same week
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	public static boolean isSameWeek(Date a, Date b) {
+		Calendar o = Calendar.getInstance();
+		{
+			o.setTime(a);
+		}
+		Calendar t = Calendar.getInstance();
+		{
+			t.setTime(b);
+		}
+		o.set(Calendar.DAY_OF_MONTH, o.get(Calendar.DAY_OF_MONTH)
+				- o.get(Calendar.DAY_OF_WEEK));
+		t.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH)
+				- t.get(Calendar.DAY_OF_WEEK));
+		return o.get(Calendar.YEAR) == t.get(Calendar.YEAR)
+				&& o.get(Calendar.MONTH) == t.get(Calendar.MONTH)
+				&& o.get(Calendar.DAY_OF_MONTH) == t.get(Calendar.DAY_OF_MONTH);
+	}
+
+	/**
+	 * test two day is in same month
+	 * @param a
+	 * @param b
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-11-27
+	 */
+	public static boolean isSameMonth(Date a, Date b) {
+		Calendar o = Calendar.getInstance();
+		{
+			o.setTime(a);
+		}
+		Calendar t = Calendar.getInstance();
+		{
+			t.setTime(b);
+		}
+		return o.get(Calendar.YEAR) == t.get(Calendar.YEAR)
+				&& o.get(Calendar.MONTH) == t.get(Calendar.MONTH);
 	}
 
 	/**
