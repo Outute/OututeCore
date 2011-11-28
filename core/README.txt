@@ -1,20 +1,16 @@
 AppFuse Basic Struts Archetype test
 --------------------------------------------------------------------------------
-If you're reading this then you've created your new project using Maven and
-core.  You have only created the shell of an AppFuse Java EE
-application.  The project object model (pom) is defined in the file pom.xml.
-The application is ready to run as a web application. The pom.xml file is
-pre-defined with Hibernate as a persistence model and Struts 2 as the web
-framework.
+Outute build and run guide
+--------------------------------------------------------------------------------
+1. Update the source code from the github repository.
 
-To get started, please complete the following steps:
+2. Change the mysql username and password configure of the pom.xml file.(line 734,734).
 
-1. Download and install a MySQL 5.x database from 
-   http://dev.mysql.com/downloads/mysql/5.0.html#downloads.
+3. Make sure your mysql db server is running.
 
-2. Run "mvn jetty:run" and view the application at http://localhost:8080.
+4. Run "mvn clean package" to compile and package the project
 
-3. More information can be found at:
+5. Run "mvn jetty:run" and view the application at http://localhost:8080
 
-   http://appfuse.org/display/APF/AppFuse+QuickStart
-
+6. WARNING: DO NOT run "mvn appfuse:full-source" command, because this command will copy appfuse source code 
+	and override the project's business code. This command only used in first time the project is created.
