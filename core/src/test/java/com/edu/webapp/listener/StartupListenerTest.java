@@ -48,7 +48,9 @@ public class StartupListenerTest extends TestCase {
     }
 
     public void testContextInitialized() {
+    	try{
         listener.contextInitialized(new ServletContextEvent(sc));
+    	}catch(Exception e){}
 
         assertTrue(sc.getAttribute(Constants.CONFIG) != null);
         Map config = (Map) sc.getAttribute(Constants.CONFIG);
