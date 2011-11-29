@@ -14,3 +14,15 @@ Outute build and run guide
 
 6. WARNING: DO NOT run "mvn appfuse:full-source" command, because this command will copy appfuse source code 
 	and override the project's business code. This command only used in first time the project is created.
+
+--------------------------------------------------------------------------------
+maven memory setting
+--------------------------------------------------------------------------------
+1. Find the line "#set MAVEN_OPTS=-Xdebug ......" in file (Windows:%M2_HOME%\bin\mvn.bat, Linux/Unix:$M2_HOME/bin/mvn)
+	add a new line after the line you found and add the jvm configure "set MAVEN_OPTS= -Xms128m -Xmx1024m".
+--------------------------------------------------------------------------------
+tomcat memory setting
+--------------------------------------------------------------------------------
+1. Find the line "# $Id: catalina.sh ......" in file (%TOMCAT_HOME%\bin\catalina.bat, Linux/Unix:$TOMCAT_HOME/bin/catalina.sh)
+	add a new line after the line you found and add the jvm configure Windows:"set JAVA_OPTS=%JAVA_OPTS% -Xms128m -Xmx1024m"
+	Linux "set JAVA_OPTS=$JAVA_OPTS -Xms128m -Xmx1024m".
