@@ -64,13 +64,14 @@
         <property name="host" value="${mail.host}"/>
         <property name="defaultEncoding" value="UTF-8"/> 
         <!-- Uncomment if you need to authenticate with your SMTP Server -->
-        <!--property name="username" value="${mail.username}"/>
+        <property name="protocol" value="${mail.transport.protocol}"/>
+        <property name="username" value="${mail.username}"/>
         <property name="password" value="${mail.password}"/>
         <property name="javaMailProperties">
             <value>
                 mail.smtp.auth=true
             </value>
-        </property-->
+        </property>
     </bean>
 
     <!-- Configure Velocity for sending e-mail -->

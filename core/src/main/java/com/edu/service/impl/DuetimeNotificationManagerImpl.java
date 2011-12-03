@@ -7,11 +7,11 @@
  ******************************************************************************/
 package com.edu.service.impl;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +20,26 @@ import com.edu.dao.TutorialScheduleStudentDao;
 import com.edu.model.SystemConfigure;
 import com.edu.model.TutorialScheduleStudent;
 import com.edu.model.TutorialScheduleStudentKey;
+import com.edu.model.User;
 import com.edu.service.DuetimeNotificationManager;
+import com.edu.service.MailEngine;
 
 /**
  * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
  * @since 2011-11-20
  */
-@Service("duetimeNotificationManager")
 public class DuetimeNotificationManagerImpl implements
 		DuetimeNotificationManager {
-	@Autowired
 	private SystemConfigureDao systemConfigureDao;
-	@Autowired
 	private TutorialScheduleStudentDao tutorialScheduleStudentDao;
+
+	private MailEngine mailEngine;
+
+	private String templateName;
+
+	private String sendFrom;
+
+	private String subject;
 
 	public void setSystemConfigureDao(SystemConfigureDao systemConfigureDao) {
 		this.systemConfigureDao = systemConfigureDao;
@@ -41,6 +48,22 @@ public class DuetimeNotificationManagerImpl implements
 	public void setTutorialScheduleStudentDao(
 			TutorialScheduleStudentDao tutorialScheduleStudentDao) {
 		this.tutorialScheduleStudentDao = tutorialScheduleStudentDao;
+	}
+
+	public void setMailEngine(MailEngine mailEngine) {
+		this.mailEngine = mailEngine;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+	public void setSendFrom(String sendFrom) {
+		this.sendFrom = sendFrom;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public void notification() {
@@ -76,9 +99,23 @@ public class DuetimeNotificationManagerImpl implements
 		updateFlag(tss);
 		try {
 			tss.setFlag(TutorialScheduleStudent.FLAG_PROCESSING);
-			//TODO
+			User student = tss.getStudent();
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+			mailMessage.setFrom(sendFrom);
+			mailMessage.setSubject(subject);
+			mailMessage.setTo(student.getFullName() + "<" + student.getEmail()
+					+ ">");
+
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("user", student);
+			// TODO: figure out how to get bundle specified in struts.xml
+			// model.put("bundle", getTexts());
+			model.put("message", tss.toString());
+			model.put("applicationURL", "http://www.outute.com");
+			mailEngine.sendMessage(mailMessage, templateName, model);
 			System.out.println("Notification:" + tss);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		updateFlag(tss);
 	}

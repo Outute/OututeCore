@@ -8,7 +8,14 @@
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
 	default-lazy-init="false">
 	<!-- quartz -->
-	<bean id="duetimeNotificationManager" class="com.edu.service.impl.DuetimeNotificationManagerImpl" />
+	<bean id="duetimeNotificationManager" class="com.edu.service.impl.DuetimeNotificationManagerImpl">
+		<property name="systemConfigureDao" ref="systemConfigureDao"/>
+		<property name="tutorialScheduleStudentDao" ref="tutorialScheduleStudentDao"/>
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="templateName" value="accountCreated.vm" />
+		<property name="sendFrom" value="${mail.default.from}" />
+		<property name="subject" value="Notification" />
+	</bean>
 	<bean id="schedulerFactoryBean"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
 		autowire="no" lazy-init="false">

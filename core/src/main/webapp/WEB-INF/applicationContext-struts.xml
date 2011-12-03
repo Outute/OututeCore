@@ -30,7 +30,10 @@
     </bean>
 
     <bean id="tutorialAction" class="com.edu.webapp.action.TutorialAction" scope="prototype">
-      <property name="userManager" ref="userManager"/>
-      <property name="tutorialManager" ref="tutorialManager"/>
+      	<property name="userManager" ref="userManager"/>
+      	<property name="tutorialManager" ref="tutorialManager"/>
+		<property name="mailEngine" ref="mailEngine"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="templateName" value="accountCreated.vm"/>
     </bean>
 </beans>

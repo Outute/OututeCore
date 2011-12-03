@@ -60,6 +60,21 @@ public class TutorialAction extends BaseAction implements Preparable {
 						.getTutorialSchedule(new Long(tutorialScheduleId));
 			}
 		}
+		try{
+//			mailMessage.setFrom("AppFuse <outute@163.com>");
+//			mailMessage.setSubject("Test");
+//			mailMessage.setTo("Tyler<iffiff1@163.com>");
+//
+//			Map<String, Object> model = new HashMap<String, Object>();
+//			model.put("user", getUser());
+//			// TODO: figure out how to get bundle specified in struts.xml
+//			// model.put("bundle", getTexts());
+//			model.put("message", "testest");
+//			model.put("applicationURL", "test");
+//			mailEngine.sendMessage(mailMessage, templateName, model);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
