@@ -340,6 +340,15 @@ Util = typeof(Util)!='undefined' || {
 			el.attachEvent( 'on'+type, f);
 		}
 	},
+	getCalendarHeader: function(id){
+		var el=Util.id(id);
+		if(!el){return;}
+		var h4s = el.getElementByName("H4");
+		if(h4s&&h4s.length){
+			return h4s[0].innerText;
+		}
+		return "";
+	},
 	getCalendarData: function(id){
 		var el=Util.id(id), arr0=Util.childFilter(el,function(el1,arr1){
 			if(Util.hasClass(el1,'calendar-panel')){
@@ -476,9 +485,27 @@ Util = typeof(Util)!='undefined' || {
 						var toDate = Util.dateToStr(Util.toDay());
 						if(sd.date.substring(0,6)>toDate.substring(0,6)){
 							Util.calender(id,props,sd.date,-1);
+							if(typeof(click)=='function'){
+								var date = Util.strToDate(sd.date);
+								diffMonth = -1;
+								date.setDate(1);
+								date.setMonth(date.getMonth()+diffMonth);
+								funcParams=funcParams||{};
+								funcParams.date=Util.dateToStr(date);
+								click(funcParams);
+							}
 						}
 					}else if(Util.hasClass(elem,'calendar-nextmonth')){
 						Util.calender(id,props,sd.date,1);
+						if(typeof(click)=='function'){
+							var date = Util.strToDate(sd.date);
+							diffMonth = 1;
+							date.setDate(1);
+							date.setMonth(date.getMonth()+diffMonth);
+							funcParams=funcParams||{};
+							funcParams.date=Util.dateToStr(date);
+							click(funcParams);
+						}
 					}else if(Util.hasClass(elem,'calendar-day-cell')&&Util.hasClass(elem,'calendar-selectabled')){
 						var day = elem.textContent || elem.innerText, data = {date:sd.date.substring(0,6)+(day.length<2?'0':'')+day,selectedId:elem.id};
 						Util.removeClass(sd.selectedId,'calendar-selected');
@@ -590,7 +617,7 @@ Util = typeof(Util)!='undefined' || {
 						}
 						if(i==0){
 							for(var j=0;j<7;j++){
-								tr[c++]='<td id="{id}" class="calendar-day-cell {selected} {disabled} schedule-week-cell'+(j==6?' last':'')+'" rowspan="12"><div style="position:relative;width:100%;height:456px;padding:0;margin:0;border:0;overflow:visible;display:block;">';
+								tr[c++]='<td id="{id}" class="calendar-day-cell {selected} {disabled} schedule-week-cell'+(j==6?' last':'')+'" rowspan="12"><div style="position:relative;width:81px;height:456px;padding:0;margin:0;border:0;overflow:visible;display:block;">';
 								{
 									var dStr=weekArr[j]=Util.dateToStr(d), id_=idPrefix+dStr, isToDay=dStr==toDayStr;
 									var s1 = ~~toDayStr>~~dStr, s2 = dateStr.substring(0,6)!=dStr.substring(0,6)&&~~toDayStr<~~dStr;
@@ -908,9 +935,15 @@ function loadMonthSchedule(url,dateStr,calId){
 		}
 	},ajaxError]);
 }
+function setCalendarHeader(headerId,title){
+	try{
+		Util.html(headerId,title);
+	}catch(err){}
+}
 function clickDay(date){
 	date = date||Util.dateToStr(Util.toDay());
 	var calDay = Util.calenderDayView('mycalendar1',{},date);
+	//setCalendarHeader();
 	loadDaySchedule('dayTutorialSchedule',date,'mycalendar1');
 }
 function clickWeek(date){
@@ -921,8 +954,8 @@ function clickWeek(date){
 function clickMonth(date){
 	date = date||Util.getCalendarData('mycalendar').date||Util.dateToStr(Util.toDay());
 	Util.calender('mycalendar1',{cellRender:function(date,i,pid){
-		var html='<div style="width:100%;position:relative;display:block;overflow:visible;"><div style="position:absolute;left:0;top:0;" class="notremove">{date}</div></div>';
-		return {css:'renderCss',html:Util.replace(html,[date.getDate()],'')};
+		var html='<div style="width:0px;height:0px;position:relative;display:block;overflow:visible;"><div style="position:absolute;left:0;top:0;" class="notremove">{date}</div></div>';
+		return {css:'calendarMonthCellCss',html:Util.replace(html,[date.getDate()],'')};
 	}},date);
 	loadMonthSchedule('monthTutorialSchedule',date,'mycalendar1');
 }

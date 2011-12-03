@@ -16,16 +16,25 @@
 					<a href="javascript:;" id="takeMoreTutorial_0" onclick="clickTakeTutorial('rightTakeTutorialPanel','searchTutorialPage');return false;"><span class="addIcon"></span><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
 				</div>
 				<div id="takeTutorialList" class="tutorialList"  style="overflow-y: scroll; height: 425px; background-color: white;">
-					<jsp:include page="/WEB-INF/pages/takeTutorial/listTutorial.jsp"></jsp:include>
+					<jsp:include page="/WEB-INF/pages/takeTutorial/listTutorial.jsp"/>
+					<c:set scope="request" value="" var="tutorials"/>
 				</div>
 			<!-- end Tutorials list -->
 			</td>
 			<td style="background-color: #FFF;">
 				<div id="rightTakeTutorialPanel" style="padding: 0; background-color: #FFF; height: 415px;">
-					<jsp:include page="/WEB-INF/pages/takeTutorial/searchTutorial.jsp"></jsp:include>
+					<c:if test="${id!=null}">
+						<jsp:include page="/WEB-INF/pages/takeTutorial/tutorialDetail.jsp"/>
+					</c:if>
+					<c:if test="${id==null}">
+						<jsp:include page="/WEB-INF/pages/takeTutorial/searchTutorial.jsp"/>
+					</c:if>
 				</div>
 			</td>
 		</tr>
 	</tbody>
 </table>
+<script type="text/javascript">
+try{Util.id('takedTutorial_${id}').click();}catch(err){}
+</script>
 <!-- end Offer Tutorials -->

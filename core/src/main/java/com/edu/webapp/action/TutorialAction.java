@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * Grab the entity from the database before populating with request parameters
 	 */
 	public void prepare() {
+		getRequest().getSession();
 		// prevent failures on new
 		if (getRequest().getMethod().equalsIgnoreCase("post")) {
 			String tutorialId = getRequest().getParameter("tutorial.id");
@@ -291,46 +293,56 @@ public class TutorialAction extends BaseAction implements Preparable {
 	public String addTutorialSchedule() {
 		String fromTime = getRequest().getParameter("fromTime");
 		String toTime = getRequest().getParameter("toTime");
-		String[] strArr = new String[] { fromTime, toTime };
-		String[] ampm = new String[] { "am", "pm" };
-		int[] fromto = new int[] { 0, 0 };
-		for (int i = 0; i < strArr.length; i++) {
-			String tmp = strArr[i] == null ? "" : strArr[i].toLowerCase();
-			for (int j = 0; j < ampm.length; j++) {
-				boolean contains = tmp.contains(ampm[j])
-						&& (tmp = tmp.replace(ampm[j], "")) != null;
-				if (contains || j + 1 == ampm.length) {
-					String[] split = tmp.split(":");
-					fromto[i] = Integer.valueOf(split.length > 0 ? split[0]
-							.trim() : "0")
-							* 60
-							+ (contains ? j * 12 * 60 : 0)
-							+ Integer.valueOf(split.length > 1 ? split[1]
-									.trim() : "0");
-					continue;
-				}
+		int from1 = 0;
+		int to1 = 0;
+		{
+			fromTime = fromTime == null ? "" : fromTime.trim().toLowerCase();
+			toTime = toTime == null ? "" : toTime.trim().toLowerCase();
+			if (fromTime.endsWith("pm")) {
+				String[] times = fromTime.replace("pm", "").split(":");
+				from1 = Integer.valueOf(times.length > 0 ? times[0] : "0") * 60
+						* 12
+						+ Integer.valueOf(times.length > 1 ? times[1] : "0");
+			} else {
+				String[] times = fromTime.replace("am", "").split(":");
+				from1 = Integer.valueOf(times.length > 0 ? times[0] : "0") * 60
+						+ Integer.valueOf(times.length > 1 ? times[1] : "0");
 			}
-		}
-		if (fromto[0] >= fromto[1] || fromto[0] < 0 || fromto[1] >= 24 * 60) {
-			addFieldError("From", "is invalid value.");
-			return SUCCESS;
+			if (toTime.endsWith("pm")) {
+				String[] times = toTime.replace("pm", "").split(":");
+				to1 = Integer.valueOf(times.length > 0 ? times[0] : "0") * 60
+						* 12
+						+ Integer.valueOf(times.length > 1 ? times[1] : "0");
+			} else {
+				String[] times = toTime.replace("am", "").split(":");
+				to1 = Integer.valueOf(times.length > 0 ? times[0] : "0") * 60
+						+ Integer.valueOf(times.length > 1 ? times[1] : "0");
+			}
+			if (from1 >= to1 || from1 < 0 || to1 >= 24 * 60) {
+				addFieldError("From", "is invalid value.");
+				return SUCCESS;
+			}
 		}
 		tutorialSchedule.setCreateTime(new Date());
 		Date startDate = tutorialSchedule.getStartDate();
 		{
 			Calendar c = Calendar.getInstance();
 			c.setTime(startDate);
-			c.set(Calendar.HOUR_OF_DAY, fromto[0] / 60);
-			c.set(Calendar.MINUTE, fromto[0] % 60);
-			tutorialSchedule.setFromTime(c.getTime());
+			c.set(Calendar.HOUR_OF_DAY, from1 / 60);
+			c.set(Calendar.MINUTE, from1 % 60);
+			tutorialSchedule.setFromTime(fixTimeZoneInput(c.getTime()));
 		}
 		tutorialSchedule.setModifyTime(new Date());
 		{
 			Calendar c = Calendar.getInstance();
 			c.setTime(startDate);
-			c.set(Calendar.HOUR_OF_DAY, fromto[1] / 60);
-			c.set(Calendar.MINUTE, fromto[1] % 60);
-			tutorialSchedule.setToTime(c.getTime());
+			c.set(Calendar.HOUR_OF_DAY, to1 / 60);
+			c.set(Calendar.MINUTE, to1 % 60);
+			tutorialSchedule.setToTime(fixTimeZoneInput(c.getTime()));
+		}
+		{
+			tutorialSchedule.setStartDate(DateUtil.clearTimes(
+					tutorialSchedule.getFromTime()).getTime());
 		}
 		if (tutorialSchedule.getId() == null) {
 			tutorialSchedule.setTutorial(tutorial);
@@ -348,8 +360,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 						.changeToDate(ts.getFromTime(), startDate).getTime();
 				long tsTo = DateUtil.changeToDate(ts.getToTime(), startDate)
 						.getTime();
-				if (newFrom >= tsFrom && newFrom <= tsTo || newTo >= tsFrom
-						&& newTo <= tsTo) {
+				if (!ts.getId().equals(tutorialSchedule.getId())
+						&& (newFrom >= tsFrom && newFrom <= tsTo || newTo >= tsFrom
+								&& newTo <= tsTo)) {
 					super.addActionError("tutorial: name="
 							+ ts.getTutorial().getName() + ", id="
 							+ ts.getTutorial().getId()
@@ -716,7 +729,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 				try {
 					start = DateUtil.convertStringToDate(startStr);
 					start = DateUtil.getSundayDay(start);
-					end = DateUtil.getSaturdayDay(start);
+					end = DateUtil.getMaxDay(DateUtil.getSaturdayDay(start))
+							.getTime();
 				} catch (Exception e) {
 					addFieldError("start date", "is invalid value(MM/dd/yyyy).");
 				}
@@ -743,7 +757,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 				try {
 					start = DateUtil.convertStringToDate(startStr);
 					start = DateUtil.getMonthFirstDay(start);
-					end = DateUtil.getMonthLastDay(start);
+					end = DateUtil.getMaxDay(DateUtil.getMonthLastDay(start))
+							.getTime();
 				} catch (Exception e) {
 					addFieldError("start date", "is invalid value(MM/dd/yyyy).");
 				}
@@ -751,6 +766,10 @@ public class TutorialAction extends BaseAction implements Preparable {
 		}
 		tutorialSchedules = tutorialManager.findStudentTutorialSchedule(
 				user == null ? null : user.getId(), start, end);
+		//		Map<Long,Tutorial> map = new LinkedHashMap<Long, Tutorial>();
+		//		for(TutorialSchedule ts:tutorialSchedules){
+		//			map.put(ts.getTutorial().getId(), ts.getTutorial());
+		//		}
 		getHighLightDate(start);
 		return SUCCESS;
 	}
@@ -770,10 +789,17 @@ public class TutorialAction extends BaseAction implements Preparable {
 						monthFirst, monthLast);
 		StringBuffer sb = new StringBuffer();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		List<TutorialScheduleStudent> forList = new ArrayList<TutorialScheduleStudent>();
 		for (TutorialScheduleStudent tss : list) {
 			Date lectureDate = tss.getId().getLectureDate();
 			sb.append(sdf.format(lectureDate)).append(",");
+			if (DateUtil.isSameDate(tss.getId().getLectureDate(), start)) {
+				forList.add(tss);
+			}
 		}
+
+		getRequest().setAttribute("startDate", start);
+		getRequest().setAttribute("tutorialScheduleStudent", forList);
 		getRequest().setAttribute("highLight", sb.toString());
 	}
 
@@ -807,7 +833,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @since 2011-10-31
 	 */
 	public static Map<Integer, List<Map<String, Object>>> processDaySchedule(
-			List<TutorialSchedule> tutorialSchedules) {
+			List<TutorialSchedule> tutorialSchedules,
+			List<TutorialScheduleStudent> tsslist, TimeZone timeZone) {
 		Map<Integer, List<Map<String, Object>>> map = new HashMap<Integer, List<Map<String, Object>>>();
 		if (tutorialSchedules == null || tutorialSchedules.isEmpty()) {
 			return map;
@@ -816,10 +843,26 @@ public class TutorialAction extends BaseAction implements Preparable {
 			map.put(i * 2, new ArrayList<Map<String, Object>>());
 		}
 		for (TutorialSchedule ts : tutorialSchedules) {
-			int fromMinute = DateUtil.getMinute(ts.getFromTime());
+			int fromMinute = DateUtil.getMinute(DateUtil.fixTimeZoneOutput(ts
+					.getFromTime(), timeZone));
 			List<Map<String, Object>> list = map.get((fromMinute / 120) * 2);
 			if (list != null) {
-				list.add(tutorialScheduleToMap(ts));
+				if (tsslist != null) {
+					boolean contains = false;
+					for (TutorialScheduleStudent tss : tsslist) {
+						if (tss.getId().getTutorialScheduleId().equals(
+								ts.getId())) {
+							list.add(tutorialScheduleToMap(ts, timeZone, true));
+							contains = true;
+							break;
+						}
+					}
+					if (!contains) {
+						list.add(tutorialScheduleToMap(ts, timeZone, false));
+					}
+				} else {
+					list.add(tutorialScheduleToMap(ts, timeZone, false));
+				}
 			}
 		}
 		return map;
@@ -833,14 +876,14 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @since 2011-10-31
 	 */
 	public static Map<String, List<Map<String, Object>>> processWeekSchedule(
-			List<TutorialSchedule> tutorialSchedules) {
+			List<TutorialSchedule> tutorialSchedules, TimeZone timeZone) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 		if (tutorialSchedules == null || tutorialSchedules.isEmpty()) {
 			return map;
 		}
 		Date start = DateUtil.getSundayDay(tutorialSchedules.get(0)
-				.getStartDate());
+				.getFromTime());
 		Date next = start;
 		for (int i = 0; i < 7; i++) {
 			next = i == 0 ? start : DateUtil.nextDate(next);
@@ -848,9 +891,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 		}
 		for (TutorialSchedule ts : tutorialSchedules) {
 			List<Map<String, Object>> list = map.get(sdf.format(ts
-					.getStartDate()));
+					.getFromTime()));
 			if (list != null) {
-				list.add(tutorialScheduleToMap(ts));
+				list.add(tutorialScheduleToMap(ts, timeZone, true));
 			}
 		}
 		return map;
@@ -864,14 +907,14 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @since 2011-10-31
 	 */
 	public static Map<String, List<Map<String, Object>>> processMonthSchedule(
-			List<TutorialSchedule> tutorialSchedules) {
+			List<TutorialSchedule> tutorialSchedules, TimeZone timeZone) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 		if (tutorialSchedules == null || tutorialSchedules.isEmpty()) {
 			return map;
 		}
 		Date start = DateUtil.getMonthFirstDay(tutorialSchedules.get(0)
-				.getStartDate());
+				.getFromTime());
 		String dateStr = sdf.format(start);
 		String month = sdf.format(start).substring(0, 6);
 		Date next = start;
@@ -882,9 +925,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 		}
 		for (TutorialSchedule ts : tutorialSchedules) {
 			List<Map<String, Object>> list = map.get(sdf.format(ts
-					.getStartDate()));
+					.getFromTime()));
 			if (list != null) {
-				list.add(tutorialScheduleToMap(ts));
+				list.add(tutorialScheduleToMap(ts, timeZone, true));
 			}
 		}
 		return map;
@@ -898,7 +941,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @since 2011-10-31
 	 */
 	public static Map<String, List<Map<String, Object>>> processTimeAreaTutorialSchedule(
-			List<TutorialSchedule> tutorialSchedules) {
+			List<TutorialSchedule> tutorialSchedules, TimeZone timeZone) {
 		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 		{
 			map.put("morning", new ArrayList<Map<String, Object>>());
@@ -908,11 +951,14 @@ public class TutorialAction extends BaseAction implements Preparable {
 		for (TutorialSchedule ts : tutorialSchedules) {
 			int fromMinute = DateUtil.getMinute(ts.getFromTime());
 			if (fromMinute / 60 < 12) {
-				map.get("morning").add(tutorialScheduleToMap(ts));
+				map.get("morning").add(
+						tutorialScheduleToMap(ts, timeZone, false));
 			} else if (fromMinute / 60 < 18) {
-				map.get("afternoon").add(tutorialScheduleToMap(ts));
+				map.get("afternoon").add(
+						tutorialScheduleToMap(ts, timeZone, false));
 			} else {
-				map.get("evening").add(tutorialScheduleToMap(ts));
+				map.get("evening").add(
+						tutorialScheduleToMap(ts, timeZone, false));
 			}
 		}
 		int maxCount = 0;
@@ -936,22 +982,28 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @since 2011-10-31
 	 */
 	private static Map<String, Object> tutorialScheduleToMap(
-			TutorialSchedule tutorialSchedule) {
+			TutorialSchedule tutorialSchedule, TimeZone timeZone,
+			boolean isOwned) {
 		Map<String, Object> m = new HashMap<String, Object>();
 		{
 			Tutorial t = tutorialSchedule.getTutorial();
-			int fromMinute = DateUtil.getMinute(tutorialSchedule.getFromTime());
-			int toMinute = DateUtil.getMinute(tutorialSchedule.getToTime());
+			Date fixTimeZoneFrom = DateUtil.fixTimeZoneOutput(tutorialSchedule
+					.getFromTime(), timeZone);
+			Date fixTimeZoneTo = DateUtil.fixTimeZoneOutput(tutorialSchedule
+					.getToTime(), timeZone);
+			int fromMinute = DateUtil.getMinute(fixTimeZoneFrom);
+			int toMinute = DateUtil.getMinute(fixTimeZoneTo);
 			m.put("id", t.getId());
 			m.put("tutorial", t);
 			m.put("name", t.getName());
 			m.put("scheduleId", tutorialSchedule.getId());
 			m.put("fromMinute", fromMinute);
+			m.put("isOwned", isOwned);
 			m.put("toMinute", toMinute);
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mmaaa",
 					Locale.ENGLISH);
-			m.put("fromTime", sdf.format(tutorialSchedule.getFromTime()));
-			m.put("toTime", sdf.format(tutorialSchedule.getToTime()));
+			m.put("fromTime", sdf.format(fixTimeZoneFrom));
+			m.put("toTime", sdf.format(fixTimeZoneTo));
 			if (t.getType() == Tutorial.TYPE_WORKSHOP) {
 				m.put("cost", t.getCost());
 				m.put("maxParticipate", t.getMaxParticipate());

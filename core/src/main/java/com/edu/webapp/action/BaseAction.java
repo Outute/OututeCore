@@ -6,6 +6,7 @@ import com.edu.service.MailEngine;
 import com.edu.service.RoleManager;
 import com.edu.service.TutorialManager;
 import com.edu.service.UserManager;
+import com.edu.util.DateUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,9 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Implementation of <strong>ActionSupport</strong> that contains
@@ -244,5 +247,26 @@ public class BaseAction extends ActionSupport {
 			return (User) auth.getPrincipal();
 		}
 		return null;
+	}
+
+	public TimeZone getTimeZone() {
+		TimeZone timeZone = (TimeZone) getSession().getAttribute("TIME_ZONE");
+		return timeZone == null ? TimeZone.getDefault() : timeZone;
+	}
+
+	public int getTimeZoneHour() {
+		TimeZone timeZone = getTimeZone();
+		if (timeZone != null) {
+			return timeZone.getRawOffset() / (3600 * 1000);
+		}
+		return 0;
+	}
+
+	public Date fixTimeZoneInput(Date date) {
+		return DateUtil.fixTimeZoneInput(date, getTimeZone());
+	}
+
+	public Date fixTimeZoneOutput(Date date) {
+		return DateUtil.fixTimeZoneOutput(date, getTimeZone());
 	}
 }

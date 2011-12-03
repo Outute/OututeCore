@@ -2,7 +2,7 @@
 <%@ include file="/common/taglibs.jsp"%>
 <fmt:setLocale value="en_US"/>
 <!--start add tutorialForm-->
-<div script="Util.calender('mycalendar','tutorialDate','<fmt:formatDate value="${tutorialSchedule.startDate}" pattern="yyyyMMdd"/>');" style="display: none;"></div>
+<div script="Util.calender('mycalendar','tutorialDate','<fmt:formatDate value="${tutorialSchedule.startDate}" pattern="yyyyMMdd" timeZone="${timeZone}"/>');" style="display: none;"></div>
 <form id="addTutorialSchedule" action="addTimeShedule" method="post" onsubmit="saveTutorialSchedule('addTimeShedule','addTutorialSchedule','tutorialDetailFragment','rightTutorialPanel');return false;">
 <input type="hidden" name="tutorial.id" value="${tutorial.id}"/>
 <input type="hidden" name="tutorialSchedule.id" value="${tutorialSchedule.id}"/>
@@ -17,7 +17,7 @@
 					<tr valign="top">
 						<td><label for="fromTime"><fmt:message key="page.offerTutorial.From"/></label></td>
 						<td>
-							<input type="text" class="input" id="fromTime" name="fromTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.fromTime}" pattern="hh:mmaaa"/>"/>
+							<input type="text" class="input" id="fromTime" name="fromTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.fromTime}" pattern="hh:mm" timeZone="${timeZone}"/>"/>
 							<div id="fromTime_maxError" style="display:none;" class="error" title="from time is over day">from time is over day time</div>
 							<div id="fromTime_gtError" style="display:none;" class="error" title="from time is greater than to time">from time is greater than to time</div>
 							<!-- <div id="fromam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
@@ -25,7 +25,7 @@
 						</td>
 						<td><label for="toTime"><fmt:message key="page.offerTutorial.To"/></label></td>
 						<td>
-							<input type="text" class="input" id="toTime" name="toTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.toTime}" pattern="hh:mmaaa"/>" validate="validateFromTo(Util.id('fromTime'),Util.id('toTime'),'maxError','gtError');"/>
+							<input type="text" class="input" id="toTime" name="toTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.toTime}" pattern="hh:mm" timeZone="${timeZone}"/>" validate="validateFromTo(Util.id('fromTime'),Util.id('toTime'),'maxError','gtError');"/>
 							<div id="toTime_maxError" style="display:none;" class="error" title="from time is over day">from time is over day time</div>
 							<div id="toTime_gtError" style="display:none;" class="error" title="from time is greater than to time">from time is greater than to time</div>
 							<!-- <div id="toam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>

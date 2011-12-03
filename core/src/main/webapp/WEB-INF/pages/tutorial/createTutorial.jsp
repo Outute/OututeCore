@@ -16,13 +16,13 @@
 					<a href="javascript:;" onclick="clickAddTutorial('rightTutorialPanel','addTutorialPage?ajax=true');return false;"><span class="addIcon"></span><fmt:message key="page.offerTutorial.AddTutorial"/></a>
 				</div>
 				<div id="tutorialListTable" class="tutorialList"  style="overflow-y: scroll; height: 420px; background-color: white;">
-					<jsp:include page="/WEB-INF/pages/tutorial/listTutorialFragment.jsp"></jsp:include>
+					<jsp:include page="/WEB-INF/pages/tutorial/listTutorialFragment.jsp"/>
 				</div>
 			<!-- end Tutorials list -->
 			</td>
 			<td style="background-color: #FFF;">
 				<div id="rightTutorialPanel" style="padding: 0; background-color: #FFF; height: 415px;">
-					<jsp:include page="/WEB-INF/pages/tutorial/tutorialDetailFragment.jsp"></jsp:include>
+					<jsp:include page="/WEB-INF/pages/tutorial/tutorialDetailFragment.jsp"/>
 				</div>
 			</td>
 		</tr>
@@ -30,6 +30,5 @@
 </table>
 <!-- end Offer Tutorials -->
 <script type="text/javascript">
-var el = Util.id('firstTutorial');
-if(el){el.click();}
+try{(Util.id('tutorial_id_${id}')||Util.id('firstTutorial')).click();}catch(err){}
 </script>

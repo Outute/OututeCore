@@ -2,7 +2,7 @@
 <%@ include file="/common/taglibs.jsp"%>
 
 <!-- view tutorial detail for book -->
-<div script="Util.calender('takeTutorialScheduleCalendar',{input:'tutorialScheduleDate',click:selectCalendar4Schedule,funcParams:{url:'bookTutorialPage',tutorialId:'${tutorial.id}',id:'rightTakeTutorialPanel'}},'<fmt:formatDate value="${startDate}" pattern="yyyyMMdd"/>');calculateTotalCost(Util.data('rightTakeTutorialPanel','ids'),'takeTutorialTotalCost');" style="display: none;"></div>
+<div script="Util.calender('takeTutorialScheduleCalendar',{input:'tutorialScheduleDate',click:selectCalendar4Schedule,funcParams:{url:'bookTutorialPage',tutorialId:'${tutorial.id}',id:'rightTakeTutorialPanel'}},'<fmt:formatDate value="${startDate}" pattern="yyyyMMdd" timeZone="${timeZone}"/>');calculateTotalCost(Util.data('rightTakeTutorialPanel','ids'),'takeTutorialTotalCost');" style="display: none;"></div>
 <div class="classTutorialDetail">
 	<div class="classTutorialTitle"><span>${tutorial.name}</span></div>
 	<div class="classDescription"><span>${tutorial.description}</span></div>
@@ -42,7 +42,7 @@
 							<th><fmt:message key="page.takeTutorial.Afternoon"/></th>
 							<th><fmt:message key="page.takeTutorial.Evening"/></th>
 						</tr>
-						<s:set value="@com.edu.webapp.action.TutorialAction@processTimeAreaTutorialSchedule(#request.tutorialSchedules)" var="mapList"/>
+						<s:set value="@com.edu.webapp.action.TutorialAction@processTimeAreaTutorialSchedule(#request.tutorialSchedules,#request.timeZone)" var="mapList"/>
 						<s:if test="#mapList['morning']">
 							<s:set value="#mapList['morning']" var="morning"/>
 							<s:set value="#mapList['afternoon']" var="afternoon"/>

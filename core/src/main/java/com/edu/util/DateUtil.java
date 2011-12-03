@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 /**
  * Date Utility Class used to convert Strings to Dates and Timestamps
@@ -548,5 +549,40 @@ public final class DateUtil {
 			break;
 		}
 		return end;
+	}
+
+	public static Date fixTimeZoneInput(Date date, TimeZone timeZone) {
+		if (timeZone == null || date == null) {
+			return date;
+		}
+		return fixTimeZone(date, timeZone.getRawOffset()
+				- TimeZone.getDefault().getRawOffset());
+	}
+
+	public static Date fixTimeZoneOutput(Date date, TimeZone timeZone) {
+		if (timeZone == null || date == null) {
+			return date;
+		}
+		return fixTimeZone(date, TimeZone.getDefault().getRawOffset()
+				- timeZone.getRawOffset());
+	}
+
+	public static Date fixTimeZone(Date date, long diff) {
+		return new Date(date.getTime() - diff);
+	}
+
+	public static void main(String[] args) {
+		try {
+			Date date0 = DateUtil.convertStringToDate("yyyyMMdd HHmmss",
+					"20111203 125700");
+			Date date1 = new Date();
+			System.out.println(date0.getTime());
+			System.out.println(date0);
+			System.out.println(date1.getTime());
+			System.out.println(date1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

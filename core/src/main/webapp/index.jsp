@@ -10,6 +10,11 @@
 <div class="middle_right floatr">
 	<div class="login-section" id="login">
 	<form method="post" id="loginForm" action="<c:url value='/j_security_check'/>" onsubmit="saveUsername(this);return validateForm(this)">
+	<script type="text/javascript">
+	    try{
+	        document.write('<input type="hidden" name="time_zone" value="'+((new Date()).getTimezoneOffset()/60*(-1))+'"/>');
+	    }catch(err){}
+    </script>
 	<h2><fmt:message key='label.login'/></h2>
 	<ul>
 	<c:if test="${param.error != null}">

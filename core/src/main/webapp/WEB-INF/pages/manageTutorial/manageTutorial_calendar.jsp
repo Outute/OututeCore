@@ -23,10 +23,10 @@ span.pagelinks{
 		<div class="button_35x21 floatl" style="border-style:none;width: 205px;"></div>
 		<div class="button_35x21 pointer floatl" onclick="clickToDay();">ToDay</div>
 		<div class="button_35x21 floatl" style="border-style:none; width: 10px;"></div>
-		<div class="button_35x21 pointer floatl">&lt;</div>
-		<div class="button_35x21 pointer floatl">&gt;</div>
+		<div class="button_35x21 pointer floatl" style="border-style: none;"></div>
+		<div class="button_35x21 pointer floatl" style="border-style: none;"></div>
 		<div class="button_35x21 floatl" style="border-style:none; width: 10px;"></div>
-		<div class="button_35x21 pointer floatl" style="border-style: none;  width: 150px;">August 2011</div>
+		<div class="button_35x21 pointer floatl" style="border-style: none;  width: 150px;" id="manageTutorialCalendarHeader"></div>
 		<div class="button_35x21 floatl" style="border-style:none; width: 10px;"></div>
 		<div class="button_35x21 pointer floatl" onclick="clickDay();">Day</div>
 		<div class="button_35x21 pointer floatl" onclick="clickWeek();">Week</div>

@@ -37,14 +37,14 @@
 							<td class="iconTd"><span class="calendarIcon"></span></td>
 					  		<td>
 					  			<div class="tutorialScheduleTimeContent">
-					  				<fmt:formatDate value="${ts.fromTime}" pattern="EEEEE MMMMM dd, yyyy - "/><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>&nbsp;<fmt:message key="page.takeTutorial.to"/>&nbsp;<fmt:formatDate value="${ts.toTime}" pattern="hh:mmaaa"/>
+					  				<fmt:formatDate value="${ts.fromTime}" pattern="EEEEE MMMMM dd, yyyy - " timeZone="${timeZone}"/><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa" timeZone="${timeZone}"/>&nbsp;<fmt:message key="page.takeTutorial.to"/>&nbsp;<fmt:formatDate value="${ts.toTime}" pattern="hh:mmaaa" timeZone="${timeZone}"/>
 					  			</div>
 					  			<div class="tutorialScheduleCostContent">
 					  				<fmt:message key="page.takeTutorial.Max1"/>&nbsp;<strong><c:if test="${ts.tutorial.type==1}">${ts.tutorial.maxParticipate}</c:if><c:if test="${ts.tutorial.type!=1}">${ts.maxParticipate}</c:if></strong>&nbsp;<fmt:message key="page.takeTutorial.participates"/>&nbsp;-&nbsp;<c:if test="${ts.tutorial.type==1}">$${ts.tutorial.cost}</c:if><c:if test="${ts.tutorial.type!=1}">$${ts.cost}</c:if>&nbsp;<c:if test="${(ts.tutorial.type!=1)&&(ts.durationType>0)}"><fmt:message key="page.takeTutorial.each"/></c:if>
 					  			</div>
 					  		</td>
 					  		<td class="iconTextTd" nowrap="nowrap">
-								<a href="javascript:;" onclick="unRegisterTutorialSchedule('cancelTutorialSchedule','listTakedTutorial','${ts.id}','<fmt:formatDate value="${ts.fromTime}" pattern="MM/dd/yyyy"/>','${tutorial.id}','takeTutorialList');return false;"><span class="removeIcon"></span><fmt:message key="page.lable.cancel"/></a>
+								<a href="javascript:;" onclick="unRegisterTutorialSchedule('cancelTutorialSchedule','listTakedTutorial','${ts.id}','<fmt:formatDate value="${ts.fromTime}" pattern="MM/dd/yyyy" timeZone="${timeZone}"/>','${tutorial.id}','takeTutorialList');return false;"><span class="removeIcon"></span><fmt:message key="page.lable.cancel"/></a>
 					  		</td>
 						</tr>
 					</table>

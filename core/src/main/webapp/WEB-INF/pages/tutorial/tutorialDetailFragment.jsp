@@ -43,7 +43,7 @@
 							<td class="iconTd"><span class="calendarIcon"></span></td>
 					  		<td>
 					  			<div class="tutorialScheduleTimeContent">
-					  				<fmt:formatDate value="${ts.startDate}" pattern="EEEEE MMMMM dd, yyyy - "/><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa"/>&nbsp;to&nbsp;<fmt:formatDate value="${ts.toTime}" pattern="hh:mmaaa"/>
+					  				<fmt:formatDate value="${ts.startDate}" pattern="EEEEE MMMMM dd, yyyy - " timeZone="${timeZone}"/><fmt:formatDate value="${ts.fromTime}" pattern="hh:mmaaa" timeZone="${timeZone}"/>&nbsp;to&nbsp;<fmt:formatDate value="${ts.toTime}" pattern="hh:mmaaa" timeZone="${timeZone}"/>
 					  			</div>
 					  			<c:if test="${ts.tutorial.type!=1}">
 					  			<div class="tutorialScheduleCostContent">

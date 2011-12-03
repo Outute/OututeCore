@@ -634,9 +634,10 @@ span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 
 #mycalendar1 td.schedule-month-cell {
 	width: 60px;
 }
-#mycalendar1 td.renderCss {
+#mycalendar1 td.calendarMonthCellCss {
 	padding: 0;
 	height: 70px;
+	width:  91px;
 	text-align: left;
 	vertical-align: text-top;
 }

@@ -12,6 +12,11 @@
 
 <form method="post" id="loginForm" action="<c:url value='/j_security_check'/>"
     onsubmit="saveUsername(this);return validateForm(this)">
+    <script type="text/javascript">
+    try{
+        document.write('<input type="hidden" name="time_zone" value="'+((new Date()).getTimezoneOffset()/60*(-1))+'"/>');
+    }catch(err){}
+    </script>
 <fieldset style="padding-bottom: 0">
 <ul>
 <c:if test="${param.error != null}">
@@ -56,6 +61,4 @@
 
 <p><fmt:message key="login.passwordHint"/></p>
 </body>
-
-
 <!--end login-->

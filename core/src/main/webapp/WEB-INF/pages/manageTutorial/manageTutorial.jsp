@@ -13,9 +13,9 @@ span.pagelinks{
 </style>
 <div class="main-content" style="width: 100%;">
 	<h2>Select View Options</h2>
-	<input checked="checked" onclick="changepage('buyerview')" name="viewtype_option" type="radio" id="viewtype_option_0"/><label for="viewtype_option_0">Table View</label>
+	<input checked="checked" onclick="window.location.href='manageTutorial';" name="viewtype_option" type="radio" id="viewtype_option_0"/><label for="viewtype_option_0">Table View</label>
 	<input onclick="window.location.href='manageTutorialCalendar';" name="viewtype_option" type="radio"  id="viewtype_option_1"/><label for="viewtype_option_1">Calendar View</label>
-	<form method="get" action="${ctx}/listTutorial" id="searchForm">
+	<form method="get" action="${ctx}/listTutorial" id="searchForm" style="display:none;">
 	    <input type="text" size="20" name="q" id="query" value="${param.q}" placeholder="Enter search terms..."/>
 	    <input type="submit" value="<fmt:message key="button.search"/>"/>
 	</form>
