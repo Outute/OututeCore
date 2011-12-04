@@ -122,9 +122,11 @@ Util = typeof(Util)!='undefined' || {
 			while (el.firstChild) {
 				el.removeChild(el.firstChild);
 			}
+			try{
 			newdiv = document.createElement("div");
 			newdiv.innerHTML=html;
 			el.appendChild(newdiv);
+			}catch(err1){alert(err1)}
 		}
 		var arr = Util.childFilter(el,function(elem,array){
 			array[0]=Util.getAttr(elem,'script');
@@ -138,6 +140,9 @@ Util = typeof(Util)!='undefined' || {
 	eval: function(script){
 		try{return eval(('{'+script+'}'));}catch(err){}
 		return undefined;
+	},
+	click: function(id){
+		try{var el=Util.id(id);(el.onclick||el.click||function(){})();}catch(err){}
 	},
 	getAttr: function(id,name){
 		var el = Util.id(id), attrNode = el?el.getAttributeNode(name):null;

@@ -23,7 +23,7 @@
 		</div>
 		<div style="float: right; width:25%; display:inline; text-align: right; position: absolute;bottom: 10px;">
 			<span class="takeMoreTutorialIcon"></span>
-			<a href="javascript:;" onclick="try{Util.id('takeMoreTutorial_0').click();}catch(err){};return false;"><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
+			<a href="javascript:;" onclick="Util.click('takeMoreTutorial_0');return false;"><fmt:message key="page.takeTutorial.TakeMoreTutorial"/></a>
 		</div>
 	</div>
 </div>
@@ -84,7 +84,7 @@
 			<tr>
 				<td colspan="2" align="right">
 					<input type="button" value="<fmt:message key="page.takeTutorial.BookNow"/>" class="button buttonMin" onclick="clickBookNow('bookTutorial','${tutorial.id}','rightTakeTutorialPanel');"/>
-					<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button buttonMin" onclick="try{Util.id('takeMoreTutorial_0').click();}catch(err){}"/>
+					<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button buttonMin" onclick="Util.click('takeMoreTutorial_0');"/>
 				</td>
 			</tr>
 		</table>

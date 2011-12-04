@@ -1,6 +1,7 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/common/taglibs.jsp"%>
 <!--list searched tutorials-->
+<table class="outertable">
 <c:forEach items="${tutorials}" var="t">
 	<tr>
 		<td colspan="2">
@@ -43,4 +44,5 @@
 		</td>
 	</tr>
 </c:if>
+</table>
 <!--end list searched tutorials-->

@@ -12,16 +12,16 @@
 		<tr valign="top">
 			<td width="30%">
 			<!-- Tutorials list -->
-				<div class="addTutorial" style="text-align: right;background-color: #DDD; height: 30px; line-height: 30px; padding-right: 10px;">
+				<div class="addTutorial" style="text-align: right;background-color: #DDD; height: 30px; line-height: 30px; padding-right: 10px; *width: 310px;">
 					<a href="javascript:;" onclick="clickAddTutorial('rightTutorialPanel','addTutorialPage?ajax=true');return false;"><span class="addIcon"></span><fmt:message key="page.offerTutorial.AddTutorial"/></a>
 				</div>
-				<div id="tutorialListTable" class="tutorialList"  style="overflow-y: scroll; height: 420px; background-color: white;">
+				<div id="tutorialListTable" class="tutorialList"  style="overflow-y: scroll; height: 435px; background-color: white; width: 300px;">
 					<jsp:include page="/WEB-INF/pages/tutorial/listTutorialFragment.jsp"/>
 				</div>
 			<!-- end Tutorials list -->
 			</td>
 			<td style="background-color: #FFF;">
-				<div id="rightTutorialPanel" style="padding: 0; background-color: #FFF; height: 415px;">
+				<div id="rightTutorialPanel" style="padding: 0; background-color: #FFF; height: 420px;">
 					<jsp:include page="/WEB-INF/pages/tutorial/tutorialDetailFragment.jsp"/>
 				</div>
 			</td>
@@ -30,5 +30,5 @@
 </table>
 <!-- end Offer Tutorials -->
 <script type="text/javascript">
-try{(Util.id('tutorial_id_${id}')||Util.id('firstTutorial')).click();}catch(err){}
+Util.click(Util.id('tutorial_id_${id}')||Util.id('firstTutorial'));
 </script>

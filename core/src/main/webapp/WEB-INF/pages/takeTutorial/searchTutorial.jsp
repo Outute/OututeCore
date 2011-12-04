@@ -39,9 +39,9 @@
 				<td><select><option><fmt:message key="page.takeTutorial.SortBy"/></option></select></td>
 			</tr>
 		</table>
-		<table class="outertable" id="listForSearchTutorial">
-			<jsp:include page="/WEB-INF/pages/takeTutorial/listForSearchTutorial.jsp"></jsp:include>
-		</table>
+		<div id="listForSearchTutorial">
+			<jsp:include page="/WEB-INF/pages/takeTutorial/listForSearchTutorial.jsp"/>
+		</div>
 	</div>
 </div>
 

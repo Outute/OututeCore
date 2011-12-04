@@ -534,16 +534,49 @@ input.buttonMin{ font-size:11px; padding: 5px; }
 .font12px{font-size: 12px;}
 .font13px{font-size: 13px;}
 .font14px{font-size: 14px;}
-span.addIcon{background: url("../images/add.png") no-repeat 0 0; padding: 3px 7px; margin: 0 3px; font-size: 10px;}
-span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 0px 8px; margin: 0 3px; font-size: 14px;}
+span.addIcon{
+	background: url("../images/add.png") no-repeat 0 0;
+	-webkit-user-select: none;
+	background-attachment: scroll;background-clip: border-box;background-color: transparent;
+	background-origin: padding-box;border-radius: 0px;border: 0px solid #939393;
+	color: black;cursor: default;display: inline-block;
+	font-family: arial, sans-serif;font-size: 12px;font-style: normal;font-variant: normal;font-weight: normal;
+	line-height: normal;margin: 0;outline: 0 none black;padding: 0;position: relative;
+	text-align: center;text-shadow: white 0px 1px 0px;vertical-align: middle;white-space: nowrap;
+	width: 16px;
+	height: 16px;
+}
+span.removeIcon{
+	background: url("../images/remove.png") no-repeat 0 0;
+	-webkit-user-select: none;
+	background-attachment: scroll;background-clip: border-box;background-color: transparent;
+	background-origin: padding-box;border-radius: 0px;border: 0px solid #939393;
+	color: black;cursor: default;display: inline-block;
+	font-family: arial, sans-serif;font-size: 12px;font-style: normal;font-variant: normal;font-weight: normal;
+	line-height: normal;margin: 0;outline: 0 none black;padding: 0;position: relative;
+	text-align: center;text-shadow: white 0px 1px 0px;vertical-align: middle;white-space: nowrap;
+	width: 16px;
+	height: 16px;
+}
+span.calendarIcon{
+	background-image: url("../images/MiniCalendar.png");
+	-webkit-user-select: none;
+	background-attachment: scroll;background-clip: border-box;background-color: transparent;
+	background-origin: padding-box;border-radius: 0px;border: 0px solid #939393;
+	color: black;cursor: default;display: inline-block;
+	font-family: arial, sans-serif;font-size: 12px;font-style: normal;font-variant: normal;font-weight: normal;
+	line-height: normal;margin: 0;outline: 0 none black;padding: 0;position: relative;
+	text-align: center;text-shadow: white 0px 1px 0px;vertical-align: middle;white-space: nowrap;
+	width: 32px;
+	height: 34px;
+}
 
 /*tutorial detail*/
-.classTutorialDetail { background-color: #e5e5e5; display: block; height: 105px; padding: 10px; }
+.classTutorialDetail { background-color: #e5e5e5; display: block; height: 115px; padding: 10px; }
 .classTutorialTitle { width: 300px; overflow:hidden; height: 24px; font-size:16px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif; }
 .classDescription { width: 300px; overflow:hidden; height: 20px; color: #6c6c6c; font-size:14px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif; }
 .tutorialHr{ margin: 5px 0px; color: #FFFFFF; }
 .tutorialDetail { float:left; width:70%; display:inline; font-size:11px; }
-.calendarIcon{background-image: url("../images/MiniCalendar.png"); padding: 8px 16px;}
 .tutorialScheduleTimeContent{font-size:12px; font-weight: bold; font-family: Georgia,"Times New Roman",Times,serif;}
 .tutorialScheduleCostContent{font-size:12px; font-weight: normal; font-family: Georgia,"Times New Roman",Times,serif;}
 .searchContent{}
@@ -569,6 +602,7 @@ span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 
 	margin-left: 5px;
 	color: red;
 }
+.listTutorialSchedule{background-color: white; overflow-y: scroll; height: 330px;}
 .listTutorialSchedule .outertable{
 	border-collapse: separate;
 	border-spacing: 5px;
@@ -595,8 +629,8 @@ span.removeIcon{background: url("../images/remove.png") no-repeat 0 0; padding: 
 	width: 24px;
 }
 .iconTextTd{
-	width: 40px;
-	-width: 55px;
+	width: 60px;
+	*width: 70px;
 	font-size: 12px;
 }
 /* manage tutorial calendar*/

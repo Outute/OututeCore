@@ -25,34 +25,27 @@
 		</li>
 	</c:if>
 		<li>
-
 			<fmt:message key="label.username"/>
-
 			<input type="text" class="" name="j_username" id="j_username" tabindex="1"/>
 		</li>
 		<li>
-
 			<fmt:message key="label.password"/>
-
 			<input type="password" class="" name="j_password" id="j_password" tabindex="2"/>
 		</li>
 	<c:if test="${appConfig['rememberMeEnabled']}">
-		<div>
-			<input type="checkbox" class="" name="_spring_security_remember_me" id="rememberMe" tabindex="3"/>
+		<li><div>
+			<input type="checkbox" class="" name="_spring_security_remember_me" id="rememberMe" tabindex="3" style="width:20px;"/>
 			&nbsp;&nbsp;&nbsp;
-			<label for="rememberMe" class=""><fmt:message key="login.rememberMe"/></labelan>
-		</div>
+			<label for="rememberMe" class="" style="width:100px;"><fmt:message key="login.rememberMe"/></label>
+		</div></li>
 	</c:if>
 		<li>
 			<s:submit key="button.login" cssClass="button" tabindex="4" />
 		</li>
-		<div>
-				<fmt:message key="login.signup">
-					<fmt:param><c:url value="/signup"/></fmt:param>
-				</fmt:message>
-		</div>
-
-	</ul>
+		<li>
+			<div><fmt:message key="login.signup"><fmt:param><c:url value="/signup" /></fmt:param></fmt:message></div>
+		</li>
+</ul>
 	</form>
 	</div>
 </div>
