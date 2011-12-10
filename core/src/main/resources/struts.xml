@@ -80,6 +80,10 @@
         <action name="contactus">
             <result name="success">/WEB-INF/pages/contactus.jsp</result>
         </action>
+        
+        <action name="categories">
+            <result name="success">/WEB-INF/pages/categories.jsp</result>
+        </action>
 
         <action name="signup" class="signupAction">
             <result name="cancel" type="redirect">/</result>
