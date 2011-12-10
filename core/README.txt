@@ -8,7 +8,7 @@ Outute build and run guide
 
 3. Make sure your mysql database server is running.(about the mysql installation and database initialization see the "mysql database setting" following)
 
-4. Run "mvn clean package" to compile and package the project. If encounter test error, please run "mvn clean package -Dmaven.test.skip=true"
+4. Run "mvn clean package" to compile and package the project. If you have encountered tests error, please run "mvn clean package -Dmaven.test.skip=true"
 
 5. Run "mvn jetty:run" and view the application at http://localhost:8080
 
