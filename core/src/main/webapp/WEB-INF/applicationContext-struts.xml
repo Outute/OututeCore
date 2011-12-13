@@ -36,4 +36,8 @@
         <property name="mailMessage" ref="mailMessage"/>
         <property name="templateName" value="accountCreated.vm"/>
     </bean>
+
+    <bean id="categories"></bean>
+    <bean id="contactus"></bean>
+    <bean id="howoututeworks"></bean>
 </beans>
