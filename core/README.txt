@@ -14,6 +14,9 @@ Outute build and run guide
 
 6. WARNING: DO NOT run "mvn appfuse:full-source" command, because this command will copy appfuse source code 
 	and override the project's business code. This command only used in first time the project is created.
+
+7. Not Initialize database setting: add parameter "-DskipTests=true" before start web container.
+	Just like: "mvn jetty:run -DskipTests=true"
 --------------------------------------------------------------------------------
 Outute deploy guide
 --------------------------------------------------------------------------------
