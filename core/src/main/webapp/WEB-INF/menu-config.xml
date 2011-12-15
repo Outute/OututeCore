@@ -6,9 +6,9 @@
     <Menus>
         <Menu name="MainMenu" class="active" title="mainMenu.title" page="/mainMenu" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="TutorialMenu" title="menu.tutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" width="120" page="/manageTutorial"/>
-        <Menu name="ManageTutorial" title="menu.tutorial.manageTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" page="/manageTutorialCalendar"/>
-        <Menu name="OfferTutorial" title="menu.tutorial.offerTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" page="/createTutorial"/>
-        <Menu name="TakeTutorial" title="menu.tutorial.takeTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR" page="/takeTutorial"/>
+        <Menu name="ManageTutorial" title="menu.tutorial.manageTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR,ROLE_USER" page="/manageTutorialCalendar"/>
+        <Menu name="OfferTutorial" title="menu.tutorial.offerTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR,ROLE_USER" page="/createTutorial"/>
+        <Menu name="TakeTutorial" title="menu.tutorial.takeTutorial" description="Tutor Menu" roles="ROLE_ADMIN,ROLE_TUTOR,ROLE_USER" page="/takeTutorial"/>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile" roles="ROLE_ADMIN,ROLE_USER"/>
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/users"/>
         <Menu name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
