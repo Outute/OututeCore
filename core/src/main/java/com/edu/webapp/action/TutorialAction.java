@@ -60,19 +60,19 @@ public class TutorialAction extends BaseAction implements Preparable {
 						.getTutorialSchedule(new Long(tutorialScheduleId));
 			}
 		}
-		try{
-//			mailMessage.setFrom("AppFuse <outute@163.com>");
-//			mailMessage.setSubject("Test");
-//			mailMessage.setTo("Tyler<iffiff1@163.com>");
-//
-//			Map<String, Object> model = new HashMap<String, Object>();
-//			model.put("user", getUser());
-//			// TODO: figure out how to get bundle specified in struts.xml
-//			// model.put("bundle", getTexts());
-//			model.put("message", "testest");
-//			model.put("applicationURL", "test");
-//			mailEngine.sendMessage(mailMessage, templateName, model);
-		}catch(Exception e){
+		try {
+			//			mailMessage.setFrom("AppFuse <outute@163.com>");
+			//			mailMessage.setSubject("Test");
+			//			mailMessage.setTo("Tyler<iffiff1@163.com>");
+			//
+			//			Map<String, Object> model = new HashMap<String, Object>();
+			//			model.put("user", getUser());
+			//			// TODO: figure out how to get bundle specified in struts.xml
+			//			// model.put("bundle", getTexts());
+			//			model.put("message", "testest");
+			//			model.put("applicationURL", "test");
+			//			mailEngine.sendMessage(mailMessage, templateName, model);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -723,8 +723,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorTutorialSchedule(null,
-				start, end);
+		tutorialSchedules = tutorialManager.findTutorTutorialSchedule(getUser()
+				.getId(), start, end);
 		getHighLightDate(start);
 		return SUCCESS;
 	}
@@ -799,17 +799,46 @@ public class TutorialAction extends BaseAction implements Preparable {
 		User user = getUser();
 		Date monthFirst = DateUtil.getMonthFirstDay(start);
 		Date monthLast = DateUtil.getMonthLastDay(start);
-		List<TutorialScheduleStudent> list = tutorialManager
-				.findTutorialSchedulesByStudentIdAndDate(user.getId(),
-						monthFirst, monthLast);
+
 		StringBuffer sb = new StringBuffer();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Map<String, String> map = new HashMap<String, String>();
 		List<TutorialScheduleStudent> forList = new ArrayList<TutorialScheduleStudent>();
-		for (TutorialScheduleStudent tss : list) {
-			Date lectureDate = tss.getId().getLectureDate();
-			sb.append(sdf.format(lectureDate)).append(",");
-			if (DateUtil.isSameDate(tss.getId().getLectureDate(), start)) {
-				forList.add(tss);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		{
+			List<TutorialScheduleStudent> list = tutorialManager
+					.findTutorialSchedulesByStudentIdAndDate(user.getId(),
+							monthFirst, monthLast);
+			for (TutorialScheduleStudent tss : list) {
+				Date lectureDate = tss.getId().getLectureDate();
+				map.put(sdf.format(lectureDate), "");
+				if (DateUtil.isSameDate(tss.getId().getLectureDate(), start)) {
+					forList.add(tss);
+				}
+			}
+		}
+		{
+			List<TutorialSchedule> list = tutorialManager
+					.findTutorTutorialSchedule(user.getId(), monthFirst,
+							monthLast);
+			if (list != null && !list.isEmpty()) {
+				Date[] monthDates = DateUtil.getMonthDays(monthFirst);
+				for (Date date : monthDates) {
+					for (TutorialSchedule ts : list) {
+						map.put(sdf.format(ts.getFromTime()), "");
+						if (DateUtil.isInDate(ts.getStartDate(), date, ts
+								.getDurationType(), ts.getEndsOccurrence())) {
+							TutorialScheduleStudent tss = new TutorialScheduleStudent(
+									ts.getId(), user.getId(), ts.getFromTime(),
+									ts.getFromTime());
+							forList.add(tss);
+						}
+					}
+				}
+			}
+		}
+		{//add all high light date
+			for (String key : map.keySet()) {
+				sb.append(key).append(",");
 			}
 		}
 

@@ -476,7 +476,8 @@ table.calendar-day td.last{
 	border-right: solid 1px #CCCCCC;
 }
 .calendar-panel .highlight{
-	background-color: #FFAFDF;
+	font-weight: bolder;
+	/*background-color: #FFAFDF;*/
 }
 /* end calendar css*/
 

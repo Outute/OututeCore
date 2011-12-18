@@ -8,9 +8,11 @@ import com.edu.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -569,6 +571,21 @@ public final class DateUtil {
 
 	public static Date fixTimeZone(Date date, long diff) {
 		return new Date(date.getTime() - diff);
+	}
+
+	public static Date[] getMonthDays(Date date) {
+		Calendar c = Calendar.getInstance();
+		{
+			c.setTime(date);
+			c.set(Calendar.DAY_OF_MONTH, 1);
+		}
+		List<Date> dates = new ArrayList<Date>();
+		int month = c.get(Calendar.MONTH);
+		while (c.get(Calendar.MONTH) == month) {
+			dates.add(c.getTime());
+			c.set(Calendar.DAY_OF_MONTH, c.get(Calendar.DAY_OF_MONTH) + 1);
+		}
+		return dates.toArray(new Date[dates.size()]);
 	}
 
 	public static void main(String[] args) {
