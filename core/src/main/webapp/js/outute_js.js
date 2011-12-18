@@ -955,9 +955,8 @@ function setCalendarHeader(headerId,title){
 	}catch(err){}
 }
 function clickDay(date){
-	date = date||Util.dateToStr(Util.toDay());
+	date = date||Util.getCalendarData('mycalendar').date||Util.dateToStr(Util.toDay());
 	var calDay = Util.calenderDayView('mycalendar1',{},date);
-	//setCalendarHeader();
 	loadDaySchedule('dayTutorialSchedule',date,'mycalendar1');
 }
 function clickWeek(date){
