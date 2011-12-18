@@ -64,6 +64,15 @@ public interface TutorialDao extends GenericDao<Tutorial, Long> {
 	 * @since 2011-10-25
 	 */
 	List<Tutorial> findTutorialsByUserId(Long userId);
+	
+	/**
+	 * find an tutor's tutorials
+	 * @param tutorId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-12-18
+	 */
+	List<Tutorial> findTutorialsByTutorId(Long tutorId);
 
 	/**
 	 * find current active tutorials

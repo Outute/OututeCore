@@ -187,7 +187,6 @@ public class TutorialAction extends BaseAction implements Preparable {
 		// for other users, prepare() method will handle populating
 		if (isRole(Constants.ADMIN_ROLE) || isRole(Constants.TUTOR_ROLE)) {
 			if (isNew) {
-				User loginUser;
 				Set<User> tutors;
 
 				tutorial.setEnabled(true);
@@ -208,7 +207,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 			}
 			try {
 				tutorialManager.saveTutorial(tutorial);
-				getRequest().getSession().setAttribute("newTutorialId", tutorial.getId());
+				getRequest().getSession().setAttribute("newTutorialId",
+						tutorial.getId());
 			} catch (Exception ade) {
 				ade.printStackTrace();
 				// thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
@@ -266,7 +266,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @return "success" if no exceptions thrown
 	 */
 	public String listAll() {
-		tutorials = tutorialManager.getTutorials();
+		tutorials = tutorialManager.findTutorialsByTutorId(getUser().getId());
 		if (!tutorials.isEmpty()) {
 			tutorial = tutorials.get(0);
 		}

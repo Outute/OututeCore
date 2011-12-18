@@ -5,7 +5,6 @@ import com.edu.model.Tutorial;
 import com.edu.model.TutorialScheduleStudent;
 import com.edu.model.TutorialScheduleStudentKey;
 
-import javax.jws.WebService;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -15,12 +14,11 @@ import javax.ws.rs.Produces;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Web Service interface so hierarchy of Generic Manager isn't carried through.
  */
-@WebService
+@javax.jws.WebService
 @Path("/")
 @Produces( { "application/json", "application/xml" })
 public interface TutorialService {
@@ -167,6 +165,17 @@ public interface TutorialService {
 	@GET
 	@Path("/tutorialSchedule")
 	List<Tutorial> findTutorialsByUserId(Long userId);
+
+	/**
+	 * find an tutor's tutorials
+	 * @param tutorId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-12-18
+	 */
+	@GET
+	@Path("/tutorialSchedule/${tutorId}")
+	List<Tutorial> findTutorialsByTutorId(@PathParam("tutorId")Long tutorId);
 
 	/**
 	 * find an user's tutorial schedule

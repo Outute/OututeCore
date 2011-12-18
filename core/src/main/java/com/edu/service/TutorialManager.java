@@ -11,9 +11,6 @@ import com.edu.model.User;
 import java.util.Date;
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-
 /**
  * Business Service Interface to handle communication between web and
  * persistence layer.
@@ -139,6 +136,15 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * @since 2011-10-25
 	 */
 	List<Tutorial> findTutorialsByUserId(Long userId);
+	
+	/**
+	 * find an tutor's tutorials
+	 * @param tutorId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-12-18
+	 */
+	List<Tutorial> findTutorialsByTutorId(Long tutorId);
 
 	/**
 	 * find an user's tutorial schedule

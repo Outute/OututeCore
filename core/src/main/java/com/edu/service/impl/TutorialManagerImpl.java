@@ -185,6 +185,13 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
+	public List<Tutorial> findTutorialsByTutorId(Long tutorId) {
+		return tutorialDao.findTutorialsByTutorId(tutorId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<TutorialScheduleStudent> findTutorialSchedulesByUserId(
 			Long tutorialId, Long userId) {
 		return tutorialScheduleStudentDao.findTutorialSchedulesByUserId(

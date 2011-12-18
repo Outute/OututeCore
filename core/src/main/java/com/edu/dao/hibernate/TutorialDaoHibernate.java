@@ -120,6 +120,14 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
+	public List<Tutorial> findTutorialsByTutorId(Long tutorId) {
+		String hql = "select t from Tutorial t join t.tutors tr where tr.id=? and t.enabled=? order by t.name";
+		return getHibernateTemplate().find(hql, tutorId, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
 			String name) {
 		List<Object> params = new ArrayList<Object>();
