@@ -208,6 +208,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 			}
 			try {
 				tutorialManager.saveTutorial(tutorial);
+				getRequest().getSession().setAttribute("newTutorialId", tutorial.getId());
 			} catch (Exception ade) {
 				ade.printStackTrace();
 				// thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
