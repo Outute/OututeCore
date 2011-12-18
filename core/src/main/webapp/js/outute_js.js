@@ -345,6 +345,15 @@ Util = typeof(Util)!='undefined' || {
 			el.attachEvent( 'on'+type, f);
 		}
 	},
+	isSameDate: function(date1,date2){
+		return Util.dateToStr(date1)==Util.dateToStr(date2);
+	},
+	isSameWeek: function(date1,date2){
+		return date1.getDay()==date2.getDay()&&Math.abs((~~Util.dateToStr(date1))-(~~Util.dateToStr(date2)))<7;
+	},
+	isSameMonth: function(date1,date2){
+		return Util.dateToStr(date1).indexOf(Util.dateToStr(date2).substring(0,6))==0;
+	},
 	getCalendarHeader: function(id){
 		var el=Util.id(id);
 		if(!el){return;}
@@ -967,7 +976,8 @@ function clickMonth(date){
 function clickCalendar(params){
 	var date = (params||{}).date||Util.dateToStr(Util.toDay());
 	var el = Util.id('mycalendar1'), type=el&&el.childNodes.length?Util.getAttr(el.childNodes[0],'viewType'):'';
-	clickDay(date);
+	var map={'month':clickMonth,'week':clickWeek,'day':clickDay};
+	if(type in map){map[type](date);}
 }
 function clickToDay(){
 	var toDay = Util.dateToStr(Util.toDay());

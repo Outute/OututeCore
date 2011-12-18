@@ -652,6 +652,7 @@ span.calendarIcon{
 }
 #mycalendar1 td.time-cell {
 	width: 50px;
+	height:27px;
 }
 #mycalendar1 th.time-cell-header {
 	width: 50px;
