@@ -972,6 +972,12 @@ function clickMonth(date){
 	}},date);
 	loadMonthSchedule('monthTutorialSchedule',date,'mycalendar1');
 }
+function clickRefresh(){
+	var date = Util.getCalendarData('mycalendar').date||Util.dateToStr(Util.toDay());
+	var el = Util.id('mycalendar1'), type=el&&el.childNodes.length?Util.getAttr(el.childNodes[0],'viewType'):'';
+	var map={'month':clickMonth,'week':clickWeek,'day':clickDay};
+	if(type in map){map[type](date);}
+}
 function clickCalendar(params){
 	var date = (params||{}).date||Util.dateToStr(Util.toDay());
 	var el = Util.id('mycalendar1'), type=el&&el.childNodes.length?Util.getAttr(el.childNodes[0],'viewType'):'';

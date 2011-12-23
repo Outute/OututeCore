@@ -32,9 +32,9 @@ span.pagelinks{
 		<div class="button_35x21 pointer floatl" onclick="clickWeek();">Week</div>
 		<div class="button_35x21 pointer floatl" onclick="clickMonth();">Month</div>
 		<div class="button_35x21 floatl" style="border-style:none; width: 10px;"></div>
-		<div class="button_35x21 pointer floatl">Print</div>
+		<div class="button_35x21 pointer floatl" style="color: gray; display: none;">Print</div>
 		<div class="button_35x21 floatl" style="border-style:none; width: 10px;"></div>
-		<div class="button_35x21 pointer floatl">Refresh</div>
+		<div class="button_35x21 pointer floatl" onclick="clickRefresh();">Refresh</div>
 		</div>
 	</div>
 	<hr class="clear"/>
