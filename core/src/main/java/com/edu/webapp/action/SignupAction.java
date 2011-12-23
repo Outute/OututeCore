@@ -71,7 +71,8 @@ public class SignupAction extends BaseAction {
         user.setEnabled(true);
 
         // Set the default user role on this new user
-        user.addRole(roleManager.getRole(Constants.USER_ROLE));
+        // TODO ignore the capability for now, grant admin role to all users
+        user.addRole(roleManager.getRole(Constants.ADMIN_ROLE));
 
         try {
             user = userManager.saveUser(user);
