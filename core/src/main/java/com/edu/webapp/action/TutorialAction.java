@@ -412,10 +412,22 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String removeTutorialSchedule() {
 		if (tutorialSchedule.getId() != null) {
-			tutorialManager.removeTutorialSchedule(tutorialSchedule.getId());
-			List<Object> args = new ArrayList<Object>();
-			args.add(tutorialSchedule.toString());
-			saveMessage(getText("TutorialSchedule.deleted", args));
+			try {
+				tutorialManager
+						.removeTutorialSchedule(tutorialSchedule.getId());
+				List<Object> args = new ArrayList<Object>();
+				args.add(tutorialSchedule.toString());
+				saveMessage(getText("TutorialSchedule.deleted", args));
+			} catch (Exception e) {
+				List<Object> args = new ArrayList<Object>();
+				if (e.getClass().getName().indexOf("ViolationException") > 0) {
+					args.add(tutorialSchedule.toString());
+					saveMessage(getText("TutorialSchedule.hasTakenByUser", args));
+				} else {
+					args.add(e.getMessage());
+					saveMessage(getText("TutorialSchedule.deleted", args));
+				}
+			}
 		}
 		return SUCCESS;
 	}
