@@ -112,6 +112,7 @@ public interface TutorialService {
 	 * @param tutorName
 	 * @param category
 	 * @param sortBy
+	 * @param existsSchedules
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-25
@@ -119,7 +120,8 @@ public interface TutorialService {
 	@GET
 	@Path("/tutorialSchedule")
 	List<Tutorial> findTutorials(Long id, String name, Date start, Date end,
-			String tutorName, Integer category, String sortBy);
+			String tutorName, Integer category, String sortBy,
+			boolean existsSchedules);
 
 	/**
 	 * remove a user's TutorialSchedule by given tutorialScheduleId and userId
@@ -175,7 +177,7 @@ public interface TutorialService {
 	 */
 	@GET
 	@Path("/tutorialSchedule/${tutorId}")
-	List<Tutorial> findTutorialsByTutorId(@PathParam("tutorId")Long tutorId);
+	List<Tutorial> findTutorialsByTutorId(@PathParam("tutorId") Long tutorId);
 
 	/**
 	 * find an user's tutorial schedule

@@ -93,12 +93,14 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	* @param tutorName
 	* @param category
 	* @param sortBy
+	* @param existsSchedules
 	* @return
 	* @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	* @since 2011-10-24
 	*/
 	List<Tutorial> findTutorials(Long id, String name, Date start, Date end,
-			String tutorName, Integer category, String sortBy);
+			String tutorName, Integer category, String sortBy,
+			boolean existsSchedules);
 
 	/**
 	 * remove an user's TutorialSchedule by given tutorialScheduleId and userId
@@ -136,7 +138,7 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * @since 2011-10-25
 	 */
 	List<Tutorial> findTutorialsByUserId(Long userId);
-	
+
 	/**
 	 * find an tutor's tutorials
 	 * @param tutorId
@@ -156,7 +158,7 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 */
 	List<TutorialScheduleStudent> findTutorialSchedulesByUserId(
 			Long tutorialId, Long userId);
-	
+
 	/**
 	 * find student's tutorial schedule between start and end date.
 	 * @param studentId

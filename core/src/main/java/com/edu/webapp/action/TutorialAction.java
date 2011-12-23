@@ -185,7 +185,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 		boolean isNew = tutorial != null && tutorial.getId() == null;
 		// only attempt to change tutorial if user is tutor or admin
 		// for other users, prepare() method will handle populating
-		if (isRole(Constants.ADMIN_ROLE) || isRole(Constants.TUTOR_ROLE) || isRole(Constants.USER_ROLE)) {
+		if (isRole(Constants.ADMIN_ROLE) || isRole(Constants.TUTOR_ROLE)
+				|| isRole(Constants.USER_ROLE)) {
 			if (isNew) {
 				Set<User> tutors;
 
@@ -517,7 +518,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 			}
 		}
 		tutorials = tutorialManager.findTutorials(id, name, start, end,
-				tutorName, category, sortBy);
+				tutorName, category, sortBy, true);
 		return SUCCESS;
 	}
 

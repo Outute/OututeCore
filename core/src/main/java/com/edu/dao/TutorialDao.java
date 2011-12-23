@@ -49,12 +49,14 @@ public interface TutorialDao extends GenericDao<Tutorial, Long> {
 	 * @param tutorName
 	 * @param category
 	 * @param sortBy
+	 * @param existsSchedules
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-10-24
 	 */
 	List<Tutorial> findTutorials(String name, Date start, Date end,
-			String tutorName, Integer category, String sortBy);
+			String tutorName, Integer category, String sortBy,
+			boolean existsSchedules);
 
 	/**
 	 * find an user's tutorials
@@ -64,7 +66,7 @@ public interface TutorialDao extends GenericDao<Tutorial, Long> {
 	 * @since 2011-10-25
 	 */
 	List<Tutorial> findTutorialsByUserId(Long userId);
-	
+
 	/**
 	 * find an tutor's tutorials
 	 * @param tutorId

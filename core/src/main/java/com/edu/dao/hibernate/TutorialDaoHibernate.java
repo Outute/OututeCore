@@ -65,7 +65,8 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findTutorials(String name, Date start, Date end,
-			String tutorName, Integer category, String sortBy) {
+			String tutorName, Integer category, String sortBy,
+			boolean existsSchedules) {
 		List<Object> params = new ArrayList<Object>();
 		StringBuffer hql = new StringBuffer(128);
 		{
@@ -78,8 +79,14 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 			hql.append(" join t.tutors tr ");
 		}
 		{
-			hql.append(" where t.enabled=? and (1=1");
+			hql.append(" where t.enabled=? ");
 			params.add(true);
+		}
+		if (existsSchedules) {
+			hql.append(" and exists elements(t.tutorialSchedules) ");
+		}
+		{
+			hql.append(" and (1=1");
 		}
 		if (category != null) {
 			hql.append(" and t.category=? ");
