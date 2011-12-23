@@ -167,6 +167,12 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public void saveTutorialSchedule(TutorialSchedule tutorialSchedule) {
+		if (tutorialSchedule.getId() != null) {
+			TutorialSchedule ts = tutorialScheduleDao.get(tutorialSchedule
+					.getId());
+			tutorialSchedule.setFromTime(ts.getFromTime());
+			tutorialSchedule.setToTime(ts.getToTime());
+		}
 		tutorialSchedule.setStartDate(DateUtil.clearTimes(
 				tutorialSchedule.getStartDate()).getTime());
 		tutorialSchedule.setEndDate(DateUtil.getEndDate(tutorialSchedule

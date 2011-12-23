@@ -17,19 +17,15 @@
 					<tr valign="top">
 						<td><label for="fromTime"><fmt:message key="page.offerTutorial.From"/></label></td>
 						<td>
-							<input type="text" class="input" id="fromTime" name="fromTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.fromTime}" pattern="hh:mm" timeZone="${timeZone}"/>"/>
+							<input type="text" class="input" id="fromTime" name="fromTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.fromTime}" pattern="HH:mm" timeZone="${timeZone}"/>" <c:if test="${tutorialSchedule!=null&&tutorialSchedule.id!=null}">disabled="disabled"</c:if> />
 							<div id="fromTime_maxError" style="display:none;" class="error" title="from time is over day">from time is over day time</div>
 							<div id="fromTime_gtError" style="display:none;" class="error" title="from time is greater than to time">from time is greater than to time</div>
-							<!-- <div id="fromam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
-							<div id="frompm" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">pm</div></div> -->
 						</td>
 						<td><label for="toTime"><fmt:message key="page.offerTutorial.To"/></label></td>
 						<td>
-							<input type="text" class="input" id="toTime" name="toTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.toTime}" pattern="hh:mm" timeZone="${timeZone}"/>" validate="validateFromTo(Util.id('fromTime'),Util.id('toTime'),'maxError','gtError');"/>
+							<input type="text" class="input" id="toTime" name="toTime" size="10" value="<fmt:formatDate value="${tutorialSchedule.toTime}" pattern="HH:mm" timeZone="${timeZone}"/>" <c:if test="${tutorialSchedule!=null&&tutorialSchedule.id!=null}">disabled="disabled"</c:if> validate="validateFromTo(Util.id('fromTime'),Util.id('toTime'),'maxError','gtError');"/>
 							<div id="toTime_maxError" style="display:none;" class="error" title="from time is over day">from time is over day time</div>
 							<div id="toTime_gtError" style="display:none;" class="error" title="from time is greater than to time">from time is greater than to time</div>
-							<!-- <div id="toam" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">am</div></div>
-							<div id="topm" style="position: relative;float:right;display: none;"><div style="position: absolute;left: -30px; margin: 5px;">pm</div></div>!-->
 						</td>
 					</tr>
 					<tr>

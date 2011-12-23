@@ -130,14 +130,20 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	 */
 	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
 			String name) {
+		Long userId = null;
 		List<Object> params = new ArrayList<Object>();
 		StringBuffer hql = new StringBuffer(128);
 		{
 			hql.append("select distinct t from Tutorial t ");
 			hql.append(" join t.tutorialSchedules ts ");
+			hql.append(" join t.ttutors tt ");
 			hql.append(" where t.enabled=? and ts.endDate>=? ");
 			params.add(true);
 			params.add(DateUtil.clearTimes(new Date()).getTime());
+		}
+		if (userId != null) {
+			hql.append(" and tt.id=? ");
+			params.add(userId);
 		}
 		if (name != null) {
 			hql.append(" and t.name like ? ");

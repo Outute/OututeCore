@@ -223,7 +223,7 @@ Util = typeof(Util)!='undefined' || {
 		}else if(form && form.elements.length){
 			for(var i=0; i<form.elements.length; i++){
 				var a = form.elements[i];
-				if(a.name && !a.disabled && (a.checked || Util.rselectTextarea.test(a.nodeName) || Util.rinput.test(a.type))){
+				if(a.name && (a.checked || Util.rselectTextarea.test(a.nodeName) || Util.rinput.test(a.type))){
 					s.push(a);
 				}
 			}
