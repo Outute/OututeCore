@@ -36,8 +36,8 @@ import java.util.Set;
 @XmlRootElement
 public class Tutorial extends BaseObject implements Serializable {
 	private static final long serialVersionUID = 6070037639785281128L;
-	public static final int TYPE_CLASS=0;
-	public static final int TYPE_WORKSHOP=1;
+	public static final int TYPE_CLASS = 0;
+	public static final int TYPE_WORKSHOP = 1;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@SearchableId
@@ -66,7 +66,7 @@ public class Tutorial extends BaseObject implements Serializable {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name = "tutorial_student", joinColumns = { @JoinColumn(name = "tutorial_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	private Set<User> students; // required
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "tutorial")
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.EAGER, mappedBy = "tutorial")
 	private Set<TutorialSchedule> tutorialSchedules;
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled;

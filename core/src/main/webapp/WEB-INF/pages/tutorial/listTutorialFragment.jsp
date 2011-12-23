@@ -3,7 +3,7 @@
 <!--start list tutorial-->
 <c:set var="newId" scope="request" value="${newTutorialId}"/>
 <c:remove var="newTutorialId" scope="session"/>
-<div class="hidden" script="Util.click(Util.id('tutorial_id_${newId}')||Util.id('tutorial_id_${id}')||Util.id('firstTutorial'));"></div>
+<div class="hidden" script="Util.click(Util.id('tutorial_id_${newId}')||Util.id('tutorial_id_${id}')||Util.id('firstTutorial'));if(!Util.id('firstTutorial')){window.location.href=window.location.href;};"></div>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tbody>
 		<c:forEach items="${tutorials}" var="t" varStatus="status">
