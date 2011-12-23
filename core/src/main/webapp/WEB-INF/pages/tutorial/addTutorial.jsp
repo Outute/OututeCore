@@ -1,7 +1,7 @@
 <%@ page language="java" errorPage="/error.jsp" pageEncoding="UTF-8" contentType="text/html;charset=utf-8" %>
 <%@ include file="/common/taglibs.jsp"%>
 <!--start add tutorialForm-->
-<form id="addTutorial" action="addTutorial" method="post" class="formContent" onsubmit="saveTutorial('addTutorial','listTutorialFragment','addTutorial','tutorialListTable');return false;">
+<form id="addTutorial" action="addTutorial" method="post" class="formContent" onsubmit="saveTutorial(this,'addTutorial','listTutorialFragment','addTutorial','tutorialListTable');return false;">
 <input type="hidden" name="tutorial.id" value="${tutorial.id}"/>
 <div class="padding10">
 	<div class="addTutorialTitle"><fmt:message key="page.offerTutorial.addTutorialTitle"/></div>
@@ -52,7 +52,7 @@
 			</tr>
 			<tr align="right">
 			  <td colspan="2">
-			  	<input type="button" name="save" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorial('addTutorial','listTutorialFragment','addTutorial','tutorialListTable');return false;"/>
+			  	<input type="button" name="save" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorial(this,'addTutorial','listTutorialFragment','addTutorial','tutorialListTable');return false;"/>
 			  	<input type="button" name="cancel" value="<fmt:message key="page.button.cancel"/>" class="button" onclick="if(Util.id('firstTutorial')){Util.click(Util.id('firstTutorial'));}else{window.location.href=window.location.href;}"/>
 			  </td>
 			</tr>

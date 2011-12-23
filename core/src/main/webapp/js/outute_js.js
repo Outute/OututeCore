@@ -76,7 +76,7 @@ Util = typeof(Util)!='undefined' || {
 		}catch(err){}
 	},
 	ajax : function(url, data, callbackArr, async, timeout){
-		var xhr = Util.getXHR(), isAsync = async!==false, callbackArr = callbackArr || [], timeouter;
+		var xhr = Util.getXHR(), isAsync = async===true, callbackArr = callbackArr || [], timeouter;
 		var status, statusText, responseHeaders, responses, xml, content = data;
 		url = url.indexOf('ajax=true')<0&&url.indexOf('?')<0?(url+'?ajax=true'):url.indexOf('ajax=true')?(url+'&ajax=true'):url;
 		xhr.open(content?'POST':'GET',url,isAsync);
@@ -735,8 +735,10 @@ function clickTutorial(pId,tutorialId,url,reloadId){
 	Util.data(pId,'tutorialId',tutorialId);
 	loadPage(url,Util.param([getTutorialId(tutorialId)]),reloadId);
 }
-function saveTutorial(commitUrl,reloadUrl,formId,id){
+function saveTutorial(button,commitUrl,reloadUrl,formId,id){
+	button.disabled=true;
 	commitPage(commitUrl,Util.serialize(formId),reloadUrl,null,id);
+	button.disabled=false;
 }
 function editTutorial(url,tutorialId,id){
 	loadPage(url,Util.param([getTutorialId(tutorialId)]),id);
@@ -750,12 +752,14 @@ function deleteTutorial(commitUrl,reloadUrl,tutorialId,id){
 function clickAddDate(url,tutorialId,id){
 	loadPage(url,Util.param([getTutorialId(tutorialId)]),id);
 }
-function saveTutorialSchedule(commitUrl,formId,reloadUrl,id){
+function saveTutorialSchedule(button,commitUrl,formId,reloadUrl,id){
+	button.disabled=true;
 	if(!Util.validate(formId)){
 		return;
 	}
 	var param = Util.serialize(formId);
 	commitPage(commitUrl,param,reloadUrl,param,id);
+	button.disabled=false;
 }
 function editTutorialSchedule(url,tutorialScheduleId,tutorialId,id){
 	loadPage(url,Util.param([getTutoriaSchedulelId(tutorialScheduleId),getTutorialId(tutorialId)]),id);
@@ -851,7 +855,8 @@ function cancelTutorialSchedule(tutorialScheduleId_date,id,trId,totalCostId){
 		trParent.removeChild(tr);
 	}
 }
-function clickRegister(commitUrl,reloadUrl,tutorialId,id,pId){
+function clickRegister(button,commitUrl,reloadUrl,tutorialId,id,pId){
+	button.disabled=true;
 	var el = Util.id(id), a=[],b=[], ids=el?Util.data(el,'ids'):null;
 	if(ids){
 		for(var k in ids){
@@ -862,6 +867,7 @@ function clickRegister(commitUrl,reloadUrl,tutorialId,id,pId){
 		}
 		commitPage(commitUrl,Util.param([getTutorialId(tutorialId),{name:'register.ids',value:a.join(',')},{name:'register.dates',value:b.join(',')}]),reloadUrl,Util.param([{name:'id',value:tutorialId}]),pId);
 	}
+	button.disabled=false;
 }
 function highLightCalendar(yyyyMMdd_array,calId){
 	var arr=[], el = Util.id(calId);

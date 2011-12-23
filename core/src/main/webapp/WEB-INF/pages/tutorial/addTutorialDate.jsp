@@ -3,7 +3,7 @@
 <fmt:setLocale value="en_US"/>
 <!--start add tutorialForm-->
 <div script="Util.calender('mycalendar','tutorialDate','<fmt:formatDate value="${tutorialSchedule.startDate}" pattern="yyyyMMdd" timeZone="${timeZone}"/>');" style="display: none;"></div>
-<form id="addTutorialSchedule" action="addTimeShedule" method="post" onsubmit="saveTutorialSchedule('addTimeShedule','addTutorialSchedule','tutorialDetailFragment','rightTutorialPanel');return false;">
+<form id="addTutorialSchedule" action="addTimeShedule" method="post" onsubmit="saveTutorialSchedule(this,'addTimeShedule','addTutorialSchedule','tutorialDetailFragment','rightTutorialPanel');return false;">
 <input type="hidden" name="tutorial.id" value="${tutorial.id}"/>
 <input type="hidden" name="tutorialSchedule.id" value="${tutorialSchedule.id}"/>
 <input type="hidden" name="tutorialSchedule.startDate" id="tutorialDate" value=""/>
@@ -73,7 +73,7 @@
 		<tr>
 			<td align="right">
 				<br/>
-				<input type="submit" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorialSchedule('addTimeShedule','addTutorialSchedule','tutorialDetailFragment','rightTutorialPanel');return false;"/>
+				<input type="submit" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorialSchedule(this,'addTimeShedule','addTutorialSchedule','tutorialDetailFragment','rightTutorialPanel');return false;"/>
 				<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button" onclick="try{Util.id('firstTutorial').click();}catch(err){}"/>
 			</td>
 		</tr>
