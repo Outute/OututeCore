@@ -31,7 +31,7 @@
 					<tr>
 						<td><label for="repeat"><fmt:message key="page.offerTutorial.Repeats"/></label></td>
 						<td colspan="3">
-							<select id="repeat" name="tutorialSchedule.durationType" class="select w200px" onchange="this.value=='0'?Util.hideId(['endstr','costtr','partr']):Util.showId(['endstr','costtr','partr']);">
+							<select id="repeat" name="tutorialSchedule.durationType" class="select w200px" onchange="this.value=='0'?Util.hideId(['endstr']):Util.showId(['endstr']);">
 								<c:set var="duration_type" scope="request" value="${tutorialSchedule.durationType}"/>
 								<c:set var="duration_showtype" scope="request" value="0"/>
 								<jsp:include page="/WEB-INF/pages/fregment/tutorial_schedule_duration.jsp"/>
@@ -52,13 +52,13 @@
 						</td>
 					</tr>
 					<c:if test="${tutorial.type!=1}">
-						<tr id="costtr" style="<c:if test="${tutorialSchedule==null||tutorialSchedule.durationType==0}">display:none;</c:if>">
+						<tr id="costtr">
 							<td colspan="2" align="right"><label for="cost"><fmt:message key="page.offerTutorial.Cost"/></label></td>
-							<td colspan="2"><input type="text" class="input" id="cost" name="tutorialSchedule.cost" size="10" value="${tutorialSchedule.cost}" validate="(function(){if(Util.id('repeat').value!='0'&&~~Util.id('cost').value<0){alert('cost should be greater or equal to 0')}else{return true}})();"/></td>
+							<td colspan="2"><input type="text" class="input" id="cost" name="tutorialSchedule.cost" size="10" value="${tutorialSchedule.cost}" validate="(function(){if(~~Util.id('cost').value<0){alert('cost should be greater or equal to 0')}else{return true}})();"/></td>
 						</tr>
-						<tr id="partr" style="<c:if test="${tutorialSchedule==null||tutorialSchedule.durationType==0}">display:none;</c:if>">
+						<tr id="partr">
 							<td colspan="2" align="right"><label for="participate"><fmt:message key="page.offerTutorial.MaxParticipates"/></label></td>
-							<td colspan="2"><input type="text" class="input" id="participate" name="tutorialSchedule.maxParticipate" size="10" value="${tutorialSchedule.maxParticipate}" validate="(function(){if(Util.id('repeat').value!='0'&&~~Util.id('participate').value<1){alert('participate should be greater than 0')}else{return true}})();"/></td>
+							<td colspan="2"><input type="text" class="input" id="participate" name="tutorialSchedule.maxParticipate" size="10" value="${tutorialSchedule.maxParticipate}" validate="(function(){if(~~Util.id('participate').value<1){alert('participate should be greater than 0')}else{return true}})();"/></td>
 						</tr>
 					</c:if>
 				</table>
