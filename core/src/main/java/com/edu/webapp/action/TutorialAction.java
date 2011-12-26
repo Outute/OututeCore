@@ -214,8 +214,9 @@ public class TutorialAction extends BaseAction implements Preparable {
 				ade.printStackTrace();
 				// thrown by UserSecurityAdvice configured in aop:advisor userManagerSecurity
 				log.warn(ade.getMessage());
-				getResponse().sendError(HttpServletResponse.SC_FORBIDDEN);
-				return null;
+				//getResponse().sendError(HttpServletResponse.SC_FORBIDDEN);
+				addActionError(ade.getMessage());
+				return SUCCESS;
 			}
 
 			if (!"list".equals(from)) {

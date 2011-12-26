@@ -735,9 +735,14 @@ function clickTutorial(pId,tutorialId,url,reloadId){
 	Util.data(pId,'tutorialId',tutorialId);
 	loadPage(url,Util.param([getTutorialId(tutorialId)]),reloadId);
 }
+function tutorialFormValidate(formId){
+	
+}
 function saveTutorial(button,commitUrl,reloadUrl,formId,id){
 	button.disabled=true;
-	commitPage(commitUrl,Util.serialize(formId),reloadUrl,null,id);
+	if(Util.validate(formId)){
+		commitPage(commitUrl,Util.serialize(formId),reloadUrl,null,id);
+	}
 	button.disabled=false;
 }
 function editTutorial(url,tutorialId,id){
@@ -755,6 +760,7 @@ function clickAddDate(url,tutorialId,id){
 function saveTutorialSchedule(button,commitUrl,formId,reloadUrl,id){
 	button.disabled=true;
 	if(!Util.validate(formId)){
+		button.disabled=false;
 		return;
 	}
 	var param = Util.serialize(formId);

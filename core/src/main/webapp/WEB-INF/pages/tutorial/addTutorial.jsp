@@ -10,7 +10,7 @@
 			<tr>
 			  <td><label for="tutorial_name"><fmt:message key="page.offerTutorial.workshopName"/><span class="form-required">*</span></label></td>
 			  <td>
-			  <input type="text" id="tutorial_name" name="tutorial.name" maxlength="32" size="30" class="input w300px" value="${tutorial.name}"></td>
+			  <input type="text" id="tutorial_name" name="tutorial.name" maxlength="32" size="30" class="input w300px" value="${tutorial.name}" validate="(function(){if(Util.id('tutorial_name').value.length==0){alert('tutorial name is required!');}else{return true;}})()"></td>
 			</tr>
 			<tr>
 			  <td><label for="tutorial_description"><fmt:message key="page.offerTutorial.description"/></label></td>
@@ -44,11 +44,11 @@
 			</tr>
 			<tr id="partitr" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">
 			  <td><label for="participate"><fmt:message key="page.offerTutorial.MaxParticipates"/></label></td>
-			  <td><input type="text" class="input" id="tutorial_participate" name="tutorial.maxParticipate" size="10" value="${tutorial.maxParticipate}"/></td>
+			  <td><input type="text" class="input" id="tutorial_participate" name="tutorial.maxParticipate" size="10" value="${tutorial.maxParticipate}" validate="(function(){if(Util.id('tutorial_type_1').checked&&~~Util.id('tutorial_participate').value<1){alert('Max Participates should be greater than 0')}else{return true}})()"/></td>
 			</tr>
 			<tr id="costtr" style="<c:if test="${tutorial==null||tutorial.type==0}">display:none;</c:if>">
 			  <td><label for="tutorial_cost"><fmt:message key="page.offerTutorial.Cost"/></label></td>
-			  <td><input type="text" class="input" id="tutorial_cost" name="tutorial.cost" size="10" value="${tutorial.cost}"/></td>
+			  <td><input type="text" class="input" id="tutorial_cost" name="tutorial.cost" size="10" value="${tutorial.cost}" validate="(function(){if(Util.id('tutorial_type_1').checked&&~~Util.id('tutorial_cost').value<0){alert('cost should be greater or equal to 0')}else{return true}})()"/></td>
 			</tr>
 			<tr align="right">
 			  <td colspan="2">
