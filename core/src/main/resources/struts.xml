@@ -70,8 +70,7 @@
         <action name="mainMenu">
             <result name="success">/WEB-INF/pages/mainMenu.jsp</result>
         </action>
-        
-        
+
         <action name="howoututeworks">
             <result name="success">/WEB-INF/pages/howoututeworks.jsp</result>
         </action>
