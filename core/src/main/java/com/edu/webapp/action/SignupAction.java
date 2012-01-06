@@ -96,11 +96,11 @@ public class SignupAction extends BaseAction {
         saveMessage(getText("user.registered"));
         getSession().setAttribute(Constants.REGISTERED, Boolean.TRUE);
 
-        // log user in automatically
-        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                user.getUsername(), user.getConfirmPassword(), user.getAuthorities());
-        auth.setDetails(user);
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        // do not log user in automatically
+        //UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                //user.getUsername(), user.getConfirmPassword(), user.getAuthorities());
+        //auth.setDetails(user);
+        //SecurityContextHolder.getContext().setAuthentication(auth);
 
         // Send an account information e-mail
         mailMessage.setSubject(getText("signup.email.subject"));
