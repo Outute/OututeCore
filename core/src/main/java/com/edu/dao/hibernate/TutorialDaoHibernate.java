@@ -143,7 +143,7 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 		{
 			hql.append("select distinct t from Tutorial t ");
 			hql.append(" join t.tutorialSchedules ts ");
-			hql.append(" join t.ttutors tt ");
+			hql.append(" join t.tutors tt ");
 			hql.append(" where t.enabled=? and ts.endDate>=? ");
 			params.add(true);
 			params.add(DateUtil.clearTimes(new Date()).getTime());
