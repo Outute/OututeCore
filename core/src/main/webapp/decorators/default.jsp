@@ -35,7 +35,6 @@
 			    try{
 					window['notificationUrl']='<c:url value="/findNeedToNotification"/>';
 					window['notificationInterval']=setInterval(function(){try{scheduleNotificationDialog();}catch(err){}}, 2*60*1000);
-					//showNotificationDialog('2','Tutorial Class Notification','test');
 			    }catch(err){}
 			</script>
 		</div>

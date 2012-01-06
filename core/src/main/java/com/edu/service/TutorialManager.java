@@ -236,4 +236,12 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * @since 2012-1-2
 	 */
 	List<TutorialScheduleStudent> findNeedToNotificationByUserId(Long userId);
+
+	/**
+	 * get notification minute before a tutorial class or workshop start
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-2
+	 */
+	public int getNotificationMinute();
 }

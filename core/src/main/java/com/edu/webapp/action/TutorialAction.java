@@ -935,8 +935,11 @@ public class TutorialAction extends BaseAction implements Preparable {
 			if (ids == null) {
 				ids = new HashSet<Long>();
 			}
+			int notificationMinute = tutorialManager.getNotificationMinute();
 			for (Long[] ls : results) {
-				if (ls[0] > current && (ls[0] - current) < (15 * 60 * 1000)
+				if (ls[0] > current
+						&& (ls[0] - current) < ((notificationMinute < 0 ? 15
+								: notificationMinute) * 60 * 1000)
 						&& !ids.contains(ls[1])) {
 					tutorialSchedule = tutorialManager
 							.getTutorialSchedule(ls[1]);

@@ -12,10 +12,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
+import com.edu.dao.SystemConfigureDao;
 import com.edu.dao.TutorialDao;
 import com.edu.dao.TutorialScheduleDao;
 import com.edu.dao.TutorialScheduleStudentDao;
 import com.edu.dao.UserDao;
+import com.edu.model.SystemConfigure;
 import com.edu.model.Tutorial;
 import com.edu.model.TutorialSchedule;
 import com.edu.model.TutorialScheduleStudent;
@@ -46,6 +48,8 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	private TutorialScheduleStudentDao tutorialScheduleStudentDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private SystemConfigureDao systemConfigureDao;
 
 	//private TutorialTutorMappingDao tutorialTutorMappingDao;
 
@@ -65,6 +69,10 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	public void setSystemConfigureDao(SystemConfigureDao systemConfigureDao) {
+		this.systemConfigureDao = systemConfigureDao;
 	}
 
 	/**
@@ -358,5 +366,18 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 			Long userId) {
 		return tutorialScheduleStudentDao
 				.findNeedToNotificationByUserId(userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public int getNotificationMinute() {
+		SystemConfigure cfg = systemConfigureDao
+				.get(SystemConfigure.NOTIFICATION_DUETIME);
+		Integer minute = cfg == null ? SystemConfigure.NOTIFICATION_MINUTE_DEFAULT
+				: cfg.getIntegerValue();
+		minute = minute == null ? SystemConfigure.NOTIFICATION_MINUTE_DEFAULT
+				: minute;
+		return minute;
 	}
 }
