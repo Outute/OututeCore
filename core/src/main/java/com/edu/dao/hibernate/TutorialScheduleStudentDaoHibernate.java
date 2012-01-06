@@ -16,8 +16,10 @@ import org.appfuse.dao.hibernate.GenericDaoHibernate;
 import org.springframework.stereotype.Repository;
 
 import com.edu.dao.TutorialScheduleStudentDao;
+import com.edu.model.Tutorial;
 import com.edu.model.TutorialScheduleStudent;
 import com.edu.model.TutorialScheduleStudentKey;
+import com.edu.util.DateUtil;
 
 /**
  * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
@@ -123,5 +125,64 @@ public class TutorialScheduleStudentDaoHibernate
 		String hql = "select distinct tss from TutorialScheduleStudent tss where tss.flag=? and tss.lectureTime between ? and ?";
 		return getHibernateTemplate().find(hql,
 				TutorialScheduleStudent.FLAG_DEFAULT, start, end);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean canHasMoreParticipate(Long tutorialScheduleId) {
+		int hasCount = 0;
+		{
+			String hql = "select count( distinct tss.id ) from TutorialScheduleStudent tss where tss.id.tutorialScheduleId=?";
+			List<?> list = getHibernateTemplate().find(hql, tutorialScheduleId);
+			if (list != null && !list.isEmpty()) {
+				try {
+					hasCount = ((Number) list.get(0)).intValue();
+				} catch (Exception e) {
+				}
+			}
+		}
+		int maxParticipate = 0;
+		{
+			String hql = "select (case when t.type=? then t.maxParticipate else ts.maxParticipate end) maxParticipate from TutorialSchedule ts join ts.tutorial t where ts.id=?";
+			List<?> list = getHibernateTemplate().find(hql,
+					Tutorial.TYPE_WORKSHOP, tutorialScheduleId);
+			if (list != null && !list.isEmpty()) {
+				try {
+					maxParticipate = ((Number) list.get(0)).intValue();
+				} catch (Exception e) {
+				}
+			}
+		}
+		return hasCount < maxParticipate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public int countParticipate(Long tutorialScheduleId) {
+		int count = 0;
+		{
+			String hql = "select count(*) from TutorialScheduleStudent tss where tss.id.tutorialScheduleId=?";
+			List<?> list = getHibernateTemplate().find(hql, tutorialScheduleId);
+			if (list != null && !list.isEmpty()) {
+				try {
+					count = ((Number) list.get(0)).intValue();
+				} catch (Exception e) {
+				}
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialScheduleStudent> findNeedToNotificationByUserId(
+			Long userId) {
+		Date start = new Date();
+		Date end = DateUtil.getMaxDay(start).getTime();
+		String hql = "select distinct tss from TutorialScheduleStudent tss where tss.id.studentId=? and tss.lectureTime between ? and ?";
+		return getHibernateTemplate().find(hql, userId, start, end);
 	}
 }

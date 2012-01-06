@@ -66,11 +66,24 @@ public class DuetimeNotificationManagerImpl implements
 		this.subject = subject;
 	}
 
-	public void notification() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public int getNotificationMinute() {
 		SystemConfigure cfg = systemConfigureDao
 				.get(SystemConfigure.NOTIFICATION_DUETIME);
-		Integer minute = cfg == null ? 15 : cfg.getIntegerValue();
-		minute = minute == null ? 15 : minute;
+		Integer minute = cfg == null ? SystemConfigure.NOTIFICATION_MINUTE_DEFAULT
+				: cfg.getIntegerValue();
+		minute = minute == null ? SystemConfigure.NOTIFICATION_MINUTE_DEFAULT
+				: minute;
+		return minute;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void notification() {
+		Integer minute = getNotificationMinute();
 		List<TutorialScheduleStudent> list = tutorialScheduleStudentDao
 				.findNeedToNotification(minute);
 		for (TutorialScheduleStudent tss : list) {
@@ -78,6 +91,9 @@ public class DuetimeNotificationManagerImpl implements
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void notification(TutorialScheduleStudentKey id) {
 		TutorialScheduleStudent tss = tutorialScheduleStudentDao.get(id);
 		if (tss != null) {

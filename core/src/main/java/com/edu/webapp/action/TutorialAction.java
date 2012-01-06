@@ -884,6 +884,69 @@ public class TutorialAction extends BaseAction implements Preparable {
 		return SUCCESS;
 	}
 
+	public String findNeedToNotification() {
+		User user = getUser();
+		{//save tutorial schedule id if notified
+			Object tutorialScheduleId = getRequest().getParameter(
+					"tutorialScheduleId");
+			if (tutorialScheduleId != null) {
+				Set<Long> ids = (Set<Long>) getSession().getAttribute(
+						"notificationTutorialScheduleIds");
+				if (ids == null) {
+					ids = new HashSet<Long>();
+				}
+				try {
+					ids.add(Long.valueOf(tutorialScheduleId.toString()));
+					getSession().setAttribute(
+							"notificationTutorialScheduleIds", ids);
+				} catch (Exception e) {
+				}
+				return SUCCESS;
+			}
+		}
+		{//find need to notify tutorial class or workshop
+			Long lastFindTime = (Long) getSession().getAttribute(
+					"lasFindNeedToNotificationTime");
+			if (lastFindTime == null
+					|| (new Date().getTime() - lastFindTime) > 10 * 1000) {
+				List<TutorialScheduleStudent> list = tutorialManager
+						.findNeedToNotificationByUserId(user.getId());
+				List<Long[]> results = new ArrayList<Long[]>();
+				for (TutorialScheduleStudent tss : list) {
+					results.add(new Long[] { tss.getLectureTime().getTime(),
+							tss.getId().getTutorialScheduleId() });
+				}
+				getSession().setAttribute("needToNotificationTutorialSchedule",
+						results);
+				getSession().setAttribute("lasFindNeedToNotificationTime",
+						new Date().getTime());
+			}
+		}
+		tutorialSchedule = null;
+		{
+			List<Long[]> results = (List<Long[]>) getSession().getAttribute(
+					"needToNotificationTutorialSchedule");
+			if (results == null) {
+				return SUCCESS;
+			}
+			long current = System.currentTimeMillis();
+			Set<Long> ids = (Set<Long>) getSession().getAttribute(
+					"notificationTutorialScheduleIds");
+			if (ids == null) {
+				ids = new HashSet<Long>();
+			}
+			for (Long[] ls : results) {
+				if (ls[0] > current && (ls[0] - current) < (15 * 60 * 1000)
+						&& !ids.contains(ls[1])) {
+					tutorialSchedule = tutorialManager
+							.getTutorialSchedule(ls[1]);
+					return SUCCESS;
+				}
+			}
+		}
+		return SUCCESS;
+	}
+
 	/**
 	 * separated tutorial schedules into {hour:scheduleInfo} 
 	 * @param tutorialSchedules

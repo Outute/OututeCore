@@ -218,4 +218,22 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 */
 	List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
 			String name);
+
+	/**
+	 * Whether can have more participate
+	 * @param tutorialScheduleId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-12-31
+	 */
+	boolean canHasMoreParticipate(Long tutorialScheduleId);
+
+	/**
+	 * find someone's tutorial schedules those need to notification
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-2
+	 */
+	List<TutorialScheduleStudent> findNeedToNotificationByUserId(Long userId);
 }

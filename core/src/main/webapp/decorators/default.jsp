@@ -28,5 +28,17 @@
 				<jsp:include page="/common/footer.jsp"/>
 			</div>
 		</div>
+		<c:if test="${not empty pageContext.request.remoteUser}">
+		<div style="display: none;">
+			<div id="notificationArea"></div>
+			<script type="text/javascript">
+			    try{
+					window['notificationUrl']='<c:url value="/findNeedToNotification"/>';
+					window['notificationInterval']=setInterval(function(){try{scheduleNotificationDialog();}catch(err){}}, 2*60*1000);
+					//showNotificationDialog('2','Tutorial Class Notification','test');
+			    }catch(err){}
+			</script>
+		</div>
+		</c:if>
 	</body>
 </html>

@@ -36,6 +36,7 @@ public class SystemConfigure extends BaseObject implements Serializable {
 
 	private static final long serialVersionUID = -4811622689943400475L;
 	public static final String NOTIFICATION_DUETIME = "NOTIFICATION_DUETIME_MINUTE";
+	public static final int NOTIFICATION_MINUTE_DEFAULT = 15;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -84,4 +84,31 @@ public interface TutorialScheduleStudentDao extends
 	 * @since 2011-11-20
 	 */
 	List<TutorialScheduleStudent> findNeedToNotification(int beforeMinutes);
+
+	/**
+	 * Whether can have more participate
+	 * @param tutorialScheduleId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-12-31
+	 */
+	boolean canHasMoreParticipate(Long tutorialScheduleId);
+
+	/**
+	 * get participate count
+	 * @param tutorialScheduleId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2011-12-31
+	 */
+	int countParticipate(Long tutorialScheduleId);
+
+	/**
+	 * find someone's tutorial schedules those need to notification
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-2
+	 */
+	List<TutorialScheduleStudent> findNeedToNotificationByUserId(Long userId);
 }

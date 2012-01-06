@@ -15,7 +15,26 @@ import com.edu.model.TutorialScheduleStudentKey;
  */
 public interface DuetimeNotificationManager {
 
-	public void notification();
+	/**
+	 * get notification minute before a tutorial class or workshop start
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-2
+	 */
+	int getNotificationMinute();
 
-	public void notification(TutorialScheduleStudentKey id);
+	/**
+	 * notification a tutorial class or workshop
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-2
+	 */
+	void notification();
+
+	/**
+	 * notification a single tutorialSchedule
+	 * @param id
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-2
+	 */
+	void notification(TutorialScheduleStudentKey id);
 }

@@ -100,7 +100,7 @@ Util = typeof(Util)!='undefined' || {
 				}
 			}
 		};
-		xhr.send(content?content:null);
+		xhr.send(content&&typeof(content)=='string'?content:"");
 		if(isAsync && timeout){
 			timeouter = setTimeout(function(){xhr.abort();},timeout);
 		}
@@ -142,7 +142,7 @@ Util = typeof(Util)!='undefined' || {
 		return undefined;
 	},
 	click: function(id){
-		try{var el=Util.id(id);(el.onclick||el.click||function(){})();}catch(err){}
+		try{var el=Util.id(id);if(el){(el.onclick||el.click||function(){})();}}catch(err){}
 	},
 	getAttr: function(id,name){
 		var el = Util.id(id), attrNode = el?el.getAttributeNode(name):null;
@@ -353,6 +353,84 @@ Util = typeof(Util)!='undefined' || {
 	},
 	isSameMonth: function(date1,date2){
 		return Util.dateToStr(date1).indexOf(Util.dateToStr(date2).substring(0,6))==0;
+	},
+	windowPosition: function(){
+		var x = 0, y = 0;
+		if (window.screenLeft != undefined) {
+			/* IE,safari,opera */
+			x = window.screenLeft;
+			y = window.screenTop;
+		} else if (window.screenX != undefined) {
+			/* firefox,safari */
+			x = window.screenX;
+			y = window.screenY;
+		}
+		return { left : x, top : y };
+	},
+	clientArea : function() {
+		var width = 0, height = 0;
+		if (window.innerWidth != undefined) {
+			/* all browser but IE */
+			width = window.innerWidth;
+			height = window.innerHeight;
+		} else if (document.documentElement != undefined
+				&& document.documentElement.clientWidth != undefined) {
+			/* IE with DOCTYPE */
+			width = document.documentElement.clientWidth;
+			height = document.documentElement.clientHeight;
+		} else if (document.body.clientWidth != undefined) {
+			/* IE without DOCTYPE */
+			width = document.body.offsetWidth;
+			height = document.body.offsetHeight;
+		}
+		return { width : width, height : height };
+	},
+	scrollRange : function() {
+		var h = 0, v = 0;
+		if (window.innerWidth != undefined) {
+			/* all browser but IE */
+			h = window.pageXOffset;
+			v = window.pageYOffset;
+		} else if (document.documentElement != undefined
+				&& document.documentElement.clientWidth != undefined) {
+			/* IE with DOCTYPE */
+			h = document.documentElement.scrollLeft;
+			v = document.documentElement.scrollTop;
+		} else if (document.body.clientWidth != undefined) {
+			/* IE without DOCTYPE */
+			h = document.body.scrollLeft;
+			v = document.body.scrollTop;
+		}
+		return { pageX : h, pageY : v };
+	},
+	docArea : function() {
+		var width = 0, height = 0;
+		if (document.documentElement != undefined
+				&& document.documentElement.scrollWidth != undefined) {
+			width = document.documentElement.scrollWidth;
+			height = document.documentElement.scrollHeight;
+		} else if (document.body.scrollWidth != undefined) {
+			width = document.body.scrollWidth;
+			height = document.body.scrollHeight;
+		}
+		return { width : width, height : height };
+	},
+	setCookie: function(name,value,expiredays){
+		var exdate=new Date();
+		exdate.setDate(exdate.getDate()+(expiredays||1));
+		document.cookie=name+"="+escape(value)+((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+	},
+	getCookie: function(name){
+		if (document.cookie.length>0){
+			c_start=document.cookie.indexOf(name+"=");
+			if (c_start!=-1){
+				c_start=c_start + name.length+1;
+				c_end=document.cookie.indexOf(";",c_start);
+				if (c_end==-1) {c_end=document.cookie.length;}
+				return unescape(document.cookie.substring(c_start,c_end));
+		    }
+		}
+		return "";
 	},
 	getCalendarHeader: function(id){
 		var el=Util.id(id);
@@ -1009,4 +1087,26 @@ function clickTable(form){
 		loadPage(form.action,Util.serialize(form),parent);
 	}
 	return false;
+}
+function scheduleNotificationDialog(){
+	if(window['notificationProcessing']!='YES'&&window['notificationUrl']&&!Util.id('notificationDialog')){
+		window['notificationProcessing']='YES';
+		loadPage(window['notificationUrl'],null,'notificationArea');
+		window['notificationProcessing']='NO';
+	}
+}
+function showNotificationDialog(id,title,message){
+	if(Util.id('notificationDialog')||!window['notificationUrl']){return;}
+	var clientArea=Util.clientArea(), width=clientArea.width, height=clientArea.height;
+	var dialog='<div id="notificationDialog" style="border:1px solid #207ce5;background-color:white;width:250px;margin: 0;padding: 0;position: absolute;z-index: 10000;display: block;left: {left}px;top: {top}px;">{content}</div>';
+	var content='<table width="100%"><tr style="background-color:#207ce5;"><td align="center"><div style="height:20px;">{title}</div></td></tr><tr><td align="center"><div style="height:60px;">{content}</div></td></tr><tr><td align="center"><div style="height:30px;"><input type="button" value="OK" onclick="closeNotificationDialog(\'{id}\')"/></div></td></tr></table>'
+	var newdiv = document.createElement("div");
+	newdiv.innerHTML=Util.replace(dialog,[(width-250-50)+"",(height-110-50)+"",Util.replace(content,[title,message,id])]);
+	document.body.appendChild(newdiv);
+}
+function closeNotificationDialog(id){
+	try{document.body.removeChild(Util.id('notificationDialog').parentNode);}catch(err){}
+	if(window['notificationUrl']){
+		loadPage(window['notificationUrl'],Util.param([{name:'tutorialScheduleId',value:id}]),'notificationArea');
+	}
 }

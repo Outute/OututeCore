@@ -213,6 +213,11 @@
         	<result name="success">/WEB-INF/pages/manageTutorial/dayTutorialSchedule.jsp</result>
         </action>
         <!-- end manage tutorial -->
+        <action name="findNeedToNotification" class="tutorialAction" method="findNeedToNotification">
+        	<result name="success">/WEB-INF/pages/manageTutorial/notification.jsp</result>
+        </action>
+        <!-- tutorial notification -->
+        <!-- tutorial notification -->
         <!-- <action name="manageTutorial" class="tutorialAction" method="execute">
             <result name="success">/WEB-INF/pages/tutorial/manageTutorial.jsp</result>
             <result name="error">/WEB-INF/pages/mainMenu.jsp</result>

@@ -260,7 +260,7 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 */
 	public void registerTutorial(Long tutorialId,
 			TutorialScheduleStudentKey[] ids) {
-		if (ids == null || ids.length == 0) {
+		if (ids == null || ids.length == 0 || tutorialId == null) {
 			return;
 		}
 		for (TutorialScheduleStudentKey id : ids) {
@@ -272,6 +272,19 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 			Tutorial tutorial = ts.getTutorial();
 			if (!tutorial.getId().equals(tutorialId)) {
 				continue;
+			}
+			{
+				int maxParticipate = 0;
+				if (tutorial.getType() == Tutorial.TYPE_WORKSHOP) {
+					maxParticipate = tutorial.getMaxParticipate();
+				} else {
+					maxParticipate = ts.getMaxParticipate();
+				}
+				int countParticipate = tutorialScheduleStudentDao
+						.countParticipate(ts.getId());
+				if (countParticipate >= maxParticipate) {
+					throw new RuntimeException("Tutorial.maxParticipate.error");
+				}
 			}
 			if (tutorial.getType() == Tutorial.TYPE_WORKSHOP) {
 				tutorialScheduleStudentDao.save(new TutorialScheduleStudent(id,
@@ -328,5 +341,22 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	public List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
 			String name) {
 		return tutorialDao.findHistoryTutorials(pageSize, currentPage, name);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean canHasMoreParticipate(Long tutorialScheduleId) {
+		return tutorialScheduleStudentDao
+				.canHasMoreParticipate(tutorialScheduleId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialScheduleStudent> findNeedToNotificationByUserId(
+			Long userId) {
+		return tutorialScheduleStudentDao
+				.findNeedToNotificationByUserId(userId);
 	}
 }
