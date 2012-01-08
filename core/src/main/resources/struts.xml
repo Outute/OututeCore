@@ -79,7 +79,11 @@
         <action name="contactus">
             <result name="success">/WEB-INF/pages/contactus.jsp</result>
         </action>
-        
+
+        <action name="classroom">
+            <result name="success">/WEB-INF/pages/classroom/classroom.jsp</result>
+        </action>
+
         <action name="categories">
             <result name="success">/WEB-INF/pages/categories.jsp</result>
         </action>
