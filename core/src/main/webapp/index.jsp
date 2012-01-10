@@ -32,15 +32,16 @@
 			<fmt:message key="label.password"/>
 			<input type="password" class="" name="j_password" id="j_password" tabindex="2"/>
 		</li>
-	<c:if test="${appConfig['rememberMeEnabled']}">
-		<li><div>
-			<input type="checkbox" class="" name="_spring_security_remember_me" id="rememberMe" tabindex="3" style="width:20px;"/>
-			&nbsp;&nbsp;&nbsp;
-			<label for="rememberMe" class="" style="width:100px;"><fmt:message key="login.rememberMe"/></label>
-		</div></li>
-	</c:if>
+		<!-- Temp Remove Remeber Me Code --START--
+			<c:if test="${appConfig['rememberMeEnabled']}">
+				<li>
+					<input type="checkbox" class="" name="_spring_security_remember_me" id="rememberMe" tabindex="3" style="width:25px;"/>
+					<label for="rememberMe" class="" style="width:100px;"><fmt:message key="login.rememberMe"/></label>
+				</li>
+			</c:if>
+	 	END -->
 		<li>
-			<s:submit key="button.login" cssClass="button" tabindex="4" />
+			<s:submit key="button.login" cssClass="button" tabindex="4" style="height:23px;"/>
 		</li>
 		<li>
 			<div><fmt:message key="login.signup"><fmt:param><c:url value="/signup" /></fmt:param></fmt:message></div>
@@ -52,11 +53,14 @@
 </div>
 
 <div class="main-content floatl">
-  <h1>Welcome to OuTute...</h1>
-  <p>To be added....</p>
+  <h1>Our Tutorials Our World Talent Pool</h1>
+  <p>Outute understands the power of the world talent, services the passionated knowledge seeker, and provides entrepreneurship spirirts to individual or group of talents.</p>
+  <p>More Info here</p>
+  <p>More Info here</p>
   <a href="#"><img src="images/read-more-button.gif" alt="" /></a>
 </div>
 <div class="left-col floatl">
+ <!-- Temp disable for now --START 
   <div class="search-area floatl">
       <ul>
       <li><img src="images/search-icon.gif" alt="" /></li>
@@ -66,29 +70,23 @@
       </ul>
       <div class="clear"></div>
   </div>
+  END -->
   <div class="category-section">
     <h1>Category</h1>
     <ul>
-      <li><a href="#">Languages</a></li>
-      <li> <a href="#">Education & Study Overseas</a></li>
-      <li> <a href="#">Games, Sports & Hobbies</a></li>
-      <li><a href="#">Business & Career Consulting</a></li>
-      <li><a href="#">Arts,Literature, Movies & Music</a></li>
-      <li><a href="#">How-tos</a></li>
-      <li><a href="#">Computer & Internet</a></li>
-      <li><a href="#">Spirituality</a></li>
-      <li><a href="#">Legal Issues</a></li>
-      <li><a href="#">Finance, Insurance & Real Estate</a></li>
-      <li><a href="#">Health & Living Style</a></li>
-      <li><a href="#">Travel</a></li>
-      <li><a href="#">Beauty & Fashion</a></li>
+      <li><img src="images/language_small.jpg" width="25" height="25" /><a href="#">Languages</a></li>
+      <li><img src="images/academic_small.jpg" width="25" height="25" /><a href="#">Academic Studies</a></li>
+      <li><img src="images/oversea_small.jpg" width="25" height="25" /><a href="#">Study Oversea</a></li>
+      <li><img src="images/dummy_small.jpg" width="25" height="25" /><a href="#">How to for Dummies</a></li>
+      <li><img src="images/computer_small.jpg" width="25" height="25" /><a href="#">Computer and Internet</a></li>
+      <li><img src="images/otherTutotial_small.jpg" width="25" height="25" /><a href="#">Other Categories</a></li>
     </ul>
     <div class="clear"></div>
   </div>
   <div class="tutor-section">
     <h1>Tutor of the month...</h1>
     <img src="images/artist-img.gif"  alt="" class="floatl"/>
-    <p>Sed ut perspiciatis unde omnislo iste natus errorvoluptatemsedlo accusantium doloremqueametk laudantiumtotam remamliopak aperiameaqueipsa</p>
+    <p>Here is tutor of the month profile information</p>
     <div class="clear"></div>
   </div>
 </div>

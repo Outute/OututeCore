@@ -49,9 +49,9 @@ body{background:#f4f4f4;font-family:Georgia, "Times New Roman", Times, serif;fon
 
 .logo{display:block;background:url(../images/outute_logo.png) no-repeat;width:361px;height:113px;text-indent:-5000px}
 
-.login_bg{background:url(../images/login_bg.png) no-repeat;width:270px;height:250px;}
+.login_bg{background:url(../images/login_bg.png) no-repeat;width:270px;height:285px;}
 
-.login-section  h2{color:#646060;font-size:25px;font-weight:normal;}
+.login-section  h2{color:#646060;font-size:20px;font-weight:normal;}
 
 .login-section span{color:#c0500d;font-weight:bold;}
 
@@ -69,7 +69,7 @@ body{background:#f4f4f4;font-family:Georgia, "Times New Roman", Times, serif;fon
 
 
 
-.category-section{padding-top:80px;}
+.category-section{padding-top:5px;}
 
 .category-section h1{color:#646060;font-weight:normal;font-size:25px;padding-bottom:15px;}
 
