@@ -8,7 +8,6 @@
         <menu:displayMenu name="Categories"/>
         <menu:displayMenu name="ContactUs"/>
 		<menu:displayMenu name="HowOututeWorks"/>
-		<menu:displayMenu name="MyOutute"/>
 		<menu:displayMenu name="Logout"/>
 	</ul>
 	</span>
