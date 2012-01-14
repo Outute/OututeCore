@@ -32,14 +32,6 @@
 			<fmt:message key="label.password"/>
 			<input type="password" class="" name="j_password" id="j_password" tabindex="2"/>
 		</li>
-		<!-- Temp Remove Remeber Me Code --START--
-			<c:if test="${appConfig['rememberMeEnabled']}">
-				<li>
-					<input type="checkbox" class="" name="_spring_security_remember_me" id="rememberMe" tabindex="3" style="width:25px;"/>
-					<label for="rememberMe" class="" style="width:100px;"><fmt:message key="login.rememberMe"/></label>
-				</li>
-			</c:if>
-	 	END -->
 		<li>
 			<s:submit key="button.login" cssClass="button" tabindex="4" style="height:23px;"/>
 		</li>
@@ -60,17 +52,6 @@
   <a href="#"><img src="images/read-more-button.gif" alt="" /></a>
 </div>
 <div class="left-col floatl">
- <!-- Temp disable for now --START 
-  <div class="search-area floatl">
-      <ul>
-      <li><img src="images/search-icon.gif" alt="" /></li>
-        <li style="line-height:22px;">Search</li>
-        <li><input type="text" class="search-input" /></li>
-        <li><input type="image" src="images/go-button.gif" /></li>
-      </ul>
-      <div class="clear"></div>
-  </div>
-  END -->
   <div class="category-section">
     <h1>Category</h1>
     <ul>
