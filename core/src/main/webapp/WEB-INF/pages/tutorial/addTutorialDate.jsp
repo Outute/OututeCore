@@ -70,7 +70,7 @@
 			<td align="right">
 				<br/>
 				<input type="submit" value="<fmt:message key="page.button.save"/>" class="button" onclick="saveTutorialSchedule(this,'addTimeShedule','addTutorialSchedule','tutorialDetailFragment','rightTutorialPanel');return false;"/>
-				<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button" onclick="try{Util.id('firstTutorial').click();}catch(err){}"/>
+				<input type="button" value="<fmt:message key="page.button.cancel"/>" class="button" onclick="if(Util.id('firstTutorial')){Util.click(Util.id('firstTutorial'));}else{window.location.href=window.location.href;}"/>
 			</td>
 		</tr>
 	</table>

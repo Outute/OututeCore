@@ -28,8 +28,8 @@
 			</div>
 		</div>
 		<div style="float: right; display:inline; text-align: right; position: absolute;bottom: 0px; right:0px; font-size: 14px;">
-			<a href="javascript:;" onclick="editTutorial('addTutorialPage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span><fmt:message key="page.lable.edit"/></a>
 			<c:if test="${tutorial!=null}">
+			<a href="javascript:;" onclick="editTutorial('addTutorialPage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span><fmt:message key="page.lable.edit"/></a>
 			<a href="javascript:;" onclick="clickAddDate('addTutorialDatePage','${tutorial.id}','rightTutorialPanel');return false;"><span class="addIcon"></span><fmt:message key="page.offerTutorial.AddDate"/></a>
 			</c:if>
 		</div>

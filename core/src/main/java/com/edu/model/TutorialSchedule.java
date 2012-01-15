@@ -2,14 +2,18 @@ package com.edu.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -77,6 +81,8 @@ public class TutorialSchedule extends BaseObject implements Serializable,
 	@ManyToOne
 	@JoinColumn(name = "tutorial_id", nullable = false)
 	private Tutorial tutorial;
+	@OneToMany(cascade = {}, fetch = FetchType.LAZY, mappedBy = "tutorialSchedule", targetEntity = TutorialScheduleStudent.class)
+	private Set<TutorialScheduleStudent> tutorialScheduleStudents;
 	@Version
 	private Integer version;
 
@@ -181,6 +187,15 @@ public class TutorialSchedule extends BaseObject implements Serializable,
 
 	public void setTutorial(Tutorial tutorial) {
 		this.tutorial = tutorial;
+	}
+
+	public Set<TutorialScheduleStudent> getTutorialScheduleStudents() {
+		return tutorialScheduleStudents;
+	}
+
+	public void setTutorialScheduleStudents(
+			Set<TutorialScheduleStudent> tutorialScheduleStudents) {
+		this.tutorialScheduleStudents = tutorialScheduleStudents;
 	}
 
 	public Integer getVersion() {

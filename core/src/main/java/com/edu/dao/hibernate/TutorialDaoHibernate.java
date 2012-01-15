@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.edu.dao.TutorialDao;
 import com.edu.model.Tutorial;
+import com.edu.model.User;
 import com.edu.service.TutorialNotFoundException;
 import com.edu.util.DateUtil;
 
@@ -136,20 +137,21 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
-			String name) {
-		Long userId = null;
+			String name, Long userId) {
 		List<Object> params = new ArrayList<Object>();
 		StringBuffer hql = new StringBuffer(128);
 		{
 			hql.append("select distinct t from Tutorial t ");
-			hql.append(" join t.tutorialSchedules ts ");
 			hql.append(" join t.tutors tt ");
+			hql.append(" left join t.tutorialSchedules ts ");
+			hql.append(" left join ts.tutorialScheduleStudents tss ");
 			hql.append(" where t.enabled=? and ts.endDate>=? ");
 			params.add(true);
 			params.add(DateUtil.clearTimes(new Date()).getTime());
 		}
 		if (userId != null) {
-			hql.append(" and tt.id=? ");
+			hql.append(" and (tt.id=? or tss.id.studentId=?) ");
+			params.add(userId);
 			params.add(userId);
 		}
 		if (name != null) {
@@ -167,11 +169,19 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
-			String name) {
+			String name, Long userId) {
 		List<Object> params = new ArrayList<Object>();
 		StringBuffer hql = new StringBuffer(128);
 		{
-			hql.append("select t from Tutorial t where");
+			hql.append("select distinct t from Tutorial t ");
+			hql.append(" join t.tutors tt ");
+			hql.append(" left join t.tutorialSchedules ts ");
+			hql.append(" left join ts.tutorialScheduleStudents tss where 1=1 ");
+		}
+		if (userId != null) {
+			hql.append(" and (tt.id=? or tss.id.studentId=?) ");
+			params.add(userId);
+			params.add(userId);
 		}
 		if (name != null) {
 			hql.append(" and t.name like ? ");

@@ -196,28 +196,30 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 			Date end);
 
 	/**
-	 * find current active tutorials
+	 * find someone's current active tutorials
 	 * @param name
 	 * @param pageSize
 	 * @param currentPage
+	 * @param userId
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-11-3
 	 */
 	List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
-			String name);
+			String name, Long userId);
 
 	/**
-	 * find history tutorials
+	 * find someone's history tutorials
 	 * @param name
 	 * @param pageSize
 	 * @param currentPage
+	 * @param userId
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-11-3
 	 */
 	List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
-			String name);
+			String name, Long userId);
 
 	/**
 	 * Whether can have more participate

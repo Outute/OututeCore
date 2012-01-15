@@ -677,8 +677,13 @@ public class TutorialAction extends BaseAction implements Preparable {
 				} catch (Exception e) {
 				}
 			}
-			tutorialManager.registerTutorial(tutorial.getId(), list
-					.toArray(new TutorialScheduleStudentKey[list.size()]));
+			try {
+				tutorialManager.registerTutorial(tutorial.getId(), list
+						.toArray(new TutorialScheduleStudentKey[list.size()]));
+			} catch (Exception e) {
+				addActionError(getText(e.getMessage()));
+				return SUCCESS;
+			}
 		}
 		return SUCCESS;
 	}
@@ -869,7 +874,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 			name = getRequest().getParameter("search.name");
 			name = name == null ? null : name.trim();
 		}
-		tutorials = tutorialManager.findCurrentTutorials(25, 0, name);
+		tutorials = tutorialManager.findCurrentTutorials(25, 0, name, getUser()
+				.getId());
 		return SUCCESS;
 	}
 
@@ -880,7 +886,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 			name = getRequest().getParameter("search.name");
 			name = name == null ? null : name.trim();
 		}
-		tutorials = tutorialManager.findHistoryTutorials(25, 0, name);
+		tutorials = tutorialManager.findHistoryTutorials(25, 0, name, getUser()
+				.getId());
 		return SUCCESS;
 	}
 

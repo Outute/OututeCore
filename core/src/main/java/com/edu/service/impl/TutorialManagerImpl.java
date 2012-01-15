@@ -339,16 +339,18 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
-			String name) {
-		return tutorialDao.findCurrentTutorials(pageSize, currentPage, name);
+			String name, Long userId) {
+		return tutorialDao.findCurrentTutorials(pageSize, currentPage, name,
+				userId);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
-			String name) {
-		return tutorialDao.findHistoryTutorials(pageSize, currentPage, name);
+			String name, Long userId) {
+		return tutorialDao.findHistoryTutorials(pageSize, currentPage, name,
+				userId);
 	}
 
 	/**

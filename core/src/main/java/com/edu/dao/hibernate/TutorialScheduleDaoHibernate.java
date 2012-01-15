@@ -56,8 +56,9 @@ public class TutorialScheduleDaoHibernate extends
 			hql.append(" join t.tutors tutor ");
 		}
 		{
-			hql.append(" where t.enabled=? ");
+			hql.append(" where t.enabled=? and ts.endDate>? ");
 			params.add(true);
+			params.add(new Date());
 		}
 		if (tutorId != null) {
 			hql.append(" and tutor.id=? ");
