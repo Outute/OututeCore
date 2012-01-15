@@ -21,17 +21,6 @@
   <a href="#"><img src="images/read-more-button.gif" alt="" /></a>
 </div>
 <div class="left-col floatl">
-  <!-- Temp disable for now --START 
-  <div class="search-area floatl">
-      <ul>
-      <li><img src="images/search-icon.gif" alt="" /></li>
-        <li style="line-height:22px;">Search</li>
-        <li><input type="text" class="search-input" /></li>
-        <li><input type="image" src="images/go-button.gif" /></li>
-      </ul>
-      <div class="clear"></div>
-  </div>
-  END -->
   <div class="category-section">
     <h1>Category</h1>
     <ul>

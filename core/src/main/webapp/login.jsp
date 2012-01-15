@@ -39,14 +39,6 @@
         </label>
         <input type="password" class="text medium" name="j_password" id="j_password" tabindex="2" />
     </li>
-	<!-- Temp Remove Remeber Me Code --START--
-		<c:if test="${appConfig['rememberMeEnabled']}">
-		    <li>
-		        <input type="checkbox" class="checkbox" name="_spring_security_remember_me" id="rememberMe" tabindex="3"/>
-		        <label for="rememberMe" class="choice"><fmt:message key="login.rememberMe"/></label>
-		    </li>
-		</c:if>
-	END -->
     <li>
         <input type="submit" class="button" name="login" value="<fmt:message key='button.login'/>" tabindex="4" />
         <p>
