@@ -171,6 +171,9 @@
         <action name="listForSearchTutorial" class="tutorialAction" method="findTutorials">
         	<result name="success">/WEB-INF/pages/takeTutorial/listForSearchTutorial.jsp</result>
         </action>
+        <action name="listForCategorySearch" class="tutorialAction" method="findTutorials">
+        	<result name="success">/WEB-INF/pages/takeTutorial/listForCategorySearch.jsp</result>
+        </action>
         <action name="tutorialDetail" class="tutorialAction" method="findRegisteredTutorialSchedule">
         	<result name="success">/WEB-INF/pages/takeTutorial/tutorialDetail.jsp</result>
         </action>

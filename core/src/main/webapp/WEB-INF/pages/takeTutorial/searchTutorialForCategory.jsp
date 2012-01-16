@@ -2,7 +2,7 @@
 <%@ include file="/common/taglibs.jsp"%>
 <!--start add tutorialForm-->
 <div>
-	<form id="searchTutorial" action="listForSearchTutorial" method="post" class="searchContent" onsubmit="return false;">
+	<form id="searchTutorialForCategory" action="listForCategorySearch" method="post" class="searchContent" onsubmit="return false;">
 		<table>
 			<tr>
 				<td><fmt:message key="page.takeTutorial.Category"/></td><td>
@@ -13,13 +13,13 @@
 				  	</select>
 			  	</td>
                 <td></td>
-                <td><input type="submit" value="<fmt:message key="page.button.search"/>" class="button buttonMin" onclick="clickSearch('listForSearchTutorial','searchTutorial','listForSearchTutorial');return false;"/></td>
+                <td><input type="submit" value="<fmt:message key="page.button.search"/>" class="button buttonMin" onclick="clickSearch('listForCategorySearch','searchTutorialForCategory','listForCategorySearch');return false;"/></td>
 			</tr>
 		</table>
 	</form>
 	<div class="listTutorial4Select" style="width: 100%; background-color: white; overflow-y: scroll; height: 200px;">
-		<div id="listForSearchTutorial">
-			<jsp:include page="/WEB-INF/pages/takeTutorial/listForSearchTutorial.jsp"/>
+		<div id="listForCategorySearch">
+			<jsp:include page="/WEB-INF/pages/takeTutorial/listForCategorySearch.jsp"/>
 		</div>
 	</div>
 </div>
