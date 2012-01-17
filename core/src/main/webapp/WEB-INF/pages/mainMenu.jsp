@@ -1,11 +1,11 @@
 <!--start index-->
-<%@ include file="/common/taglibs.jsp"%>
-
-<head>
+<%@ include file="/common/taglibs.jsp"%><head>
 	<title><fmt:message key="index.title"/></title>
 	<meta name="heading" content="<fmt:message key='index.heading'/>"/>
 	<meta name="menu" content="Home"/>
 </head>
+
+
 
 <div class="login_bg floatr">
 <div class="middle_right floatr">
