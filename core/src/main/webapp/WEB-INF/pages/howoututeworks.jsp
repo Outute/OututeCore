@@ -14,7 +14,7 @@ span.pagelinks{
 
  <div class="main-content">
 	<h2>How Outute Work</h2>
-	<p>1.Home</p>
-	<p>2. Categories</p>
-	<p>3. My Outute</p>
+	<p><h3>Manage Tutorial Page</h3></p><img src="images/ManageTutorial.jpg"/>
+	<p><h3>Offer Tutorial Page</h3></p><img src="images/OfferTutorial.jpg"/>
+	<p><h3>Take Tutorial Page</h3></p><img src="images/TakeTutorial.jpg"/>
 </div>
