@@ -22,22 +22,6 @@
         <s:if test="user.version == null">
             <input type="hidden" name="encryptPass" value="true" />
         </s:if>
-    <table>
-    	<tr>
-    		<td>
-    			<s:submit key="button.save" method="save" cssClass="button" onclick="onFormSubmit(this.form)"/>
-    		</td>
-    		<td>
-    			<c:if test="${param.from == 'list' and not empty user.id}">
-    				<s:submit key="button.delete" method="delete" cssClass="button" onclick="return confirmDelete('user')"/>
-    			</c:if>
-    		</td>
-    		<td>
-    			<s:submit key="button.cancel" cssClass="button" method="cancel"/>
-    		</td>
-    	</tr>
-    </table>
-    <br/>
         <c:choose>
             <c:when test="${param.from == 'list'}">
                 <p><fmt:message key="userProfile.admin.message"/></p>
@@ -45,7 +29,7 @@
             <c:otherwise>
                 <p><fmt:message key="userProfile.message"/></p>
             </c:otherwise>
-        </c:choose>
+        </c:choose><p></p>
     <table>
     	<tr>
     		<td>
@@ -94,11 +78,6 @@
         <tr>
         	<td>
         		<s:textfield key="user.website" required="true" theme="xhtml" cssClass="text large"/>
-        	</td>
-        </tr>
-        <tr>
-        	<td>
-        		<label class="desc"><fmt:message key="user.address.address"/></label>
         	</td>
         </tr>
         <tr>
