@@ -215,6 +215,10 @@
         <action name="dayTutorialSchedule" class="tutorialAction" method="findDayTutorialSchedule">
         	<result name="success">/WEB-INF/pages/manageTutorial/dayTutorialSchedule.jsp</result>
         </action>
+        <action name="clickTutorial" class="tutorialAction" method="clickTutorial">
+        	<result name="createTutorial" type="redirectAction">createTutorial?id=${tutorial.id}</result>
+        	<result name="takeTutorial" type="redirectAction">takeTutorial?id=${tutorial.id}</result>
+        </action>
         <!-- end manage tutorial -->
         <action name="findNeedToNotification" class="tutorialAction" method="findNeedToNotification">
         	<result name="success">/WEB-INF/pages/manageTutorial/notification.jsp</result>

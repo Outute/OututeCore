@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.edu.dao.TutorialScheduleDao;
 import com.edu.model.TutorialSchedule;
+import com.edu.util.DateUtil;
 
 /**
  * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
@@ -41,9 +42,30 @@ public class TutorialScheduleDaoHibernate extends
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<TutorialSchedule> findTutorialSchedule(Date start, Date end,
-			Long tutorId) {
-		if (start == null && end == null && tutorId == null) {
+	public List<TutorialSchedule> findTutorTutorialSchedule(Date start,
+			Date end, Long userId) {
+		return findTutorialSchedule(start, end, userId, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialSchedule> findStudentTutorialSchedule(Date start,
+			Date end, Long userId) {
+		return findTutorialSchedule(start, end, userId, false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialSchedule> findTutorAndStudentTutorialSchedule(
+			Date start, Date end, Long userId) {
+		return findTutorialSchedule(start, end, userId, null);
+	}
+
+	private List<TutorialSchedule> findTutorialSchedule(Date start, Date end,
+			Long userId, Boolean nullAll_trueTutor_falseStudent) {
+		if (start == null && end == null && userId == null) {
 			return new ArrayList<TutorialSchedule>();
 		}
 		List<Object> params = new ArrayList<Object>();
@@ -52,21 +74,38 @@ public class TutorialScheduleDaoHibernate extends
 			hql.append("select distinct ts from Tutorial t ");
 			hql.append(" join t.tutorialSchedules ts ");
 		}
-		if (tutorId != null) {
-			hql.append(" join t.tutors tutor ");
+		if (userId != null) {
+			if (nullAll_trueTutor_falseStudent == null) {
+				hql.append(" join t.tutors tutor ");
+				hql.append(" left join ts.tutorialScheduleStudents tss ");
+			} else if (nullAll_trueTutor_falseStudent) {
+				hql.append(" join t.tutors tutor ");
+			} else {
+				hql.append(" join ts.tutorialScheduleStudents tss ");
+			}
 		}
 		{
-			hql.append(" where t.enabled=? and ts.endDate>? ");
+			hql.append(" where t.enabled=? and ts.endDate>=? ");
 			params.add(true);
-			params.add(new Date());
+			Date d = DateUtil.clearTimes(new Date()).getTime();
+			if (start == null || d.after(start)) {
+				params.add(d);
+			} else {
+				params.add(start);
+			}
 		}
-		if (tutorId != null) {
-			hql.append(" and tutor.id=? ");
-			params.add(tutorId);
-		}
-		if (start != null) {
-			hql.append(" and ts.endDate>=? ");
-			params.add(start);
+		if (userId != null) {
+			if (nullAll_trueTutor_falseStudent == null) {
+				hql.append(" and (tutor.id=? or tss.student.id=?) ");
+				params.add(userId);
+				params.add(userId);
+			} else if (nullAll_trueTutor_falseStudent) {
+				hql.append(" and tutor.id=? ");
+				params.add(userId);
+			} else {
+				hql.append(" and tss.student.id=? ");
+				params.add(userId);
+			}
 		}
 		if (end != null) {
 			hql.append(" and ts.startDate<=? ");

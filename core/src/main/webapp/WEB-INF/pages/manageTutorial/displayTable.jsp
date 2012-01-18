@@ -5,7 +5,7 @@
 <form name="currentTutorials" action="currentTutorials" method="get" onsubmit="return clickTable(this);">
 <display:table name="tutorials" cellspacing="0" cellpadding="0" requestURI="" defaultsort="1" pagesize="25" class="table" export="false" form="currentTutorials" excludedParams="ajax">
     <display:column property="name" escapeXml="true" sortable="true" titleKey="tutorial.name" style="width: 25%"
-        url="/createTutorial" paramId="id" paramProperty="id"/>
+        url="/clickTutorial" paramId="id" paramProperty="id"/>
     <display:column property="description" escapeXml="true" sortable="true" titleKey="tutorial.description" style="width: 34%"/>
     <display:column property="cost" sortable="true" titleKey="tutorial.cost" style="width: 25%" autolink="true" media="html"/>
     <display:column titleKey="tutorial.tutor" sortable="true" style="width: 34%">
@@ -30,7 +30,7 @@
 <form name="historyTutorials" action="historyTutorials" method="get" onsubmit="return clickTable(this);">
 <display:table name="tutorials" cellspacing="0" cellpadding="0" requestURI="" defaultsort="1" pagesize="25" class="table" export="false" form="historyTutorials" excludedParams="ajax">
     <display:column property="name" escapeXml="true" sortable="true" titleKey="tutorial.name" style="width: 25%"
-        url="/editTutorial?from=list" paramId="id" paramProperty="id"/>
+        url="/clickTutorial" paramId="id" paramProperty="id"/>
     <display:column property="description" escapeXml="true" sortable="true" titleKey="tutorial.description" style="width: 34%"/>
     <display:column property="cost" sortable="true" titleKey="tutorial.cost" style="width: 25%" autolink="true" media="html"/>
     <display:column titleKey="tutorial.tutor" sortable="true" style="width: 34%">

@@ -270,7 +270,17 @@ public class TutorialAction extends BaseAction implements Preparable {
 	public String listAll() {
 		tutorials = tutorialManager.findTutorialsByTutorId(getUser().getId());
 		if (!tutorials.isEmpty()) {
-			tutorial = tutorials.get(0);
+			if (id != null) {
+				for (Tutorial t : tutorials) {
+					if (t.getId().equals(id)) {
+						tutorial = t;
+						break;
+					}
+				}
+			}
+			if (tutorial == null) {
+				tutorial = tutorials.get(0);
+			}
 		}
 		return SUCCESS;
 	}
@@ -441,8 +451,38 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findRegisteredTutorial() {
 		User user = getUser();
+		String type = getRequest().getParameter("type");
+		String searchDate = getRequest().getParameter("searchDate");
+		{
+			if (type != null) {
+				getRequest().setAttribute("type", type);
+				getRequest().setAttribute("searchId", id);
+				getRequest().setAttribute("searchDate", searchDate);
+			}
+		}
 		if (user != null) {
 			tutorials = tutorialManager.findTutorialsByUserId(user.getId());
+			if (!tutorials.isEmpty() && type == null) {
+				if (id != null) {
+					for (Tutorial t : tutorials) {
+						if (t.getId().equals(id)) {
+							tutorial = t;
+							break;
+						}
+					}
+				}
+				if (tutorial == null) {
+					tutorial = tutorials.get(0);
+				}
+			}
+			if (type != null) {
+				try {
+					tutorial = tutorialManager.getTutorial(id);
+					tutorialSchedules = new ArrayList<TutorialSchedule>();
+					tutorialSchedules.addAll(tutorial.getTutorialSchedules());
+				} catch (Exception e) {
+				}
+			}
 		}
 		return SUCCESS;
 	}
@@ -731,6 +771,7 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 */
 	public String findDayTutorialSchedule() {
 		Date start = null, end = null;
+		User user = getUser();
 		{
 			String startStr = getRequest().getParameter("search.start");
 			if (startStr != null && (startStr.trim()).length() > 0) {
@@ -743,8 +784,18 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findTutorTutorialSchedule(getUser()
-				.getId(), start, end);
+		tutorialSchedules = tutorialManager
+				.findTutorAndStudentTutorialSchedule(user.getId(), start, end);
+		{
+			List<Long> tutorialIds = new ArrayList<Long>();
+			for (TutorialSchedule ts : tutorialSchedules) {
+				tutorialIds.add(ts.getTutorial().getId());
+			}
+			List<Long> list = tutorialManager.hasTakenTutorialIds(tutorialIds,
+					user.getId());
+			getRequest().setAttribute("hasTakenTutorialIds",
+					new HashSet<Long>(list));
+		}
 		getHighLightDate(start);
 		return SUCCESS;
 	}
@@ -771,8 +822,18 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findStudentTutorialSchedule(
-				user == null ? null : user.getId(), start, end);
+		tutorialSchedules = tutorialManager
+				.findTutorAndStudentTutorialSchedule(user.getId(), start, end);
+		{
+			List<Long> tutorialIds = new ArrayList<Long>();
+			for (TutorialSchedule ts : tutorialSchedules) {
+				tutorialIds.add(ts.getTutorial().getId());
+			}
+			List<Long> list = tutorialManager.hasTakenTutorialIds(tutorialIds,
+					user.getId());
+			getRequest().setAttribute("hasTakenTutorialIds",
+					new HashSet<Long>(list));
+		}
 		getHighLightDate(start);
 		return SUCCESS;
 	}
@@ -799,12 +860,19 @@ public class TutorialAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-		tutorialSchedules = tutorialManager.findStudentTutorialSchedule(
-				user == null ? null : user.getId(), start, end);
-		//		Map<Long,Tutorial> map = new LinkedHashMap<Long, Tutorial>();
-		//		for(TutorialSchedule ts:tutorialSchedules){
-		//			map.put(ts.getTutorial().getId(), ts.getTutorial());
-		//		}
+		tutorialSchedules = tutorialManager
+				.findTutorAndStudentTutorialSchedule(user == null ? null : user
+						.getId(), start, end);
+		{
+			List<Long> tutorialIds = new ArrayList<Long>();
+			for (TutorialSchedule ts : tutorialSchedules) {
+				tutorialIds.add(ts.getTutorial().getId());
+			}
+			List<Long> list = tutorialManager.hasTakenTutorialIds(tutorialIds,
+					user.getId());
+			getRequest().setAttribute("hasTakenTutorialIds",
+					new HashSet<Long>(list));
+		}
 		getHighLightDate(start);
 		return SUCCESS;
 	}
@@ -874,8 +942,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 			name = getRequest().getParameter("search.name");
 			name = name == null ? null : name.trim();
 		}
-		tutorials = tutorialManager.findCurrentTutorials(25, 0, name, getUser()
-				.getId());
+		Long userId = getUser().getId();
+		tutorials = tutorialManager.findCurrentTutorials(25, 0, name, userId);
 		return SUCCESS;
 	}
 
@@ -886,9 +954,20 @@ public class TutorialAction extends BaseAction implements Preparable {
 			name = getRequest().getParameter("search.name");
 			name = name == null ? null : name.trim();
 		}
-		tutorials = tutorialManager.findHistoryTutorials(25, 0, name, getUser()
-				.getId());
+		Long userId = getUser().getId();
+		tutorials = tutorialManager.findHistoryTutorials(25, 0, name, userId);
 		return SUCCESS;
+	}
+
+	public String clickTutorial() {
+		Long userId = getUser().getId();
+		tutorial = new Tutorial();
+		tutorial.setId(id);
+		if (tutorialManager.isHasTakenTutorial(id, userId)) {
+			return "takeTutorial";
+		} else {
+			return "createTutorial";
+		}
 	}
 
 	public String findNeedToNotification() {
@@ -1129,6 +1208,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 			m.put("tutorial", t);
 			m.put("name", t.getName());
 			m.put("scheduleId", tutorialSchedule.getId());
+			m.put("startDate", new SimpleDateFormat("yyyyMMdd")
+					.format(tutorialSchedule.getStartDate()));
 			m.put("fromMinute", fromMinute);
 			m.put("isOwned", isOwned);
 			m.put("toMinute", toMinute);

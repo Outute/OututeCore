@@ -101,4 +101,65 @@ public interface TutorialDao extends GenericDao<Tutorial, Long> {
 	 */
 	List<Tutorial> findHistoryTutorials(int pageSize, int currentPage,
 			String name, Long userId);
+
+	/**
+	 * whether the tutorialId is user's owned or taken.
+	 * @param tutorialId
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	boolean isOwnedOrTakenTutorial(Long tutorialId, Long userId);
+
+	/**
+	 * whether the tutorialId is user's owned.
+	 * @param tutorialId
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	boolean isOwnedTutorial(Long tutorialId, Long userId);
+
+	/**
+	 * whether the tutorialId is user's taken.
+	 * @param tutorialId
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	boolean isHasTakenTutorial(Long tutorialId, Long userId);
+
+	/**
+	 * the tutorialIds those which are user's owned or taken.
+	 * @param tutorialIds
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	List<Long> ownedOrTakenTutorialIds(List<Long> tutorialIds, Long userId);
+
+	/**
+	 * the tutorialIds those which are user's owned.
+	 * @param tutorialIds
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	List<Long> ownedTutorialIds(List<Long> tutorialIds, Long userId);
+
+	/**
+	 * the tutorialIds those which are user's taken.
+	 * @param tutorialIds
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	List<Long> hasTakenTutorialIds(List<Long> tutorialIds, Long userId);
+
 }

@@ -324,7 +324,8 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 			}
 			return list;
 		}
-		return tutorialScheduleDao.findTutorialSchedule(start, end, null);
+		return tutorialScheduleDao.findStudentTutorialSchedule(start, end,
+				userId);
 	}
 
 	/**
@@ -332,7 +333,16 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	 */
 	public List<TutorialSchedule> findTutorTutorialSchedule(Long tutorId,
 			Date start, Date end) {
-		return tutorialScheduleDao.findTutorialSchedule(start, end, tutorId);
+		return tutorialScheduleDao.findTutorTutorialSchedule(start, end,
+				tutorId);
+	}
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<TutorialSchedule> findTutorAndStudentTutorialSchedule(Long tutorId,
+			Date start, Date end) {
+		return tutorialScheduleDao.findTutorAndStudentTutorialSchedule(start, end,
+				tutorId);
 	}
 
 	/**
@@ -381,5 +391,48 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 		minute = minute == null ? SystemConfigure.NOTIFICATION_MINUTE_DEFAULT
 				: minute;
 		return minute;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isHasTakenTutorial(Long tutorialId, Long userId) {
+		return tutorialDao.isHasTakenTutorial(tutorialId, userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isOwnedOrTakenTutorial(Long tutorialId, Long userId) {
+		return tutorialDao.isOwnedOrTakenTutorial(tutorialId, userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isOwnedTutorial(Long tutorialId, Long userId) {
+		return tutorialDao.isOwnedTutorial(tutorialId, userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Long> hasTakenTutorialIds(List<Long> tutorialIds, Long userId) {
+		return tutorialDao.hasTakenTutorialIds(tutorialIds, userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Long> ownedOrTakenTutorialIds(List<Long> tutorialIds,
+			Long userId) {
+		return tutorialDao.ownedOrTakenTutorialIds(tutorialIds, userId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Long> ownedTutorialIds(List<Long> tutorialIds, Long userId) {
+		return tutorialDao.ownedTutorialIds(tutorialIds, userId);
 	}
 }

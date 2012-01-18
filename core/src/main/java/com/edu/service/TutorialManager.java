@@ -196,6 +196,18 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 			Date end);
 
 	/**
+	 *  find tutor's and student's TutorialSchedule by date between start and end
+	 * @param tutorId
+	 * @param start
+	 * @param end
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-18
+	 */
+	List<TutorialSchedule> findTutorAndStudentTutorialSchedule(Long tutorId,
+			Date start, Date end);
+
+	/**
 	 * find someone's current active tutorials
 	 * @param name
 	 * @param pageSize
@@ -246,4 +258,65 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	 * @since 2012-1-2
 	 */
 	public int getNotificationMinute();
+
+	/**
+	 * whether the tutorialId is user's owned or taken.
+	 * @param tutorialId
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	boolean isOwnedOrTakenTutorial(Long tutorialId, Long userId);
+
+	/**
+	 * whether the tutorialId is user's owned.
+	 * @param tutorialId
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	boolean isOwnedTutorial(Long tutorialId, Long userId);
+
+	/**
+	 * whether the tutorialId is user's taken.
+	 * @param tutorialId
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	boolean isHasTakenTutorial(Long tutorialId, Long userId);
+
+	/**
+	 * the tutorialIds those which are user's owned or taken.
+	 * @param tutorialIds
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	List<Long> ownedOrTakenTutorialIds(List<Long> tutorialIds, Long userId);
+
+	/**
+	 * the tutorialIds those which are user's owned.
+	 * @param tutorialIds
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	List<Long> ownedTutorialIds(List<Long> tutorialIds, Long userId);
+
+	/**
+	 * the tutorialIds those which are user's taken.
+	 * @param tutorialIds
+	 * @param userId
+	 * @return
+	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
+	 * @since 2012-1-16
+	 */
+	List<Long> hasTakenTutorialIds(List<Long> tutorialIds, Long userId);
+
 }

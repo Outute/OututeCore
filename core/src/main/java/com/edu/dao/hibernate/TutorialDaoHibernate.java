@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.edu.dao.TutorialDao;
 import com.edu.model.Tutorial;
-import com.edu.model.User;
 import com.edu.service.TutorialNotFoundException;
 import com.edu.util.DateUtil;
 
@@ -136,6 +135,57 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
+	public boolean isOwnedTutorial(Long tutorialId, Long userId) {
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select count(t.id) from Tutorial t ");
+			hql.append(" join t.tutors tt ");
+			hql.append(" where t.id=? and tt.id=?");
+		}
+		String query = hql.toString();
+		List<?> list = getHibernateTemplate().find(query, tutorialId, userId);
+		return list != null && !list.isEmpty() && list.get(0) != null
+				&& ((Number) list.get(0)).longValue() > 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isHasTakenTutorial(Long tutorialId, Long userId) {
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select count(t.id) from Tutorial t ");
+			hql.append(" join t.tutorialSchedules ts ");
+			hql.append(" join ts.tutorialScheduleStudents tss ");
+			hql.append(" where t.id=? and tss.id.studentId=?");
+		}
+		String query = hql.toString();
+		List<?> list = getHibernateTemplate().find(query, tutorialId, userId);
+		return list != null && !list.isEmpty() && list.get(0) != null
+				&& ((Number) list.get(0)).longValue() > 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isOwnedOrTakenTutorial(Long tutorialId, Long userId) {
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select t.id from Tutorial t ");
+			hql.append(" join t.tutors tt ");
+			hql.append(" left join t.tutorialSchedules ts ");
+			hql.append(" left join ts.tutorialScheduleStudents tss ");
+			hql.append(" where t.id=? and (tt.id=? or tss.id.studentId=?)");
+		}
+		String query = hql.toString();
+		List<?> list = getHibernateTemplate().find(query, tutorialId, userId);
+		return list != null && !list.isEmpty() && list.get(0) != null
+				&& ((Number) list.get(0)).longValue() > 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Tutorial> findCurrentTutorials(int pageSize, int currentPage,
 			String name, Long userId) {
 		List<Object> params = new ArrayList<Object>();
@@ -197,6 +247,100 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 			params.add(DateUtil.clearTimes(new Date()).getTime());
 		}
 		String query = hql.toString().replace("where and", "where");
+		return getHibernateTemplate().find(query, params.toArray());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Long> ownedOrTakenTutorialIds(List<Long> tutorialIds,
+			Long userId) {
+		if (tutorialIds == null || tutorialIds.isEmpty()) {
+			return new ArrayList<Long>();
+		}
+		List<Object> params = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select t.id from Tutorial t ");
+			hql.append(" join t.tutors tt ");
+			hql.append(" left join t.tutorialSchedules ts ");
+			hql.append(" left join ts.tutorialScheduleStudents tss ");
+			hql.append(" where t.id in (");
+			for (int i = tutorialIds.size() - 1; i > -1; i--) {
+				hql.append(tutorialIds.get(i)).append(",");
+				if (i > 0 && i % 10 == 0) {
+					hql.append("\r\n");
+				}
+			}
+			hql.setLength(hql.length() - 1);
+			hql.append(")");
+		}
+		if (userId != null) {
+			hql.append(" and (tt.id=? or tss.id.studentId=?) ");
+			params.add(userId);
+		}
+		String query = hql.toString();
+		return getHibernateTemplate().find(query, params.toArray());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Long> ownedTutorialIds(List<Long> tutorialIds, Long userId) {
+		if (tutorialIds == null || tutorialIds.isEmpty()) {
+			return new ArrayList<Long>();
+		}
+		List<Object> params = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select t.id from Tutorial t ");
+			hql.append(" join t.tutors tt ");
+			hql.append(" where t.id in (");
+			for (int i = tutorialIds.size() - 1; i > -1; i--) {
+				hql.append(tutorialIds.get(i)).append(",");
+				if (i > 0 && i % 10 == 0) {
+					hql.append("\r\n");
+				}
+			}
+			hql.setLength(hql.length() - 1);
+			hql.append(")");
+		}
+		if (userId != null) {
+			hql.append(" and tt.id=? ");
+			params.add(userId);
+		}
+		String query = hql.toString();
+		return getHibernateTemplate().find(query, params.toArray());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Long> hasTakenTutorialIds(List<Long> tutorialIds, Long userId) {
+		if (tutorialIds == null || tutorialIds.isEmpty()) {
+			return new ArrayList<Long>();
+		}
+		List<Object> params = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer(128);
+		{
+			hql.append("select t.id from Tutorial t ");
+			hql.append(" join t.tutorialSchedules ts ");
+			hql.append(" join ts.tutorialScheduleStudents tss ");
+			hql.append(" where t.id in (");
+			for (int i = tutorialIds.size() - 1; i > -1; i--) {
+				hql.append(tutorialIds.get(i)).append(",");
+				if (i > 0 && i % 10 == 0) {
+					hql.append("\r\n");
+				}
+			}
+			hql.setLength(hql.length() - 1);
+			hql.append(")");
+		}
+		if (userId != null) {
+			hql.append(" and tss.id.studentId=? ");
+			params.add(userId);
+		}
+		String query = hql.toString();
 		return getHibernateTemplate().find(query, params.toArray());
 	}
 }

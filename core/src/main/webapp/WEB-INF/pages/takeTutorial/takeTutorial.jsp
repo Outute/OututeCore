@@ -23,11 +23,14 @@
 			</td>
 			<td style="background-color: #FFF;">
 				<div id="rightTakeTutorialPanel" style="padding: 0; background-color: #FFF; height: 415px;">
-					<c:if test="${id!=null}">
+					<c:if test="${id!=null&&searchId==null}">
 						<jsp:include page="/WEB-INF/pages/takeTutorial/tutorialDetail.jsp"/>
 					</c:if>
-					<c:if test="${id==null}">
+					<c:if test="${id==null&&searchId==null}">
 						<jsp:include page="/WEB-INF/pages/takeTutorial/searchTutorial.jsp"/>
+					</c:if>
+					<c:if test="${searchId!=null}">
+						<jsp:include page="/WEB-INF/pages/takeTutorial/bookTutorial.jsp"/>
 					</c:if>
 				</div>
 			</td>
@@ -36,5 +39,8 @@
 </table>
 <script type="text/javascript">
 Util.click(Util.id('takedTutorial_${id}'));
+<c:if test="${searchId!=null}">
+Util.calender('takeTutorialScheduleCalendar',{input:'tutorialScheduleDate',click:selectCalendar4Schedule,funcParams:{url:'bookTutorialPage',tutorialId:'${tutorial.id}',id:'rightTakeTutorialPanel'}},'${searchDate}');
+</c:if>
 </script>
 <!-- end Offer Tutorials -->
