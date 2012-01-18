@@ -30,6 +30,15 @@ Outute deploy guide
 
 4. Deploy in jboss
 --------------------------------------------------------------------------------
+notification email setting
+--------------------------------------------------------------------------------
+1. Setting sending email account in file: /core/src/main/resources/mail.properties
+
+2. Setting you available email account in your database table 'app_user'
+
+3. The default notification time is before 15 minutes. You can change in database table 'system_configure' column name value is 
+	'NOTIFICATION_DUETIME_MINUTE'. Or you can change in file:/core/src/test/resources/sample-data.xml.
+--------------------------------------------------------------------------------
 maven memory setting
 --------------------------------------------------------------------------------
 1. Find the line "#set MAVEN_OPTS=-Xdebug ......" in file (Windows:%M2_HOME%\bin\mvn.bat, Linux/Unix:$M2_HOME/bin/mvn)
