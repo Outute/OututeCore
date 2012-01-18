@@ -12,7 +12,7 @@
 
     <p class="signup">
         <fmt:message key="signup.message"/>
-    </p>
+    </p><p></p>
     <table>
     	<tr>
     		<td>
@@ -59,11 +59,6 @@
         	<td>
         		<s:textfield key="user.website" theme="xhtml" required="true" cssClass="text large"/>
         	</td>
-        </tr>
-        	<td>
-        		<label class="desc"><fmt:message key="user.address.address"/></label>
-        	</td>
-        </tr>
         <tr>
             <td>
                 <s:textfield key="user.address.address" theme="xhtml" cssClass="text large"/>
