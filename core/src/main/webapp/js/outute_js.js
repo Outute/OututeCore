@@ -877,7 +877,16 @@ function viewTutorial(url,tutorialId,id,start,end){
 			Util.data(el,'ids',{});
 		}
 	}
-	loadPage(url,Util.param([getTutorialId(tutorialId),{name:'search.start',value:startDate},{name:'search.end',value:endDate}]),id);
+	var idDates="", dates = Util.data(el,'ids')||{};
+	{
+		for(var kk in dates){
+			if(dates[kk]){
+				var k=kk.split("_"),dd=k[1].split("/");
+				idDates+=k[0]+"_"+dd[2]+dd[0]+dd[1]+"|";
+			}
+		}
+	}
+	loadPage(url,Util.param([getTutorialId(tutorialId),{name:'search.start',value:startDate},{name:'search.end',value:endDate},{name:'search.iddates',value:idDates}]),id);
 }
 function clickTutorialSchedule(id, tutorialScheduleId,isCheck,isWorkshop,cost,totalCostId, dateId){
 	var el = Util.id(id), dateEl = Util.id(dateId);

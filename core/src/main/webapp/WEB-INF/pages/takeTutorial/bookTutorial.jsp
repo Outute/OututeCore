@@ -42,7 +42,7 @@
 							<th><fmt:message key="page.takeTutorial.Afternoon"/></th>
 							<th><fmt:message key="page.takeTutorial.Evening"/></th>
 						</tr>
-						<s:set value="@com.edu.webapp.action.TutorialAction@processTimeAreaTutorialSchedule(#request.tutorialSchedules,#request.timeZone)" var="mapList"/>
+						<s:set value="@com.edu.webapp.action.TutorialAction@processTimeAreaTutorialSchedule(#request.tutorialSchedules,#request.startDate,#request.searchIdDates,#request.timeZone)" var="mapList"/>
 						<s:if test="#mapList['morning']">
 							<s:set value="#mapList['morning']" var="morning"/>
 							<s:set value="#mapList['afternoon']" var="afternoon"/>
@@ -54,7 +54,7 @@
 									<td>
 										<s:if test="#ts0">
 										<div style="display: block; width:130px;">
-											<input type="checkbox" name="time_<s:property value="#ts0['scheduleId']"/>" value="<s:property value="#ts0['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.checked,'<s:if test="#ts0['tutorial'].type==@com.edu.model.Tutorial@TYPE_WORKSHOP">true</s:if><s:else>false</s:else>','<s:property value="#ts0['cost']"/>','takeTutorialTotalCost','tutorialScheduleDate');"/>
+											<input type="checkbox" <s:if test="#ts0['isOwned']">checked="checked"</s:if> name="time_<s:property value="#ts0['scheduleId']"/>_<s:property value="#ts0['startDate']"/>" value="<s:property value="#ts0['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.checked,'<s:if test="#ts0['tutorial'].type==@com.edu.model.Tutorial@TYPE_WORKSHOP">true</s:if><s:else>false</s:else>','<s:property value="#ts0['cost']"/>','takeTutorialTotalCost','tutorialScheduleDate');"/>
 											<s:property value="#ts0['fromTime']"/>(<s:property value="#ts0['toMinute']-#ts0['fromMinute']"/> <fmt:message key="page.takeTutorial.mins"/>, <s:property value="#ts0['maxParticipate']"/> <fmt:message key="page.takeTutorial.slots"/>, $<s:property value="#ts0['cost']"/>)
 										</div>
 										</s:if>
@@ -62,7 +62,7 @@
 									<td>
 										<s:if test="#ts1">
 										<div style="display: block; width:130px;">
-										<input type="checkbox" name="time_<s:property value="#ts1['scheduleId']"/>" value="<s:property value="#ts1['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.checked,'<s:if test="#ts1['tutorial'].type==@com.edu.model.Tutorial@TYPE_WORKSHOP">true</s:if><s:else>false</s:else>','<s:property value="#ts1['cost']"/>','takeTutorialTotalCost','tutorialScheduleDate');"/>
+										<input type="checkbox" <s:if test="#ts1['isOwned']">checked="checked"</s:if> name="time_<s:property value="#ts1['scheduleId']"/>" value="<s:property value="#ts1['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.checked,'<s:if test="#ts1['tutorial'].type==@com.edu.model.Tutorial@TYPE_WORKSHOP">true</s:if><s:else>false</s:else>','<s:property value="#ts1['cost']"/>','takeTutorialTotalCost','tutorialScheduleDate');"/>
 										<s:property value="#ts1['fromTime']"/>(<s:property value="#ts1['toMinute']-#ts1['fromMinute']"/> <fmt:message key="page.takeTutorial.mins"/>, <s:property value="#ts1['maxParticipate']"/> <fmt:message key="page.takeTutorial.slots"/>, $<s:property value="#ts1['cost']"/>)
 										</div>
 										</s:if>
@@ -70,7 +70,7 @@
 									<td>
 										<s:if test="#ts2">
 										<div style="display: block; width:130px;">
-										<input type="checkbox" name="time_<s:property value="#ts2['scheduleId']"/>" value="<s:property value="#ts2['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.checked,'<s:if test="#ts2['tutorial'].type==@com.edu.model.Tutorial@TYPE_WORKSHOP">true</s:if><s:else>false</s:else>','<s:property value="#ts2['cost']"/>','takeTutorialTotalCost','tutorialScheduleDate');"/>
+										<input type="checkbox" <s:if test="#ts2['isOwned']">checked="checked"</s:if> name="time_<s:property value="#ts2['scheduleId']"/>" value="<s:property value="#ts2['scheduleId']"/>" onchange="clickTutorialSchedule('rightTakeTutorialPanel',this.value,this.checked,'<s:if test="#ts2['tutorial'].type==@com.edu.model.Tutorial@TYPE_WORKSHOP">true</s:if><s:else>false</s:else>','<s:property value="#ts2['cost']"/>','takeTutorialTotalCost','tutorialScheduleDate');"/>
 										<s:property value="#ts2['fromTime']"/>(<s:property value="#ts2['toMinute']-#ts2['fromMinute']"/> <fmt:message key="page.takeTutorial.mins"/>, <s:property value="#ts2['maxParticipate']"/> <fmt:message key="page.takeTutorial.slots"/>, $<s:property value="#ts2['cost']"/>)
 										</div>
 										</s:if>

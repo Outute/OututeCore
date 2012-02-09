@@ -169,7 +169,7 @@ public interface TutorialService {
 	List<Tutorial> findTutorialsByUserId(Long userId);
 
 	/**
-	 * find an tutor's tutorials
+	 * find an tutor's available tutorials
 	 * @param tutorId
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
@@ -177,7 +177,7 @@ public interface TutorialService {
 	 */
 	@GET
 	@Path("/tutorialSchedule/${tutorId}")
-	List<Tutorial> findTutorialsByTutorId(@PathParam("tutorId") Long tutorId);
+	List<Tutorial> findAvailableTutorialsByTutorId(@PathParam("tutorId") Long tutorId);
 
 	/**
 	 * find an user's tutorial schedule

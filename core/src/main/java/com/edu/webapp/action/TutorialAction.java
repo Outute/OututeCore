@@ -3,6 +3,7 @@ package com.edu.webapp.action;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -268,7 +269,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @return "success" if no exceptions thrown
 	 */
 	public String listAll() {
-		tutorials = tutorialManager.findTutorialsByTutorId(getUser().getId());
+		tutorials = tutorialManager.findAvailableTutorialsByTutorId(getUser()
+				.getId());
 		if (!tutorials.isEmpty()) {
 			if (id != null) {
 				for (Tutorial t : tutorials) {
@@ -616,6 +618,15 @@ public class TutorialAction extends BaseAction implements Preparable {
 					.getDurationType(), ts.getEndsOccurrence())) {
 				tutorialSchedules.add(ts);
 			}
+		}
+		{
+			String idDates = getRequest().getParameter("search.iddates");
+			List<String> list = new ArrayList<String>();
+			if (idDates != null) {
+				list.addAll(Arrays.asList(idDates.split("\\|")));
+			}
+			getRequest().setAttribute("searchIdDates", list);
+			System.out.println(idDates);
 		}
 		return SUCCESS;
 	}
@@ -1152,7 +1163,8 @@ public class TutorialAction extends BaseAction implements Preparable {
 	 * @since 2011-10-31
 	 */
 	public static Map<String, List<Map<String, Object>>> processTimeAreaTutorialSchedule(
-			List<TutorialSchedule> tutorialSchedules, TimeZone timeZone) {
+			List<TutorialSchedule> tutorialSchedules, Date startDate,
+			List<String> idDates, TimeZone timeZone) {
 		Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>();
 		{
 			map.put("morning", new ArrayList<Map<String, Object>>());
@@ -1161,15 +1173,26 @@ public class TutorialAction extends BaseAction implements Preparable {
 		}
 		for (TutorialSchedule ts : tutorialSchedules) {
 			int fromMinute = DateUtil.getMinute(ts.getFromTime());
+			String idDate = ts.getId() + "_"
+					+ DateUtil.getDateTime("yyyyMMdd", startDate);
+			boolean isSelected = false;
+			if (ts.getTutorial().getType() == Tutorial.TYPE_CLASS) {
+				isSelected = idDates.contains(idDate);
+			} else {
+				isSelected = idDates.isEmpty() ? false// 
+						: ts.getId().toString().equals(
+								idDates.get(0).substring(0,
+										idDates.get(0).length() - 9));
+			}
 			if (fromMinute / 60 < 12) {
 				map.get("morning").add(
-						tutorialScheduleToMap(ts, timeZone, false));
+						tutorialScheduleToMap(ts, timeZone, isSelected));
 			} else if (fromMinute / 60 < 18) {
 				map.get("afternoon").add(
-						tutorialScheduleToMap(ts, timeZone, false));
+						tutorialScheduleToMap(ts, timeZone, isSelected));
 			} else {
 				map.get("evening").add(
-						tutorialScheduleToMap(ts, timeZone, false));
+						tutorialScheduleToMap(ts, timeZone, isSelected));
 			}
 		}
 		int maxCount = 0;

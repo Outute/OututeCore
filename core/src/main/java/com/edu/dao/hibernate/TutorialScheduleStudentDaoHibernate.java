@@ -160,11 +160,11 @@ public class TutorialScheduleStudentDaoHibernate
 	/**
 	 * {@inheritDoc}
 	 */
-	public int countParticipate(Long tutorialScheduleId) {
+	public int countParticipate(Long tutorialScheduleId, Date lectureDate) {
 		int count = 0;
 		{
-			String hql = "select count(*) from TutorialScheduleStudent tss where tss.id.tutorialScheduleId=?";
-			List<?> list = getHibernateTemplate().find(hql, tutorialScheduleId);
+			String hql = "select count(*) from TutorialScheduleStudent tss where tss.id.tutorialScheduleId=? and tss.id.lectureDate=?";
+			List<?> list = getHibernateTemplate().find(hql, tutorialScheduleId, lectureDate);
 			if (list != null && !list.isEmpty()) {
 				try {
 					count = ((Number) list.get(0)).intValue();

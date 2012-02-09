@@ -97,11 +97,12 @@ public interface TutorialScheduleStudentDao extends
 	/**
 	 * get participate count
 	 * @param tutorialScheduleId
+	 * @param lectureDate
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-12-31
 	 */
-	int countParticipate(Long tutorialScheduleId);
+	int countParticipate(Long tutorialScheduleId, Date lectureDate);
 
 	/**
 	 * find someone's tutorial schedules those need to notification

@@ -140,13 +140,13 @@ public interface TutorialManager extends GenericManager<Tutorial, Long> {
 	List<Tutorial> findTutorialsByUserId(Long userId);
 
 	/**
-	 * find an tutor's tutorials
+	 * find an tutor's available tutorials
 	 * @param tutorId
 	 * @return
 	 * @author <a href="mailto:iffiff1@hotmail.com">Tyler Chen</a> 
 	 * @since 2011-12-18
 	 */
-	List<Tutorial> findTutorialsByTutorId(Long tutorId);
+	List<Tutorial> findAvailableTutorialsByTutorId(Long tutorId);
 
 	/**
 	 * find an user's tutorial schedule

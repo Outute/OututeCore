@@ -199,8 +199,8 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<Tutorial> findTutorialsByTutorId(Long tutorId) {
-		return tutorialDao.findTutorialsByTutorId(tutorId);
+	public List<Tutorial> findAvailableTutorialsByTutorId(Long tutorId) {
+		return tutorialDao.findAvailableTutorialsByTutorId(tutorId);
 	}
 
 	/**
@@ -289,7 +289,7 @@ public class TutorialManagerImpl extends GenericManagerImpl<Tutorial, Long>
 					maxParticipate = ts.getMaxParticipate();
 				}
 				int countParticipate = tutorialScheduleStudentDao
-						.countParticipate(ts.getId());
+						.countParticipate(ts.getId(),id.getLectureDate());
 				if (countParticipate >= maxParticipate) {
 					throw new RuntimeException("Tutorial.maxParticipate.error");
 				}

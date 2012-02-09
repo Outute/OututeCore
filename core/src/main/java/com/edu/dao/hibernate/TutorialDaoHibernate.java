@@ -70,9 +70,9 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 		List<Object> params = new ArrayList<Object>();
 		StringBuffer hql = new StringBuffer(128);
 		{
-			hql.append("from Tutorial t ");
+			hql.append("select distinct t from Tutorial t ");
 		}
-		if (start != null) {
+		if (start != null||existsSchedules) {
 			hql.append(" join t.tutorialSchedules ts ");
 		}
 		if (tutorName != null) {
@@ -84,6 +84,8 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 		}
 		if (existsSchedules) {
 			hql.append(" and exists elements(t.tutorialSchedules) ");
+			//TODO:
+			//hql.append(" and exists(select tsss.id.lectureDate from TutorialScheduleStudent tsss where tsss.id.tutorialScheduleId=ts.id group by tsss.id.lectureDate having count(*)=(t.maxParticipate+ts.maxParticipate))");
 		}
 		{
 			hql.append(" and (1=1");
@@ -127,9 +129,22 @@ public class TutorialDaoHibernate extends GenericDaoHibernate<Tutorial, Long>
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<Tutorial> findTutorialsByTutorId(Long tutorId) {
-		String hql = "select t from Tutorial t join t.tutors tr where tr.id=? and t.enabled=? order by t.name";
-		return getHibernateTemplate().find(hql, tutorId, true);
+	public List<Tutorial> findAvailableTutorialsByTutorId(Long tutorId) {
+		List<Object> params = new ArrayList<Object>();
+		String hql = "select t from Tutorial t join t.tutors tr left join t.tutorialSchedules ts where tr.id=? and t.enabled=? ";
+		{
+			params.add(tutorId);
+			params.add(true);
+		}
+		Date date = DateUtil.clearTimes(new Date()).getTime();
+		{
+			hql += " and not exists (from TutorialSchedule tsts where tsts=ts and tsts.endDate<?)";
+			params.add(date);
+		}
+		{
+			hql += " order by t.name";
+		}
+		return getHibernateTemplate().find(hql, params.toArray());
 	}
 
 	/**
