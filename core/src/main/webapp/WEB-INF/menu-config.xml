@@ -20,5 +20,6 @@
         <Menu name="HowOututeWorks" title="menu.howOututeWorks" description="How Outute Works" page="/howoututeworks"/>
         <Menu name="Categories" title="menu.categories" description="Categories" page="/categories"/>
         <Menu name="ContactUs" title="menu.contactUs" description="Contact us" page="/contactus"/>
+        <Menu name="Classroom" title="Class Room" description="Class Room" page="/classroom" roles="ROLE_ADMIN,ROLE_USER"/>
     </Menus>
 </MenuConfig>

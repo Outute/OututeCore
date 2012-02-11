@@ -731,7 +731,7 @@
 		<jdbc.version>5.1.14</jdbc.version>
 		<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
 		<jdbc.url>jdbc:mysql://localhost/${db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</jdbc.url>
-		<jdbc.username>iff</jdbc.username>
-		<jdbc.password>iff</jdbc.password>
+		<jdbc.username>root</jdbc.username>
+		<jdbc.password>password</jdbc.password>
 	</properties>
 </project>

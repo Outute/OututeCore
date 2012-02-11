@@ -18,6 +18,7 @@
         <menu:displayMenu name="OfferTutorial"/>
         <menu:displayMenu name="TakeTutorial"/>
         <menu:displayMenu name="UserMenu"/>
+        <menu:displayMenu name="Classroom"/>
     </ul>
     </span>
     </c:if>
